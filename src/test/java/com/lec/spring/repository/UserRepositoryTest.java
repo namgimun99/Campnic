@@ -90,6 +90,15 @@ class UserRepositoryTest {
 
         lender1 = userRepository.save(lender1);
 
+        User lender2 = User.builder()
+                .username("LENDER2")
+                .password(passwordEncoder.encode("lender22!"))
+                .phone("01078912345")
+                .name("렌더2")
+                .build();
+
+        lender2 = userRepository.save(lender2);
+
         User camping1 = User.builder()
                 .username("CAMP1")
                 .password(passwordEncoder.encode("camp1111!"))
@@ -98,6 +107,15 @@ class UserRepositoryTest {
                 .build();
 
         camping1 = userRepository.save(camping1);
+
+        User camping2 = User.builder()
+                .username("CAMP2")
+                .password(passwordEncoder.encode("camp2222!"))
+                .phone("01089123456")
+                .name("캠핑2")
+                .build();
+
+        camping2 = userRepository.save(camping2);
 
         User admin1 = User.builder()
                 .username("ADMIN1")
@@ -109,7 +127,9 @@ class UserRepositoryTest {
         admin1 = userRepository.save(admin1);
 
         lender1.addAuthority(auth_lender);
+        lender2.addAuthority(auth_lender);
         camping1.addAuthority(auth_camping);
+        camping2.addAuthority(auth_camping);
         admin1.addAuthority(auth_admin);
 
         userRepository.findAll().forEach(System.out::println);
