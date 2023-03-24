@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +28,7 @@ public class User extends BaseEntity{
     @JsonIgnore
     private String password;// 회원 비밀번호
 
-    @Transient   // DB 에 반영암함
+    @Transient   // DB 에 반영안함
     @ToString.Exclude
     @JsonIgnore
     private String re_password;  // 비밀번호 확인 입력
@@ -38,5 +42,14 @@ public class User extends BaseEntity{
     @ColumnDefault(value = "0")
     private int point;
 
-    // 권한..
+    // 권한
+    @ManyToMany(fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @Builder.Default
+    @JsonIgnore
+    private List<Authority> authorities = new ArrayList<>();
+
+    public void addAuthority(Authority...authorities){      // xxxToMany 의  경우 만들어두면 편리해서 작성함
+        Collections.addAll(this.authorities, authorities);
+    }
 }
