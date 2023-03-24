@@ -1,21 +1,23 @@
 package com.lec.spring.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity(name = "db_city")
-public class City {
+@DynamicInsert
+@DynamicUpdate
+public class City{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;    // 글 id (PK)
+    private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String city;
 }
