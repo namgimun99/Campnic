@@ -6,6 +6,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,12 +32,15 @@ public class CampReserve extends BaseEntity{
         private Campsite campsite; // FK
 
         @Column(nullable = false, length = 8)
-        private int date; // 날짜
+        private int sdate; // 날짜
+
+        @Column(nullable = false, length = 8)
+        private int edate; // 날짜
 
         @ColumnDefault("00000000")
         @Column(length = 8)
         private String coupon;
 
 
+}
 
-    }

@@ -37,41 +37,15 @@ class CampReserveRepositoryTest {
         System.out.println("init() 생성");
 
 //        User 생성
-        User user1 = User.builder()
-                .username("user1")
-                .password(passwordEncoder.encode("1234"))
-                .phone("01012345677")
-                .name("철수")
-                .build();
-        User user2 = User.builder()
-                .username("user2")
-                .password(passwordEncoder.encode("1234"))
-                .phone("01012345666")
-                .name("유리")
-                .build();
-        User user3 = User.builder()
-                .username("user3")
-                .password(passwordEncoder.encode("1234"))
-                .phone("01012345555")
-                .name("맹구")
-                .build();
+        User user1 = userRepository.findByUsername("Camping1");
 
-        user1 = userRepository.save(user1); // user 저장
-        user2 = userRepository.save(user2); // user 저장
-        user3 = userRepository.save(user3); // user 저장
+        User user2 = userRepository.findByUsername("Camping2");
+
+
 
         //city 생성
 
-        City city1 = City.builder()
-                .city("강원도")
-                .build();
-        City city2 = City.builder()
-                .city("전라도")
-                .build();
-
-
-        city1 = cityRepository.save(city1); // user 저장
-        city2 = cityRepository.save(city2); // user 저장
+        City city1 = cityRepository.findByCity("강원도");
 
         //camping 생성
 
@@ -97,7 +71,7 @@ class CampReserveRepositoryTest {
                 .city(city1)
                 .build();
 
-//        Camping camping4 = Camping.builder()
+//      Camping camping4 = Camping.builder()
 //                .camp_name("설악산 캠핑장 4")
 //                .content("공기 좋고 물 좋은 설악산으로 오세요 4")
 //                .address(city2.getCity() + " 속초")
@@ -105,10 +79,10 @@ class CampReserveRepositoryTest {
 //                .city(city1)
 //                .build();
 
-
         camping1 = campingRepository.save(camping1);
         camping2 = campingRepository.save(camping2);
         camping3 = campingRepository.save(camping3);
+
 
         //campsite 생성
         Campsite campsite1 = Campsite.builder()
@@ -199,37 +173,43 @@ class CampReserveRepositoryTest {
 
         CampReserve campReserve1 = CampReserve.builder()
                 .user(user1)
-                .date(20230326)
+                .sdate(20230326)
+                .edate(20230326)
                 .campsite(campsite1)
                 .build();
 
         CampReserve campReserve2 = CampReserve.builder()
                 .user(user1)
-                .date(20230326)
+                .sdate(20230326)
+                .edate(20230326)
                 .campsite(campsite2)
                 .build();
 
         CampReserve campReserve3 = CampReserve.builder()
                 .user(user2)
-                .date(20230326)
+                .sdate(20230326)
+                .edate(20230326)
                 .campsite(campsite3)
                 .build();
 
         CampReserve campReserve4 = CampReserve.builder()
                 .user(user1)
-                .date(20230326)
+                .sdate(20230326)
+                .edate(20230326)
                 .campsite(campsite4)
                 .build();
 
         CampReserve campReserve5 = CampReserve.builder()
                 .user(user2)
-                .date(20230326)
+                .sdate(20230326)
+                .edate(20230326)
                 .campsite(campsite5)
                 .build();
 
         CampReserve campReserve6 = CampReserve.builder()
                 .user(user2)
-                .date(20230326)
+                .sdate(20230326)
+                .edate(20230326)
                 .campsite(campsite6)
                 .build();
 
