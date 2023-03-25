@@ -15,5 +15,6 @@ SELECT * FROM db_city;
 SELECT * FROM lender;
 SELECT * FROM item;
 SELECT * FROM item_file;
+SELECT * FROm rental_recipt;
 SELECT * FROM qna;
 SELECT * FROM qna_comment;

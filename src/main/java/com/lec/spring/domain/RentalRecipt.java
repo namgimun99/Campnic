@@ -1,8 +1,9 @@
 package com.lec.spring.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -11,7 +12,7 @@ import lombok.*;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "rental_recipt")
-public class RentalRecipt extends BaseEntity{
+public class RentalRecipt extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,12 @@ public class RentalRecipt extends BaseEntity{
     @ToString.Exclude
     private Item item;
 
-    @Column(nullable=false)
-    private Long date;
+    @Column(nullable = false)
+    private int quantity;
+
+    @Column(name = "sdate", nullable = false)
+    private LocalDate sdate;
+
+    @Column(name = "edate", nullable = false)
+    private LocalDate edate;
 }

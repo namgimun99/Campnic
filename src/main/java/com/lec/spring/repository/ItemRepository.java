@@ -9,4 +9,7 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     // 특정 lender(lenderId)의 items
     List<Item> findByLender(Lender lender);
+
+    // item_name으로 물건 찾기
+    Item findByItemName (String itemName);
 }

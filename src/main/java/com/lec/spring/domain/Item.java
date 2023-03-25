@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,8 +22,8 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;    // 글 id (PK)
 
-    @Column(nullable = false)
-    private String item_name;
+    @Column(nullable = false) // vaildation에서 [lendername]종류로 적게함
+    private String itemName;
 
     private int price;
 
@@ -42,5 +43,25 @@ public class Item {
 
     public void addFiles(ItemFileDTO... files){
         Collections.addAll(fileList, files);
+    }
+
+    // 대여 내역
+    @OneToMany(mappedBy = "item")
+    @ToString.Exclude
+    @Builder.Default
+    private List<RentalRecipt> rentalReciptList = new ArrayList<>();
+
+    public void addRentalRecipt(RentalRecipt rentalRecipt) {
+        rentalReciptList.add(rentalRecipt);
+    }
+
+    // 대여 가능 여부 체크
+    public boolean isAvailable(LocalDate sdate, LocalDate edate) {
+        for (RentalRecipt rentalRecipt : rentalReciptList) {
+            if (rentalRecipt.getSdate().isBefore(edate) && rentalRecipt.getEdate().isAfter(sdate)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class LenderRepositoryTest {
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -27,6 +26,8 @@ class LenderRepositoryTest {
     private  ItemRepository itemRepository;
 
     @Autowired ItemFileRepository fileRepository;
+
+    @Autowired RentalReciptRepository rentalReciptRepository;
 
     @Test
     public void init(){
@@ -86,42 +87,42 @@ class LenderRepositoryTest {
 
         //Item 생성
         Item i1 = Item.builder()
-                .item_name("초강력 텐트")
+                .itemName("초강력 텐트")
                 .content("인기 많아요")
                 .price(1000000)
                 .lender(l1)
                 .build();
 
         Item i2 = Item.builder()
-                .item_name("스텐 세트")
+                .itemName("스텐 세트")
                 .content("별로 안썼어요")
                 .price(2000000)
                 .lender(l1)
                 .build();
 
         Item i3 = Item.builder()
-                .item_name("캔들")
+                .itemName("캔들")
                 .content("분위기 좋게 만들어줘요")
                 .price(3000000)
                 .lender(l2)
                 .build();
 
         Item i4 = Item.builder()
-                .item_name("식기류 세트")
+                .itemName("식기류 세트")
                 .content("열전도가 좋아요")
                 .price(4000000)
                 .lender(l2)
                 .build();
 
         Item i5 = Item.builder()
-                .item_name("낚시용 의자")
+                .itemName("낚시용 의자")
                 .content("튼튼해요")
                 .price(5000000)
                 .lender(l3)
                 .build();
 
         Item i6 = Item.builder()
-                .item_name("모기장")
+                .itemName("모기장")
                 .content("여름 한정")
                 .price(6000000)
                 .lender(l3)
@@ -219,5 +220,7 @@ class LenderRepositoryTest {
         //구분
         System.out.println("---------특정item의 files-------------");
         System.out.println(fileRepository.findByItem(i1.getId()));
+
+
     }
 }
