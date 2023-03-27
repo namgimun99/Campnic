@@ -7,5 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface LenderRepository extends JpaRepository<Lender, Long> {
+
+    Lender findByLenderName(String lenderName);
+
     List<Lender> findByUserOrderByIdDesc(User user);
 }

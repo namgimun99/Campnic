@@ -11,4 +11,6 @@ public interface RentalReciptRepository extends JpaRepository<RentalRecipt, Long
 
     //User 로 찾기
     List<RentalRecipt> findByUser (User user);
+
+    List<RentalRecipt> findByUserOrderByIdDesc(User user);
 }

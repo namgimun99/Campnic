@@ -56,21 +56,21 @@ class LenderRepositoryTest {
 
         //Lender 생성
         Lender l1 = Lender.builder()
-                .lender_name("campinggogo")
+                .lenderName("campinggogo")
                 .address("장안구")
                 .user(lender1)
                 .city(c1)
                 .build();
 
         Lender l2 = Lender.builder()
-                .lender_name("대명캠핑")
+                .lenderName("대명캠핑")
                 .address("동작구")
                 .user(lender1)
                 .city(c2)
                 .build();
 
         Lender l3 = Lender.builder()
-                .lender_name("fun 캠프")
+                .lenderName("fun 캠프")
                 .address("스타필드")
                 .user(lender1)
                 .city(c3)

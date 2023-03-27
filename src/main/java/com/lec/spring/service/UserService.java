@@ -74,11 +74,11 @@ public class UserService {
         User u = userRepository.findByUsername(username);
 //        for(i = 0; i <= auth.size(); i++){
 //            Authority au = authorityRepository.findByName(auth.get(i));
-            Authority au = authorityRepository.findByName(auth);
-            Authreq ar = new Authreq();
-            ar.setUser(u);
-            ar.setAuthority(au);
-            authreqRepository.save(ar);     // authreq에 INSERT
+        Authority au = authorityRepository.findByName(auth);
+        Authreq ar = new Authreq();
+        ar.setUser(u);
+        ar.setAuthority(au);
+        authreqRepository.save(ar);     // authreq에 INSERT
 //        }
     }
 

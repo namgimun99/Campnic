@@ -28,15 +28,15 @@ public class Lender extends BaseEntity{
     private String address;
 
     @Column(nullable = false)
-    private String lender_name;
+    private String lenderName;
 
     // FK user_id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
     private User user;
 
     // FK city_id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
     private City city;
 
@@ -49,4 +49,6 @@ public class Lender extends BaseEntity{
     public void addItems(Item... items){
         Collections.addAll(itemList, items);
     }
+
+    //TODO cascade
 }

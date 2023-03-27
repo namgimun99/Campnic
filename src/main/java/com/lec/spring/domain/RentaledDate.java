@@ -23,7 +23,7 @@ public class RentaledDate {
     private LocalDate rentaledDate;
 
     // FK item_id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
     private Item item;
 }

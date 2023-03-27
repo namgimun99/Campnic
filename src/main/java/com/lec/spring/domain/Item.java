@@ -31,7 +31,7 @@ public class Item {
     private String content;
 
     //FK lender_id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
     private Lender lender;
 
@@ -46,7 +46,7 @@ public class Item {
     }
 
     // 대여 내역
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @ToString.Exclude
     @Builder.Default
     private List<RentalRecipt> rentalReciptList = new ArrayList<>();

@@ -19,12 +19,12 @@ public class RentalRecipt extends BaseEntity {
     private Long id;
 
     //FK user_id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
     private User user;
 
     //FK item_id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
     private Item item;
 

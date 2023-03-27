@@ -1,17 +1,14 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.City;
-import com.lec.spring.domain.Lender;
-import com.lec.spring.domain.User;
-import com.lec.spring.repository.CityRepository;
-import com.lec.spring.repository.LenderRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.domain.*;
+import com.lec.spring.repository.*;
 import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +22,8 @@ public class LenderService {
     private LenderRepository lenderRepository;
     private UserRepository userRepository;
     private CityRepository cityRepository;
+    private final ItemRepository itemRepository;
+    private final RentalReciptRepository rentalReciptRepository;
 
     @Autowired
     public void setWriteRepository(LenderRepository lenderRepository) {
@@ -41,8 +40,11 @@ public class LenderService {
         this.cityRepository = cityRepository;
     }
 
-    public LenderService() {
+    public LenderService(ItemRepository itemRepository,
+                         RentalReciptRepository rentalReciptRepository) {
         System.out.println("LenderService() 생성");
+        this.itemRepository = itemRepository;
+        this.rentalReciptRepository = rentalReciptRepository;
     }
 
     // 보류
@@ -82,16 +84,21 @@ public class LenderService {
     }
 
     // lender 등록
-    public int addLender(String lender_name, String address, City city) {
+    @Transactional
+    public int addLender(Lender lender, String cityName) {
+
+        String lenderName = lender.getLenderName();
+        City city = cityRepository.findByCity(cityName);
+
+        for (Lender i : lenderList()) {
+            if (lenderName.equals(i.getLenderName())) return 0;
+        }
         // 현재 로그인한 작성자 정보
         User user = U.getLoggedUser();
-        Lender lender = new Lender();
 
         // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다
         user = userRepository.findById(user.getId()).orElse(null);
         lender.setUser(user);  // 글 작성자 세팅
-        lender.setLender_name(lender_name);
-        lender.setAddress(address);
         lender.setCity(city);
 
         lender = lenderRepository.saveAndFlush(lender);  // INSERT
@@ -108,13 +115,15 @@ public class LenderService {
     }
 
     // lenderAdmin 렌더 수정
-    public int lenderUpdate(Lender lender){
+    public int lenderUpdate(Lender lender, String cityName){
         // update 하고자 하는 것을 일단 읽어와야 한다
         Lender w = lenderRepository.findById(lender.getId()).orElse(null);
         if(w != null){
+            City city = cityRepository.findByCity(cityName);
+            w.setCity(city);
             w.setAddress(lender.getAddress());
             w.setCity(lender.getCity());
-            w.setLender_name(lender.getLender_name());
+            w.setLenderName(lender.getLenderName());
             lenderRepository.save(w);   // UPDATE
             return 1;
         }
@@ -132,6 +141,104 @@ public class LenderService {
         return 0;
     }
 
+    // lenderAdmin Item 등록
+    // TODO item file
+    public int addItem(Item item, String lenderName) {
+        Lender lender = lenderRepository.findByLenderName(lenderName);
+        item.setLender(lender);
+        lender = lenderRepository.saveAndFlush(lender);
+        return 1;
+    }
+
+    // lenderAdmin Item 수정
+    public int updateItem(Item item, String lenderName) {
+        // update 하고자 하는 것을 일단 읽어와야 한다
+        Item w = itemRepository.findById(item.getId()).orElse(null);
+        if(w != null){
+            Lender lender = lenderRepository.findByLenderName(lenderName);
+            w.setLender(lender);
+            w.setContent(item.getContent());
+            w.setPrice(item.getPrice());
+            w.setItemName(item.getItemName());
+            itemRepository.save(w);   // UPDATE
+            return 1;
+        }
+        return 0;
+    }
+
+    // lenderAdmin Item 삭제
+    public int deleteItem(long id){
+        Item w = itemRepository.findById(id).orElse(null);
+        if(w != null){
+            // 글삭제 (참조하는 첨부파일, 댓글 등도 같이 삭제 될 것이다 ON DELETE CASCADE)
+            itemRepository.delete(w);
+            return 1;
+        }
+        return 0;
+    }
+
+    // lenderAdmin Item 목록
+    public List<Item> myItemList(String lenderName) {
+        Lender lender = lenderRepository.findByLenderName(lenderName);
+        List<Item> itemList  = itemRepository.findByLender(lender);
+        return itemList;
+    }
+
+    // Item 목록
+    public List<Item> itemList(){
+        List<Item> itemList = itemRepository.findAll();
+        return itemList;
+    }
+
+    // Item detail
+    public Item itemDetail(Long id){
+        Item item = itemRepository.findById(id).orElse(null);
+        return item;
+    }
+
+    // rental 하기
+    public int addRental(RentalRecipt rentalRecipt, Long item_id){ // item_id hidden
+        Item item = itemRepository.findById(item_id).orElse(null);
+        if(item != null){
+            // 현재 로그인한 작성자 정보
+            User user = U.getLoggedUser();
+
+            // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다
+            user = userRepository.findById(user.getId()).orElse(null);
+            rentalRecipt.setUser(user);
+            rentalRecipt.setItem(item);
+            rentalRecipt = rentalReciptRepository.saveAndFlush(rentalRecipt);
+            return 1;
+        }
+        return 0;
+    }
+
+    // 취소일이 렌트 당일인지 check
+    public boolean checkDays(RentalRecipt rentalRecipt){
+        LocalDate sdate = rentalRecipt.getSdate();
+        if(sdate != LocalDate.now()) {return true;}
+        return false;
+    }
+
+    // rental 취소
+    public int delRental(Long id){
+        RentalRecipt rentalRecipt = rentalReciptRepository.findById(id).orElse(null);
+        if(rentalRecipt != null && checkDays(rentalRecipt)){
+            rentalReciptRepository.delete(rentalRecipt);
+            return 1;
+        }
+        return 0;
+    }
+
+    // 내 rental 목록
+    public List<RentalRecipt> myRental() {
+        // 현재 로그인한 작성자 정보
+        User user = U.getLoggedUser();
+        // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다
+        user = userRepository.findById(user.getId()).orElse(null);
+        List<RentalRecipt> myRental = rentalReciptRepository.findByUserOrderByIdDesc(user);
+        return myRental;
+    }
 }
 
 
