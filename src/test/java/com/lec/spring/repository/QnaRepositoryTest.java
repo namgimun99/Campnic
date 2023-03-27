@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -27,15 +30,16 @@ class QnaRepositoryTest {
         User user2 = userRepository.findByUsername("USER2");
         User user3 = userRepository.findByUsername("USER3");
         User lender1 = userRepository.findByUsername("LENDER1");
-        User camping1 = userRepository.findByUsername("CAMP1");
+        User lender2 = userRepository.findByUsername("LENDER2");
+        User camping1 = userRepository.findByUsername("CAMPING1");
         User admin1 = userRepository.findByUsername("ADMIN1");
 
         System.out.println("qna-init() 생성");
 
         // qna 글 생성
         Qna qna1 = Qna.builder()
-                .subject("로그인 안됨")
-                .content("컴터 껐다 켜도 로그인이 안되네요..")
+                .subject("렌더 등록 어떻게 하나요")
+                .content("캠핑용품이 많이 남아서 렌탈하려고 하는데 권한 어떻게 받나요?")
                 .user(user1)
                 .build();
 
@@ -95,7 +99,7 @@ class QnaRepositoryTest {
                 .build();
 
         QnaComment c2 = QnaComment.builder()
-                .content("빠른 시일 내로 도움 드리겠습니다. 감사합니다.")
+                .content("메인 페이지 상단에 등록버튼이 있습니다. 감사합니다.")
                 .user(admin1)
                 .qna(qna1.getId())
                 .build();
@@ -138,32 +142,32 @@ class QnaRepositoryTest {
 
         QnaComment c9 = QnaComment.builder()
                 .content("맞습니다. 저도 주로 캠핑용품을 빌려드리고 있습니다")
-                .user(lender1)
+                .user(lender2)
                 .qna(qna5.getId())
                 .build();
 
         QnaComment c10 = QnaComment.builder()
                 .content("저희 서비스에 관심을 가져주셔서 감사합니다. 품목들은 캠핑용품이 주를 이루고 있으나 옮기기 어려운 무겁거나 큰 품목들은 제한하고 있습니다. 감사합니다.")
                 .user(admin1)
-                .qna(qna6.getId())
+                .qna(qna5.getId())
                 .build();
 
         QnaComment c11 = QnaComment.builder()
                 .content("저도 강아지를 키우고 있는데 카테고리가 있으면 너무 좋겠네요!")
                 .user(user1)
-                .qna(qna7.getId())
+                .qna(qna6.getId())
                 .build();
 
         QnaComment c12 = QnaComment.builder()
                 .content("고양이도...")
                 .user(user3)
-                .qna(qna7.getId())
+                .qna(qna6.getId())
                 .build();
 
         QnaComment c13 = QnaComment.builder()
                 .content("목록에 있는 공지글 확인해주시면 감사하겠습니다^^")
                 .user(admin1)
-                .qna(qna7.getId())
+                .qna(qna6.getId())
                 .build();
 
         c1 = qnaCommentRepository.save(c1);
@@ -181,5 +185,16 @@ class QnaRepositoryTest {
         c13 = qnaCommentRepository.save(c13);
 
         qnaCommentRepository.findAll().forEach(System.out::println);
+
     }
+
+//    @Test
+    public void test(){
+        System.out.println("------test------");
+
+        List<Qna> qnaList;
+        qnaList = qnaRepository.findAllByUserId(1L);
+        qnaList.forEach(System.out::println);
+    }
+
 }

@@ -37,9 +37,9 @@ class CampReserveRepositoryTest {
         System.out.println("init() 생성");
 
 //        User 생성
-        User user1 = userRepository.findByUsername("Camping1");
+        User user1 = userRepository.findByUsername("CAMPING1");
 
-        User user2 = userRepository.findByUsername("Camping2");
+        User user2 = userRepository.findByUsername("CAMPING2");
 
 
 

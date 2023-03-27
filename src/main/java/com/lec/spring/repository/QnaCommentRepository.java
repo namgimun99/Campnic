@@ -10,4 +10,5 @@ public interface QnaCommentRepository extends JpaRepository<QnaComment, Long> {
 
     // 특정글(qna)의 댓글들 조회
     List<QnaComment> findByQna(Long qna, Sort sort);
+
 }

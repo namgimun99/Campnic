@@ -42,6 +42,9 @@ public class User extends BaseEntity{
     @ColumnDefault(value = "0")
     private int point;
 
+    @Transient
+    private String provider;
+
     // 권한
     @ManyToMany(fetch = FetchType.EAGER)
     @ToString.Exclude

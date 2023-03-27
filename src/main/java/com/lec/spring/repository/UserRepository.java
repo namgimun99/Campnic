@@ -8,4 +8,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // 사용자 username 으로 조회
     User findByUsername(String username);
 
+    // 회원 탈퇴
+    void deleteById(Id id);
+
 }

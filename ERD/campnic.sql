@@ -6,6 +6,7 @@ WHERE TABLE_SCHEMA = 'campdb'
 
 SELECT * FROM db_user;
 SELECT * FROM authority;
+SELECT * FROM db_user_authorities;
 SELECT * FROM authreq;
 SELECT * FROM Camping;
 SELECT * FROM Campsite;

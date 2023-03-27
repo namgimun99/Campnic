@@ -19,6 +19,6 @@ public class Coupon {
 
     @ManyToOne
     private User user;
-    @OneToOne(optional = false)
-    private CampReserve campReserve;
+//    @OneToOne(optional = false)
+//    private CampReserve campReserve;
 }
