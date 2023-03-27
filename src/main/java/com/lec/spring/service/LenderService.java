@@ -143,10 +143,11 @@ public class LenderService {
 
     // lenderAdmin Item 등록
     // TODO item file
+    @Transactional
     public int addItem(Item item, String lenderName) {
         Lender lender = lenderRepository.findByLenderName(lenderName);
         item.setLender(lender);
-        lender = lenderRepository.saveAndFlush(lender);
+        item = itemRepository.saveAndFlush(item);
         return 1;
     }
 
@@ -154,8 +155,8 @@ public class LenderService {
     public int updateItem(Item item, String lenderName) {
         // update 하고자 하는 것을 일단 읽어와야 한다
         Item w = itemRepository.findById(item.getId()).orElse(null);
+        Lender lender = lenderRepository.findByLenderName(lenderName);
         if(w != null){
-            Lender lender = lenderRepository.findByLenderName(lenderName);
             w.setLender(lender);
             w.setContent(item.getContent());
             w.setPrice(item.getPrice());
@@ -189,6 +190,22 @@ public class LenderService {
         List<Item> itemList = itemRepository.findAll();
         return itemList;
     }
+
+    // 지역 Item 목록
+    @Transactional
+    public List<Item> searchItemList(String cityName){
+        City city = cityRepository.findByCity(cityName);
+        List<Lender> lenderList = lenderRepository.findByCity(city);
+        List<Item> itemList = new ArrayList<>();
+        for(Lender l : lenderList){
+            if(cityName.equals(l.getCity().getCity())) {
+                List<Item> items = itemRepository.findByLender(l);
+                itemList.addAll(items);
+            }
+        }
+        return itemList;
+    }
+
 
     // Item detail
     public Item itemDetail(Long id){

@@ -1,6 +1,9 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.service.LenderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -8,5 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LenderContoller {
     public LenderContoller() {System.out.println(getClass().getName() + "() 생성");}
 
+    private LenderService lenderService;
 
+    @Autowired
+    public void setLenderService(LenderService lenderService){
+        this.lenderService = lenderService;
+    }
+
+    @GetMapping("/admin/write")
+    public void adminWrite(){}
 }

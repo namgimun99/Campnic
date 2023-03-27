@@ -1,11 +1,7 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.City;
-import com.lec.spring.domain.Lender;
-import com.lec.spring.domain.User;
-import com.lec.spring.repository.CityRepository;
-import com.lec.spring.repository.LenderRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.domain.*;
+import com.lec.spring.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +19,10 @@ class LenderServiceTest {
     private UserRepository userRepository;
     @Autowired
     private CityRepository cityRepository;
+    @Autowired
+    private ItemRepository itemRepository;
+    @Autowired
+    private RentalReciptRepository rentalReciptRepository;
 
     @Test
     void cityList() {
@@ -57,47 +57,45 @@ class LenderServiceTest {
     }
 
     @Test
-    void deleteLender() {
-        System.out.println(cityRepository.findByCity("서울시"));
-    }
-
-    @Test
     void addItem() {
+        Item item = Item.builder()
+                .itemName("장작")
+                .price(8000000)
+                .content("잘 타요")
+                .build();
+        Lender lender = lenderRepository.findById(2L).orElse(null);
+        String lenderName = lender.getLenderName();
+        lenderService.addItem(item, lenderName);
     }
 
     @Test
     void updateItem() {
-    }
-
-    @Test
-    void deleteItem() {
+        Item item = Item.builder()
+                .id(8L)
+                .itemName("숯")
+                .price(8000000)
+                .content("잘 타요")
+                .build();
+        Lender lender = lenderRepository.findById(2L).orElse(null);
+        String lenderName = lender.getLenderName();
+        lenderService.updateItem(item, lenderName);
     }
 
     @Test
     void myItemList() {
+        Lender lender = lenderRepository.findById(2L).orElse(null);
+        String lenderName = lender.getLenderName();
+        lenderService.myItemList(lenderName).forEach(System.out::println);
     }
 
     @Test
     void itemList() {
+        lenderService.itemList().forEach(System.out::println);
     }
 
     @Test
-    void itemDetail() {
+    void searchItemList() {
+        lenderService.searchItemList("수원시").forEach(System.out::println);
     }
 
-    @Test
-    void addRental() {
-    }
-
-    @Test
-    void checkDays() {
-    }
-
-    @Test
-    void delRental() {
-    }
-
-    @Test
-    void myRental() {
-    }
 }
