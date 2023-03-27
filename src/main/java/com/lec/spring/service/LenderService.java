@@ -115,14 +115,14 @@ public class LenderService {
     }
 
     // lenderAdmin 렌더 수정
+    @Transactional
     public int lenderUpdate(Lender lender, String cityName){
         // update 하고자 하는 것을 일단 읽어와야 한다
         Lender w = lenderRepository.findById(lender.getId()).orElse(null);
+        City city = cityRepository.findByCity(cityName);
         if(w != null){
-            City city = cityRepository.findByCity(cityName);
             w.setCity(city);
             w.setAddress(lender.getAddress());
-            w.setCity(lender.getCity());
             w.setLenderName(lender.getLenderName());
             lenderRepository.save(w);   // UPDATE
             return 1;

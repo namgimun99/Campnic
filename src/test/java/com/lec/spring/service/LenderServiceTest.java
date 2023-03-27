@@ -58,7 +58,7 @@ class LenderServiceTest {
 
     @Test
     void deleteLender() {
-        System.out.println(cityRepository.findByCity("서울시")); // TODO null id 로???
+        System.out.println(cityRepository.findByCity("서울시"));
     }
 
     @Test
