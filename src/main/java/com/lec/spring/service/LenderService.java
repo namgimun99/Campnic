@@ -85,10 +85,9 @@ public class LenderService {
 
     // lender 등록
     @Transactional
-    public int addLender(Lender lender, String cityName) {
+    public int addLender(Lender lender, City city) {
 
         String lenderName = lender.getLenderName();
-        City city = cityRepository.findByCity(cityName);
 
         for (Lender i : lenderList()) {
             if (lenderName.equals(i.getLenderName())) return 0;
@@ -116,10 +115,9 @@ public class LenderService {
 
     // lenderAdmin 렌더 수정
     @Transactional
-    public int lenderUpdate(Lender lender, String cityName){
+    public int lenderUpdate(Lender lender, City city){ // city 수정가능
         // update 하고자 하는 것을 일단 읽어와야 한다
         Lender w = lenderRepository.findById(lender.getId()).orElse(null);
-        City city = cityRepository.findByCity(cityName);
         if(w != null){
             w.setCity(city);
             w.setAddress(lender.getAddress());
@@ -152,12 +150,10 @@ public class LenderService {
     }
 
     // lenderAdmin Item 수정
-    public int updateItem(Item item, String lenderName) {
+    public int updateItem(Item item) { // lenderName 수정불가
         // update 하고자 하는 것을 일단 읽어와야 한다
         Item w = itemRepository.findById(item.getId()).orElse(null);
-        Lender lender = lenderRepository.findByLenderName(lenderName);
         if(w != null){
-            w.setLender(lender);
             w.setContent(item.getContent());
             w.setPrice(item.getPrice());
             w.setItemName(item.getItemName());

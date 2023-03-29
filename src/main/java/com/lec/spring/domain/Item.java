@@ -31,7 +31,7 @@ public class Item {
     private String content;
 
     //FK lender_id
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @ToString.Exclude
     private Lender lender;
 

@@ -52,7 +52,8 @@ class LenderServiceTest {
                 .address("스타필드")
                 .lenderName("morefun캠프")
                 .build();
-        lenderService.lenderUpdate(lender, "서울시");
+        City city = cityRepository.findById(2L).orElse(null);
+        lenderService.lenderUpdate(lender, city);
         System.out.println(lender);
     }
 
@@ -70,15 +71,16 @@ class LenderServiceTest {
 
     @Test
     void updateItem() {
+        Lender lender = lenderRepository.findById(2L).orElse(null);
         Item item = Item.builder()
                 .id(8L)
                 .itemName("숯")
                 .price(8000000)
                 .content("잘 타요")
+                .lender(lender)
                 .build();
-        Lender lender = lenderRepository.findById(2L).orElse(null);
-        String lenderName = lender.getLenderName();
-        lenderService.updateItem(item, lenderName);
+
+        lenderService.updateItem(item);
     }
 
     @Test
