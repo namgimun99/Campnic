@@ -10,12 +10,12 @@ SELECT * FROM db_user_authorities;
 SELECT * FROM authreq;
 SELECT * FROM Camping;
 SELECT * FROM Campsite;
-SELECT * FROM Camp_reserve
+SELECT * FROM Camp_reserve;
 SELECT * FROM Camp_file;
 SELECT * FROM db_city;
 SELECT * FROM lender;
 SELECT * FROM item;
 SELECT * FROM item_file;
-SELECT * FROm rental_recipt;
+SELECT * FROM rental_recipt;
 SELECT * FROM qna;
 SELECT * FROM qna_comment;

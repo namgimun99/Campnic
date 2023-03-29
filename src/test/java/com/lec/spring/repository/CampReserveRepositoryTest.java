@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.*;
+import com.lec.spring.service.CampingService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,7 +46,7 @@ class CampReserveRepositoryTest {
 
         //city 생성
 
-        City city1 = cityRepository.findByCity("강원도");
+        City city1 = cityRepository.findByCity("제천");
 
         //camping 생성
 
@@ -224,3 +225,4 @@ class CampReserveRepositoryTest {
         campreserveRepository.findAll().forEach(System.out::println);
     }
 }
+
