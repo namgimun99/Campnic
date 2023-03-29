@@ -2,64 +2,74 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
 
 <th:block th:fragment="header">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="btn btn-primary" th:href="@{/main}">Home</a>
-            <a class="navbar-brand" href="javascript:void(0)">Security</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
             <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="navbar-nav me-auto">
-                    <!-- 로그인하지 않았을때(anonymous 상태) 보이는 메뉴 -->
-                    <li class="nav-item" sec:authorize="isAnonymous()">
-                        <a class="nav-link" href="javascript:void(0)">Anonymous</a>
+                    <li class="nav-item">
+                        <a class="nav-item" th:href="@{/main}">
+                            <img th:src="@{/img/logo.jpeg}" alt="logo" width="200" height="100"/>
+                        </a>
                     </li>
-                    <!-- 로그인한 사람에게만 보이는 메뉴 -->
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" href="javascript:void(0)">Authenticated</a>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/camping/list}">캠핑예약</a>
                     </li>
-                    <!-- 로그인한 사람중 ROLE_MEMBER 나 ROLE_ADMIN 권한 있는 사람에게만 보이는 메뉴 -->
-                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MEMBER')">
-                        <a class="nav-link" href="javascript:void(0)">Member</a>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/lender/item/list}">캠핑용품</a>
                     </li>
-                    <!-- 로그인한 사람중 ROLE_ADMIN 권한 있는 사람에게만 보이는 메뉴 -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/qna/list}">QnA</a>
+                    </li>
                     <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                        <a class="nav-link" href="javascript:void(0)">Admin</a>
+                        <a class="nav-link" th:href="@{/admin/authCheck}">관리자</a>
                     </li>
                 </ul>
-                <!-- 로그인 안했을때는 로그인 form 보여주기 -->
-                <a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/user/login}">Login</a>
+                <a class="btn btn-primary" th:href="@{/user/mypage}">Mypage</a>
+                <a class="btn btn-primary" th:href="@{/coupon/write}">쿠폰 등록하기</a>
+
+                <a class="btn btn-primary" sec:authorize="isAnonymous()" data-bs-toggle="modal" data-bs-target="#myModal">Login</a>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"><b>로그인</b></h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form name="form2" th:action="@{/user/login}" method="post">
+                                <div class="modal-body">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" name="username" id="username" th:value="${username}" placeholder="ID" required>
+                                            <label for="username">ID</label>
+                                        </div>
+                                        <div class="form-floating mt-1">
+                                            <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
+                                            <label for="password">Password</label>
+                                        </div>
+                                        계정이 없으신가요? <a th:href="@{/user/join}" class="join"><b>회원가입</b></a>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary" value="로그인"></input>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- 로그인 했을때는 username 과 로그아웃 form 보여주기 -->
                 <form th:action="@{/user/logout}" method="POST" sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">
                     <!--TODO : 로그아웃후 다시 돌아오기 -->
                     <span class="d-flex">
-                        <span class="text-light p-2"><span TODO="">[[${user.username}]]([[${user.name}]])</span> 님 환영합니다</span>
+                        <span class="text-light p-2"><span>[[${user.username}]]</span> 님 환영합니다!(Points:<span>[[${user.point}]]</span>)</span>
                         <span><button class="btn btn-danger" type="submit">Logout</button></span>
                       </span>
                 </form>
             </div>
         </div>
     </nav>
-
-    <div class="container-fluid mt-3">
-        <!-- 로그인 하지 않았을때 보여주는 화면 -->
-        <div class="alert alert-warning alert-dismissible" sec:authorize="isAnonymous()">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            로그인하지 않은 상태입니다 <br>
-        </div>
-        <!-- 로그인 했을때 보여주는 화면 -->
-        <div class="alert alert-info alert-dismissible" sec:authorize="isAuthenticated()">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <div th:text="${#authentication.getPrincipal().getUser()}"></div>
-            <div sec:authentication="principal.authorities"></div>
-            로그인 하셨습니다 <br>
-        </div>
-    </div>
-
 
 </th:block>
 

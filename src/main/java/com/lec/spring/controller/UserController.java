@@ -1,6 +1,9 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.City;
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.UserValidator;
+import com.lec.spring.service.LenderService;
 import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
@@ -10,10 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -23,6 +23,12 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private LenderService lenderService;
+
+    @Autowired
+    public void setLenderService(LenderService lenderService) {
+        this.lenderService = lenderService;
+    }
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -47,6 +53,42 @@ public class UserController {
     @GetMapping("/join")
     public void join(){}
 
+    @PostMapping("/join")
+    public String joinOk(@Valid User user
+            , BindingResult result   // UserValidagtor 가 유효성 검증한 결과가 담긴 객체
+            , Model model
+            , RedirectAttributes redirectAttrs
+    ){
+        // 이미 등록된 중복된 아이디(username) 이 들어오면
+        if(!result.hasFieldErrors("username") && userService.isExist(user.getUsername())){
+            result.rejectValue("username", "이미 존재하는 아이디 입니다");
+        }
+
+        // 검증 에러가 있었다면 redirect 한다
+        if(result.hasErrors()){
+            redirectAttrs.addFlashAttribute("username", user.getUsername());
+            redirectAttrs.addFlashAttribute("password", user.getPassword());
+            redirectAttrs.addFlashAttribute("name", user.getName());
+            redirectAttrs.addFlashAttribute("phone", user.getPhone());
+
+            List<FieldError> errList = result.getFieldErrors();
+            for(FieldError err : errList) {
+                redirectAttrs.addFlashAttribute("error", err.getCode());
+                break;
+            }
+
+            return "redirect:/user/join";
+        }
+
+
+        // 에러 없었으면 회원 등록 진행
+        String page = "/user/registerOk";
+        int cnt = userService.register(user);
+        model.addAttribute("result", cnt);
+        return page;
+    }
+
+
     @GetMapping("/mypage")
     public String mypage(Model model){
         model.addAttribute("user", U.getLoggedUser());
@@ -62,27 +104,9 @@ public class UserController {
         return "redirect:mypage";
     }
 
-    @GetMapping("/admin/authCheck")
-    public String authcheck(Model model){
-        model.addAttribute("list", userService.getAllAuthreq());
-        return "/user/admin/authCheck";
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.setValidator(new UserValidator());
     }
-
-    @PostMapping("/admin/authAccept")
-    public String authAccept(String authreqId, String userId, String authId){
-        userService.acceptAuth(authreqId, userId, authId);
-        return "redirect:/main";
-    }
-
-    @PostMapping("/admin/authRefuse")
-    public String authRefuse(String authreqId){
-        userService.refuseAuth(authreqId);
-        return "redirect:/main";
-    }
-
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder){
-//        binder.setValidator(new UserValidator());
-//    }
 
 }

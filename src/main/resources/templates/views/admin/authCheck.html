@@ -21,13 +21,13 @@
       <td>[[${dto.user.username}]]</td>
       <td>[[${dto.authority.name}]]</td>
       <td class="d-flex justify-content-around mt-1">
-        <form th:action="@{/user/admin/authAccept}" method="post">
+        <form th:action="@{/admin/authAccept}" method="post">
           <input type="hidden" name="authreqId" th:value="${dto.id}">
           <input type="hidden" name="userId" th:value="${dto.user.id}">
           <input type="hidden" name="authId" th:value="${dto.authority.id}">
           <button class="btn btn-success">수락</button>
         </form>
-        <form th:action="@{/user/admin/authRefuse}" method="post">
+        <form th:action="@{/admin/authRefuse}" method="post">
           <input type="hidden" name="authreqId" th:value="${dto.id}">
           <button class="btn btn-danger">거절</button>
         </form>
@@ -35,7 +35,7 @@
     </tr>
   </table>
 
-  <a class="btn btn-primary" th:href="@{/user/admin/city}">▶지역 관리하러 가기</a>
+  <a class="btn btn-primary" th:href="@{/admin/city}">▶지역 관리하러 가기</a>
 
 </div>
 

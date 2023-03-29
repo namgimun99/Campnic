@@ -1,1 +1,12 @@
-body {margin-bottom:400px}
+@font-face{
+    font-family: "NanumSquareNeo";
+    src : url("../font/NanumSquareNeo-Variable.woff") format("woff");
+}
+@font-face{
+    font-family: "NanumSquare";
+    src : url("../font/NanumSquareR.ttf") format("truetype");
+}
+body {
+margin-bottom:400px;
+font-family: NanumSquare;
+}
