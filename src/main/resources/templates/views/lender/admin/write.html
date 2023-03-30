@@ -26,10 +26,10 @@
             <input type="text" class="form-control" id="lenderName" name="lenderName" placeholder="사업장 이름" th:value="${lenderName}">
         </div>
         <div class="mt-3">
-            <select name="city" id="city" class="form-select w-25">
+            <select name="cityId" id="city" class="form-select w-25">
                 <option value="null" selected>도시</option>
                 <th:block th:each="city : ${cityList}">
-                    <option th:value="${city}" th:text="${city.city}"></option>
+                    <option th:value="${city.id}" th:text="${city.city}"></option>
                 </th:block>
             </select>
            

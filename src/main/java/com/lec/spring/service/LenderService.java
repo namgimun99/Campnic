@@ -85,9 +85,10 @@ public class LenderService {
 
     // lender 등록
     @Transactional
-    public int addLender(Lender lender, City city) {
+    public int addLender(Lender lender, Long cityId) {
 
         String lenderName = lender.getLenderName();
+        City c = cityRepository.findById(cityId).orElse(null);
 
         for (Lender i : lenderList()) {
             if (lenderName.equals(i.getLenderName())) return 0;
@@ -98,7 +99,7 @@ public class LenderService {
         // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다
         user = userRepository.findById(user.getId()).orElse(null);
         lender.setUser(user);  // 글 작성자 세팅
-        lender.setCity(city);
+        lender.setCity(c);
 
         lender = lenderRepository.saveAndFlush(lender);  // INSERT
 
@@ -113,13 +114,19 @@ public class LenderService {
         return lenderList;
     }
 
+    // lenderAdmin 렌더 하나
+    public Lender lender(Long id) {
+        return lenderRepository.findById(id).orElse(new Lender());
+    }
+
     // lenderAdmin 렌더 수정
     @Transactional
-    public int lenderUpdate(Lender lender, City city){ // city 수정가능
+    public int lenderUpdate(Lender lender, Long cityId){ // city 수정가능
         // update 하고자 하는 것을 일단 읽어와야 한다
         Lender w = lenderRepository.findById(lender.getId()).orElse(null);
+        City c = cityRepository.findById(cityId).orElse(null);
         if(w != null){
-            w.setCity(city);
+            w.setCity(c);
             w.setAddress(lender.getAddress());
             w.setLenderName(lender.getLenderName());
             lenderRepository.save(w);   // UPDATE

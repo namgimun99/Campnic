@@ -52,7 +52,7 @@ class LenderServiceTest {
                 .address("스타필드")
                 .lenderName("morefun캠프")
                 .build();
-        City city = cityRepository.findById(2L).orElse(null);
+        Long city = cityRepository.findById(2L).orElse(null).getId();
         lenderService.lenderUpdate(lender, city);
         System.out.println(lender);
     }
