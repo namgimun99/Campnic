@@ -4,6 +4,7 @@ import com.lec.spring.domain.City;
 import com.lec.spring.domain.User;
 import com.lec.spring.domain.UserValidator;
 import com.lec.spring.service.LenderService;
+import com.lec.spring.service.QnaService;
 import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
@@ -24,6 +25,12 @@ public class UserController {
 
     private UserService userService;
     private LenderService lenderService;
+    private QnaService qnaService;
+
+    @Autowired
+    public void setQnaService(QnaService qnaService) {
+        this.qnaService = qnaService;
+    }
 
     @Autowired
     public void setLenderService(LenderService lenderService) {
@@ -41,6 +48,17 @@ public class UserController {
 
     @GetMapping("/login")
     public void login(){}
+
+    @PostMapping("/apiLogin")
+    public String apiLogin(String id, Model model){
+        model.addAttribute("username", id);
+
+        if(userService.isExist(id)){
+            return "/user/apiLogin";
+        }else{
+            return "/user/apiJoin";
+        }
+    }
 
     @PostMapping("/loginError")
     public String loginError(){ return "user/login"; }
@@ -79,19 +97,28 @@ public class UserController {
 
             return "redirect:/user/join";
         }
+        // valid 통과되면 수행
+        int cnt = userService.register(user);
 
+        // api로그인이라면 바로 로그인까지 실행
+        if (user.getProvider().equals("api")) {
+            model.addAttribute("username", user.getUsername());
+            System.out.println("----------------------------");
+            System.out.println(user.getUsername());
+            System.out.println("----------------------------");
+            return "/user/apiLogin";
+        }
 
         // 에러 없었으면 회원 등록 진행
-        String page = "/user/registerOk";
-        int cnt = userService.register(user);
         model.addAttribute("result", cnt);
-        return page;
+        return "/user/joinOk";
     }
 
-
     @GetMapping("/mypage")
-    public String mypage(Model model){
+    public String mypage(Long userId, Model model){
         model.addAttribute("user", U.getLoggedUser());
+        model.addAttribute("myqna", qnaService.myqnaList(userId));
+
         return "/user/mypage";
     }
 

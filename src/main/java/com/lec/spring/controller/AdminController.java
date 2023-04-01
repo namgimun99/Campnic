@@ -58,13 +58,13 @@ public class AdminController {
     @PostMapping("/authAccept")
     public String authAccept(String authreqId, String userId, String authId){
         userService.acceptAuth(authreqId, userId, authId);
-        return "redirect:/main";
+        return "redirect:/admin/authCheck";
     }
 
     @PostMapping("/authRefuse")
     public String authRefuse(String authreqId){
         userService.refuseAuth(authreqId);
-        return "redirect:/main";
+        return "redirect:/admin/authCheck";
     }
 
 }

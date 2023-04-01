@@ -33,7 +33,10 @@ public class QnaService {
         System.out.println("QnaService() 생성");
     }
 
-    public List<Qna> list() {return qnaRepository.findAll();}
+    public List<Qna> listAdmin() {
+        List<Qna> notice = qnaRepository.findAllByUserId(8L);
+        return notice;
+    }
 
     public List<Qna> myqnaList(Long userId){
         return qnaRepository.findAllByUserId(userId);

@@ -60,6 +60,7 @@ public class QnaController {
         }
 
         model.addAttribute("result", qnaService.write(qna));
+        model.addAttribute("dto", qna);
         return "qna/writeOk";
     }
 
@@ -72,7 +73,7 @@ public class QnaController {
     // 페이징 사용
     @GetMapping("/list")
     public void list(Integer page, Model model){
-//        model.addAttribute("list", boardService.list());
+        model.addAttribute("adminL", qnaService.listAdmin());
         qnaService.list(page, model);
     }
 
@@ -125,7 +126,7 @@ public class QnaController {
     @PostMapping("/pageRows")
     public String pageRows(Integer page, Integer pageRows){
         U.getSession().setAttribute("pageRows", pageRows);
-        return "redirect:/board/list?page=" + page;
+        return "redirect:/qna/list?page=" + page;
     }
 
 }

@@ -55,9 +55,17 @@
         </tr>
         </thead>
         <tbody>
+        <tr th:each="dto2 : ${adminL}" style="color: Crimson">
+            <td><b>[[${dto2.id}]]</b></td>
+            <td><a th:href="@{/qna/detail(id=${dto2.id})}" style="color: black; text-decoration: none;"><b>[[${dto2.subject}]]</b></a></td>
+            <td><b>[[${dto2.user.username}]]</b></td>
+            <td><b>[[${#temporals.format(dto2.regDate, 'yyyy-MM-dd HH:mm:ss')}]]</b></td>
+        </tr>
+        </tbody>
+        <tbody>
         <tr th:each="dto : ${list}">
             <td>[[${dto.id}]]</td>
-            <td><a th:href="@{/qna/detail(id=${dto.id})}">[[${dto.subject}]]</a> </td>
+            <td><a th:href="@{/qna/detail(id=${dto.id})}" style="color: black; text-decoration: none;">[[${dto.subject}]]</a> </td>
             <td>[[${dto.user.username}]]</td>
             <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}]]</td>
         </tr>

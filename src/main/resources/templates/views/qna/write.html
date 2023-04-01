@@ -19,7 +19,7 @@
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
 
-<div class="container mt-3" >
+<div class="container mt-3" th:with="user=${#authentication.getPrincipal().getUser()}">
     <h2>작성</h2>
     <hr>
 
@@ -29,20 +29,16 @@
     </div>
 
 
-    <form th:action="@{/qna/write}" method="post">
-
-        <!--/*  th:with="user=${#authentication.getPrincipal().getUser() 나중에 위에 넣어야함 ****[[${user.id}]] 이게 member_id 값이다!!!!!*** 이거는 로그인 된 사용자의 u_id를 알려준다. 정보는 밑으로.. */-->
+    <form th:action="@{/qna/write}" method="post" enctype="Multipart/form-data">
 
         <div class="mb-3 mt-3">
             <label for="subject">제목:</label>
-            <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject">
+            <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" th:value="${subject}">
         </div>
         <div class="mb-3 mt-3">
             <label for="content">내용:</label>
-            <textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content"></textarea>
+            <textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content">[[${content}]]</textarea>
         </div>
-
-        <!--        <input type="hidden"  name="user_id"  th:value="${user.id}" required>-->
 
         <button type="submit" class="btn btn-outline-dark">작성완료</button>
         <a class="btn btn-outline-dark" th:href="@{/qna/list}">목록</a>

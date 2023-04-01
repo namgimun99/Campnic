@@ -195,6 +195,10 @@ class QnaRepositoryTest {
         List<Qna> qnaList;
         qnaList = qnaRepository.findAllByUserId(1L);
         qnaList.forEach(System.out::println);
+
+//        List<Qna> adminList;
+//        adminList = qnaRepository.findAllByAuthId(4L);
+//        adminList.forEach(System.out::println);
     }
 
 }

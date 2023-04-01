@@ -1,0 +1,46 @@
+body{
+    background: Black;
+}
+.conA{
+    padding-top: 10%;
+    align-items: center;
+    text-align: center;
+    padding-left: 35%;
+}
+.conB{
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-top: 1em;
+    padding-bottom: 5em;
+    background-color: rgb(255, 255, 255, 0.8);
+    border-radius : 10px;
+    text-align: center;
+    width: 500px;
+}
+.apiLogin{
+    justify-content: space-between;
+}
+.easyLogin{
+    font-size: 30px;
+    text-align: center;
+}
+.loginBtn{
+    float: right;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding:1em;
+    font-size: 15px;
+}
+.blank{
+    padding-top: 60px;
+    padding-bottom: 1em;
+}
+a.join{
+  color: black;
+}
+#kakao-login-btn{
+    border:0;
+}
+.NoAccount{
+    font-size: 17px;
+}

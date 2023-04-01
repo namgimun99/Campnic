@@ -10,7 +10,8 @@
   <!--    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"></script>-->
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   <script th:src="@{/js/kakaoLogin.js}"></script>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/login/login.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
   <title>LOGIN</title>
 </head>
 
@@ -19,8 +20,18 @@
 <th:block th:insert="~{common/header::header}"></th:block>
 
 <div class="conA">
-  <h1>로그인</h1>
   <div class="conB">
+    <h1 class="easyLogin"><b>간편로그인</b></h1>
+    <div class="apiLogin">
+      <form id="kakaoform" th:action="@{/user/apiLogin}" method="POST"></form>
+      <div onclick="loginWithKakao();" style="display:inline; padding-top: 10px;">
+        <a href="javascript:void(0)">
+          <img th:src="@{/img/kakao.png}">
+        </a>
+      </div>
+      <img th:src="@{/img/google.png}" style="display:inline; padding-top: 10px; padding-left: 50px; padding-right: 50px;">
+      <img th:src="@{/img/naver.png}" style="display:inline; padding-top: 10px;">
+    </div>
     <form th:action="@{/user/login}" method="POST">
       <hr>
       <div class="row mt-5">
@@ -36,7 +47,7 @@
         <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
         <label for="password">Password</label>
       </div>
-      계정이 없으신가요? <a th:href="@{/user/join}" class="join"><b>회원가입</b></a>
+      <div class="NoAccount">계정이 없으신가요? <a th:href="@{/user/join}" class="join"><b>회원가입</b></a></div>
       <div class="blank"></div>
       <button class="loginBtn" type="submit">로그인</button>
     </form>

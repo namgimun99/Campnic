@@ -11,27 +11,28 @@
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
 
-<div class="container mt-3">
-  <h2> 지역 등록</h2>
+<div class="container mt-5" style="justify-content:space-between; display:inline-flex; padding-left: 13em;">
+  <div style="width: 50%;">
+  <h2>지역 등록🏘️</h2>
   <form th:action="@{/admin/city}" method="post">
-
-    <div class="mb-3 mt-3">
-      <label for="subject">지역이름</label>
+    <div class="mb-3 mt-3" >
+      <label for="subject" style="font-size: 20px;">지역이름</label>
       <input type="text" class="form-control" id="subject" placeholder="지역을 입력하세요" name="city">
     </div>
-
-    <button type="submit" class="btn btn-outline-dark">등록</button>
+    <button type="submit" class="btn btn-outline-dark" style="font-size: 17px;">등록</button>
   </form>
+  </div>
 
-  <h2>지역 목록</h2>
-
+  <div>
+  <h2>지역 목록📃</h2>
   <table class="table table-hover">
-    <thead class="table-success">
+    <thead class="table-success" style="font-size: 17px;">
     <tr>
       <th>Citylist</th>
+      <th></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody style="font-size: 17px;">
     <tr th:each="dto : ${list}">
       <td>[[${dto.city}]]</td>
       <td>
@@ -43,6 +44,7 @@
     </tr>
     </tbody>
   </table>
+</div>
 </div>
 </body>
 </html>
