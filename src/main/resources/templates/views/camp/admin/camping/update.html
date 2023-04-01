@@ -5,7 +5,7 @@
             alert("해당 정보가 삭제되거나 없습니다");
             history.back();
           </script>
-
+<th:block th:with="dto=${list[0]}" th:if="${list} and ${#lists.size(list) > 0}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,38 +16,37 @@
 
     <script th:src="@{/js/write.js}"></script>
 
-    <title>캠핑장 등록</title>
+    <title>캠핑장 수정</title>
 </head>
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
-<h2 id = wh2>캠핑장 등록</h2>
-<div id = write>
-    <div id = wimage>
-        <div id = wimgbtn>
-            <button type = button id = btnAdd class="btn btn-outline-dark">이미지 등록</button>
-        </div>
 
+
+<h2 id = wh2>캠핑장 수정</h2>
+<div id = write>
         <div class="row mt-5" th:if="${error }">
             <div class="col-12 text-danger" th:text="${error }">
                 <!--/* 에러메세지 */-->
             </div>
         </div>
-    </div>
-    <form th:action="@{/camp/admin/camping/write}" method="post" enctype="Multipart/form-data">
+
+    <form th:action="@{/camp/admin/camping/update}" method="post">
+        <input type="hidden" name="id" th:value="${dto.id}"/>
+
 
         <div class = write>
             <label for="camp_name">캠핑장 이름:</label>
-            <input type="text" class="form-control" id="camp_name" placeholder="캠핑장명" name="camp_name" th:value="${camp_name}">
+            <input type="text" class="form-control" id="camp_name" placeholder="캠핑장명" name="camp_name" th:value="${dto.camp_name}">
         </div>
 
         <div class = write>
             <label for="address">주소:</label>
-            <input type="text" class="form-control" id="address" placeholder="상세 주소" name="address" th:value="${address}">
+            <input type="text" class="form-control" id="address" placeholder="상세 주소" name="address" th:value="${dto.address}">
         </div>
 
         <div class = write>
             <label for="content">소개:</label>
-            <input type="text" class="form-control" id="content" placeholder="소개" name="content" th:value="${content}">
+            <input type="text" class="form-control" id="content" placeholder="소개" name="content" th:value="${dto.content}">
         </div>
 
 
@@ -59,5 +58,6 @@
 </div>
 </div>
 </body>
+</th:block>
 </html>
 

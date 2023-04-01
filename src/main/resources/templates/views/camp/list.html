@@ -21,7 +21,7 @@
 <body>
 <!--/* 인증 헤더 */-->
 <th:block th:insert="~{common/header::header}"></th:block>
-
+<th:block th:with="dto=${list[0]}">
 <div class="container mt-3">
     <h2>목록</h2>
     <hr>
@@ -37,12 +37,15 @@
         </thead>
         <tbody>
         <tr th:each="dto : ${list}">
-            <td><a th:href="@{/camp/detail(id=${dto.id})}">[[${dto.camp_name}]]</a> </td>
+            <td><a th:href="@{/camp/detail(id=${dto.id})}">[[${dto.camp_name}]]</a></td>
             <td>[[${dto.content}]]</td>
-            <td>[[${dto.address)}]]</td>
+            <td>[[${dto.address}]]</td>
         </tr>
         </tbody>
     </table>
+</div>
+</th:block>
+
     <!-- 목록 -->
 </div>
 </body>

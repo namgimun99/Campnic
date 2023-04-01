@@ -12,4 +12,6 @@ public interface CampsiteRepository extends JpaRepository<Campsite, Long> {
 
 
     List<Campsite> findByCampingIdOrderByIdDesc(Long id);
+
+    List<Campsite> findByCampingIdOrderByIdAsc(Long id);
 }

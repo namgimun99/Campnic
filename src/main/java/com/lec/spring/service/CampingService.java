@@ -136,7 +136,7 @@ public class CampingService {
 
     //CampingDetail
     @Transactional
-    public List<Camping> campingDetail(long id) {
+    public List<Camping> campingDetail(Long id) {
         List<Camping> list = new ArrayList<>();
 
         Camping camping = campingRepository.findById(id).orElse(null);
@@ -148,6 +148,11 @@ public class CampingService {
             list.add(camping);
         }
         return list;
+    }
+
+    public Camping campingSave(Long id) {
+        Camping camping = campingRepository.findById(id).orElse(null);
+        return camping;
     }
 
     //Camping update
@@ -170,7 +175,7 @@ public class CampingService {
     }
 
     //Camping 특정 글(id) 삭제
-    public int campingDelete(long id){
+    public int campingDelete(Long id){
         int result = 0;
 
         Camping camping = campingRepository.findById(id).orElse(null);
@@ -184,7 +189,7 @@ public class CampingService {
     //등록한 camping 목록 보기
     public List<Camping> myCamping(){
         User user = U.getLoggedUser();
-        List<Camping> myCamping = campingRepository.findByUserOrderByIdDesc(user);
+        List<Camping> myCamping = campingRepository.findByUserOrderByIdAsc(user);
         return myCamping;
     }
     //------------------------------------------------------------
@@ -195,7 +200,7 @@ public class CampingService {
     //camping에 등록된 campsite 목록
     public List<Campsite> campsiteList(Long id){
 
-        List<Campsite> campsiteList = campsiteRepository.findByCampingIdOrderByIdDesc(id);
+        List<Campsite> campsiteList = campsiteRepository.findByCampingIdOrderByIdAsc(id);
         return campsiteList;
     }
     public List<Campsite> list() {
@@ -204,7 +209,7 @@ public class CampingService {
 
     //campsite Detail
     @Transactional
-    public List<Campsite> campsiteDetail(long id) {
+    public List<Campsite> campsiteDetail(Long id) {
         List<Campsite> list = new ArrayList<>();
 
         Campsite campsite = campsiteRepository.findById(id).orElse(null);
@@ -280,7 +285,7 @@ public class CampingService {
     }
 
     //특정 글(id) 삭제
-    public int campsiteDelete(long id){
+    public int campsiteDelete(Long id){
         int result = 0;
 
         Campsite campsite = campsiteRepository.findById(id).orElse(null);
@@ -291,7 +296,9 @@ public class CampingService {
         return result;
     }
 
+
     public int addCampsite(Campsite campsite) {
+
         campsite = campsiteRepository.save(campsite);  // INSERT
 
         return 1;
@@ -359,7 +366,7 @@ public int addReserve(CampReserve campReserve) {
 
     //CampReserveDetail
     @Transactional
-    public List<CampReserve> campReserveDetail(long id) {
+    public List<CampReserve> campReserveDetail(Long id) {
         List<CampReserve> list = new ArrayList<>();
 
         CampReserve campReserve = campReserveRepository.findById(id).orElse(null);
@@ -392,7 +399,7 @@ public int addReserve(CampReserve campReserve) {
     }
 
     //campReserve 특정 글(id) 삭제
-    public int campReserveDelete(long id){
+    public int campReserveDelete(Long id){
         int result = 0;
 
         CampReserve campReserve = campReserveRepository.findById(id).orElse(null);
@@ -442,4 +449,5 @@ public int addReserve(CampReserve campReserve) {
 
         return couponNum;
     }
+
 }

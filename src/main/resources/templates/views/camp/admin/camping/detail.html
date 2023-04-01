@@ -23,9 +23,12 @@
     <body>
     <th:block th:insert="~{common/header::header}"></th:block>
     <div class="container mt-3">
-        <h2 id = dh2>[[${dto.name}]]</h2>
+        <h2 id = dh2>[[${dto.camp_name}]]</h2>
+        <section>
+        <form name="frmDelete" th:action="@{/camp/admin/camping/delete}" method="post">
+            <input type="hidden" name="id" th:value="${dto.id}">
+        </form>
         <div id = detail>
-            <section>
                 <div class=detail>
                     <label>캠핑장 이름:</label>
                     <div class="border bg-light rounded p-2" >[[${dto.camp_name}]]</div>
@@ -38,17 +41,19 @@
                     <label>소개:</label>
                     <div class="border bg-light rounded p-2" >[[${dto.content}]]</div>
                 </div>
+            <a class="btn btn-outline-dark" th:href="@{/camp/admin/campsite/list(id=${dto.id})}">등록한 구역 보기</a>
                 <div id = dbutton>
                     <!-- 하단 링크 -->
                     <a class="btn btn-outline-dark" th:href="@{/camp/admin/camping/update(id=${dto.id})}">수정</a>
-                    <a class="btn btn-outline-dark" th:href="@{/camp/admin/camping/list}">목록</a>
+                    <button type="button" class="btn btn-outline-dark" onclick="history.back()">돌아가기</button>
                     <button type="button" class="btn btn-outline-dark" id="btnDel">삭제</button>
                 </div>
 
                 <!-- 하단 링크 -->
 
-            </section>
+
         </div>
+        </section>
     </div>
     </body>
 </th:block>
