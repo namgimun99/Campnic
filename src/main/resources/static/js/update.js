@@ -18,9 +18,9 @@ $(function(){
     });
 
     // Summernote 추가
-    $('#content').summernote({
-        height: 300,
-    });
+    // $('#content').summernote({
+    //     height: 300,
+    // });
 });
 
 function deleteFiles(fileId){
