@@ -90,10 +90,10 @@ class LenderServiceTest {
         lenderService.itemList().forEach(System.out::println);
     }
 
-    @Test
-    void searchItemList() {
-        lenderService.searchItemList("수원시").forEach(System.out::println);
-    }
+//    @Test
+//    void searchItemList() {
+//        lenderService.searchItemList("수원시").forEach(System.out::println);
+//    }
 
     @Test
     void fileTest() {

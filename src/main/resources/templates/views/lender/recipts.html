@@ -19,6 +19,11 @@
 <body>
   <!-- 인증 header -->
   <th:block th:insert="~{common/header::header}"></th:block>
+
+  <form name="frmDelete" th:action="@{/lender/reciptDelete}" method="post">
+    <input type="hidden" name="id"/>
+  </form>
+
   <div class="container mt-5">
     <div class="container mt-5">
       <div class="row">
@@ -30,15 +35,15 @@
         <th:block th:each="rental : ${rentalList}">
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img th:src="@{'/images/' + ${rental.item.fileList[0].file}}" class="card-img-top" alt="Item Image">
+              <img th:src="@{'/upload/item/' + ${rental.item.fileList[0].file}}" class="card-img-top" alt="Item Image">
               <div class="card-body">
                 <h5 class="card-title" th:text="${rental.item.price * (T(java.time.temporal.ChronoUnit).DAYS.between(rental.sdate, rental.edate) + 1) * rental.quantity}"></h5>
                 <p class="card-text" th:text="${rental.item.lender.address + ' ' + rental.item.lender.city.city}"></p>
-                <p class="card-text" th:text="${#temporals.format(rental.regdate, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                <p class="card-text" th:text="${#temporals.format(rental.regDate, 'yyyy-MM-dd HH:mm:ss')}"></p>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <button type="button" class="btn btn-danger delete-rental" th:href="@{/lender/recipts/delete(id=${rental.id})}" th:data-regdate="${#temporals.format(rental.regdate, 'yyyy-MM-dd HH:mm:ss')}">🗑</button>
+                    <a class="btn btn-danger delete-rental" th:data-regdate="${#temporals.format(rental.regDate, 'yyyy-MM-dd HH:mm:ss')}" th:onclick="remove([[${rental.id}]])">🗑</a>
                 </li>
               </ul>
             </div>
@@ -50,18 +55,27 @@
   <script>
     $(document).ready(function () {
       $(".delete-rental").each(function () {
-        const regDateString = $(this).data("regdate");
+        const regDateString = $(this).data("regDate");
         const regDate = new Date(regDateString);
         const currentDate = new Date();
         const daysDiff = Math.floor((currentDate - regDate) / (1000 * 60 * 60 * 24));
 
-        if (daysDiff < 7) {
+        if (daysDiff < 1) {
           $(this).prop("disabled", true);
         } else {
           $(this).prop("disabled", false);
         }
       });
     });
+  </script>
+  <script>
+    function remove(id) {
+      var answer = confirm("삭제하시겠습니까?");
+      if (answer) {
+        $("input[name='id']").val(id);
+        $("form[name='frmDelete']").submit();
+      }
+    }
   </script>
 </body>
 </html>

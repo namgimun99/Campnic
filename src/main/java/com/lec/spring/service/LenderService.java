@@ -345,12 +345,12 @@ public class LenderService {
 
     // 지역 Item 목록
     @Transactional
-    public List<Item> searchItemList(String cityName){
-        City city = cityRepository.findByCity(cityName);
+    public List<Item> searchItemList(Long cityId){
+        City city = cityRepository.findById(cityId).orElse(new City());
         List<Lender> lenderList = lenderRepository.findByCity(city);
         List<Item> itemList = new ArrayList<>();
         for(Lender l : lenderList){
-            if(cityName.equals(l.getCity().getCity())) {
+            if(city.getCity().equals(l.getCity().getCity())) {
                 List<Item> items = itemRepository.findByLender(l);
                 itemList.addAll(items);
             }
@@ -390,8 +390,8 @@ public class LenderService {
     }
 
     // rental 하기
-    public int addRental(RentalRecipt rentalRecipt, Long item_id){ // item_id hidden
-        Item item = itemRepository.findById(item_id).orElse(null);
+    public int addRental(RentalRecipt rentalRecipt, Long itemId){ // item_id hidden
+        Item item = itemRepository.findById(itemId).orElse(null);
         if(item != null){
             // 현재 로그인한 작성자 정보
             User user = U.getLoggedUser();

@@ -1,14 +1,12 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.domain.City;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.Lender;
-import com.lec.spring.domain.LenderValidator;
+import com.lec.spring.domain.RentalRecipt;
 import com.lec.spring.service.LenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,19 +15,21 @@ import java.util.Map;
 @Controller
 @RequestMapping("/lender")
 public class LenderContoller {
-    public LenderContoller() {System.out.println(getClass().getName() + "() 생성");}
+    public LenderContoller() {
+        System.out.println(getClass().getName() + "() 생성");
+    }
 
     private LenderService lenderService;
 
     @Autowired
-    public void setLenderService(LenderService lenderService){
+    public void setLenderService(LenderService lenderService) {
         this.lenderService = lenderService;
     }
 
     // lender
 
     @GetMapping("/admin/write")
-    public void adminWrite(Model model){
+    public void adminWrite(Model model) {
         model.addAttribute("cityList", lenderService.cityList());
     }
 
@@ -37,19 +37,19 @@ public class LenderContoller {
     public String adminWriteOk(
             Lender lender
             , @RequestParam("cityId") Long cityId
-            , Model model){
+            , Model model) {
         model.addAttribute("lender", lender);
         model.addAttribute("result", lenderService.addLender(lender, cityId));
         return "redirect:/lender/admin/list";
     }
 
     @GetMapping("/admin/list")
-    public void adminList(Model model){
+    public void adminList(Model model) {
         model.addAttribute("lenderList", lenderService.lenderList());
     }
 
     @GetMapping("/admin/update")
-    public void adminUpdate(Long id, Model model){
+    public void adminUpdate(Long id, Model model) {
         model.addAttribute("cityList", lenderService.cityList());
         model.addAttribute("lender", lenderService.lender(id));
     }
@@ -58,13 +58,13 @@ public class LenderContoller {
     public String adminUpdateOk(
             @ModelAttribute("lender") Lender lender
             , @RequestParam("cityId") Long cityId
-            , Model model){
+            , Model model) {
         model.addAttribute("result", lenderService.lenderUpdate(lender, cityId));
         return "redirect:/lender/admin/list";
     }
 
     @PostMapping("/admin/delete")
-    public String adminDelete(Long id){
+    public String adminDelete(Long id) {
         lenderService.deleteLender(id);
         return "redirect:/lender/admin/list";
     }
@@ -74,7 +74,7 @@ public class LenderContoller {
     @GetMapping("/admin/itemWrite")
     public void adminItemWrite(
             Long lenderId
-            , Model model){
+            , Model model) {
         model.addAttribute("lender", lenderService.lender(lenderId));
     }
 
@@ -83,7 +83,7 @@ public class LenderContoller {
             @RequestParam Map<String, MultipartFile> files     // 첨부파일들
             , @ModelAttribute("item") Item item
             , Long lenderId
-            , Model model){
+            , Model model) {
         model.addAttribute("result", lenderService.addItem(item, lenderId, files));
         return "lender/admin/itemWriteOk";
     }
@@ -91,7 +91,7 @@ public class LenderContoller {
     @GetMapping("/admin/itemList")
     public void adminItemList(
             Long lenderId
-            , Model model){
+            , Model model) {
         model.addAttribute("lender", lenderService.lender(lenderId));
         model.addAttribute("itemList", lenderService.myItemList(lenderId));
     }
@@ -100,7 +100,7 @@ public class LenderContoller {
     public void adminItemUpdate(
             Long id
             , Model model
-    ){
+    ) {
         model.addAttribute("item", lenderService.itemDetail(id));
     }
 
@@ -110,7 +110,7 @@ public class LenderContoller {
             , @RequestParam Map<String, MultipartFile> files     // 새로 추가될 첨부파일들
             , Long[] delfile    // 삭제될 파일들
             , Model model
-    ){
+    ) {
         model.addAttribute("result", lenderService.updateItem(item, files, delfile));
         return "lender/admin/itemUpdateOk";
     }
@@ -118,30 +118,69 @@ public class LenderContoller {
     @GetMapping("/admin/itemDetail")
     public void adminItemDetail(
             Long id
-            ,Model model){
+            , Model model) {
         model.addAttribute("item", lenderService.itemDetail(id));
     }
 
     @PostMapping("/admin/itemDelete")
     public String adminItemDelete(
             Long id
-            ,@RequestParam("lenderId") Long lenderId
-    ){
+            , @RequestParam("lenderId") Long lenderId
+    ) {
         lenderService.deleteItem(id);
         return "redirect:/lender/admin/itemList?lenderId=" + lenderId;
     }
 
+    // rental
+
     @GetMapping("/itemList")
-    public void itemList(){}
+    public void itemList(
+            Model model
+    ) {
+        model.addAttribute("itemList", lenderService.itemList());
+        model.addAttribute("cityList", lenderService.cityList());
+    }
+
+    @PostMapping("/itemList")
+    public void itemListOk(
+            @RequestParam("cityId") Long cityId
+            , Model model
+    ) {
+        model.addAttribute("itemList", lenderService.searchItemList(cityId));
+        model.addAttribute("cityList", lenderService.cityList());
+    }
 
     @GetMapping("/itemRent")
-    public void itemRent(){}
+    public void itemRent(
+            @RequestParam("itemId") Long itemId
+            , Model model
+    ) {
+        model.addAttribute("item", lenderService.itemDetail(itemId));
+    }
+
+    @PostMapping("/itemRent")
+    public String itemRentOk(
+            @RequestParam("itemId") Long itemId
+            , RentalRecipt rentalRecipt
+            , Model model
+    ) {
+        model.addAttribute("itemId", itemId);
+        model.addAttribute("item", lenderService.addRental(rentalRecipt, itemId));
+        return "redirect:/lender/recipts";
+    }
 
     @GetMapping("/recipts")
-    public void recipts(){}
+    public void recipts(
+            Model model
+    ) {
+        model.addAttribute("rentalList", lenderService.myRental());
+    }
 
-    @GetMapping("/reciptDelete")
-    public String reciptDelete(){
-        return "/lender/recipts";
+    @PostMapping("/reciptDelete")
+    public String reciptDelete(
+            Long id
+    ) {
+        lenderService.delRental(id);
+        return "redirect:/lender/recipts";
     }
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="utf-8">
@@ -18,51 +18,53 @@
   <title>/lender/itemList</title>
 </head>
 <body>
-  <!-- 인증 header -->
-  <th:block th:insert="~{common/header::header}"></th:block>
-  <div class="container mt-5">
-    <form class="row align-items-center" th:action="@{/lender/itemList}" method="post">
-      <th:block th:each="city : ${cityList}"> 
-        <div class="d-flex flex-row mt-3">
-          <div class="p-2">
-            <select name="city" id="city" class="form-select">
-              <option value="null" selected>도시</option>
-              <option th:value="${city.city}" th:text="${city.city}"></option>
-            </select>
-          </div>
-          <div class="p-2">
-            <button type="submit" class="btn btn-primary">🔍</button>
-          </div>
-        </div>
-      </th:block> 
-    </form>
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col-lg-10">
-          <h2 class="text-center">캠핑 용품</h2>
-        </div>
-        <div class="col-lg-2">
-          <a class="btn btn-outline-dark" th:href="@{/lender/admin/list}" sec:authorize="hasAnyRole('ROLE_LENDER')">관리자모드</a>
-        </div>
+<!-- 인증 header -->
+<th:block th:insert="~{common/header::header}"></th:block>
+<div class="container mt-5">
+  <form class="row align-items-center" th:action="@{/lender/itemList}" method="post">
+    <div class="d-flex flex-row mt-3">
+      <div class="p-2">
+        <select name="cityId" id="city" class="form-select">
+          <option value="null" selected>도시</option>
+          <th:block th:each="city : ${cityList}">
+            <option th:value="${city.id}" th:text="${city.city}"></option>
+          </th:block>
+        </select>
       </div>
-      <div class="row mt-3">
-        <th:block th:each="item : ${itemList}">
-          <div class="col-md-4 mb-3">
-            <div class="card">
-              <img th:src="@{'/images/' + ${item.fileList[0].file}}" class="card-img-top" alt="Item Image">
-              <div class="card-body">
-                <h5 class="card-title" th:text="${item.itemName}"></h5>
-                <p class="card-text" th:text="${item.content}"></p>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item"><span th:text="${item.price}">원</span></li>
-                <li class="list-group-item"><button type="button" class="btn btn-outline-dark" th:href="@{/lender/itemRent(id=${item.id})}">렌트하기</button></li>
-              </ul>
-            </div>
-          </div>
-        </th:block>
+      <div class="p-2">
+        <button type="submit" class="btn btn-primary">🔍</button>&nbsp;
+        <a class="btn btn-primary" th:href="@{/lender/itemList}">모두보기</a>
       </div>
     </div>
+  </form>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-10">
+        <h2 class="text-center">캠핑 용품</h2>
+      </div>
+      <div class="col-lg-2">
+        <a class="btn btn-outline-dark" th:href="@{/lender/admin/list}" sec:authorize="hasAnyRole('ROLE_LENDER')">관리자모드</a>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <th:block th:each="item : ${itemList}">
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <img th:src="@{'/upload/item/' + ${item.fileList[0].file}}" class="card-img-top" alt="Item Image">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${item.itemName}"></h5>
+              <p class="card-text" th:text="${item.content}"></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><span th:text="${item.price}">원</span></li>
+              <li class="list-group-item"><a class="btn btn-outline-dark" th:href="@{/lender/itemRent(itemId=${item.id})}">렌트하기</a></li>
+            </ul>
+          </div>
+        </div>
+      </th:block>
+    </div>
   </div>
+</div>
 </body>
 </html>

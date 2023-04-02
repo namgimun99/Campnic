@@ -26,7 +26,6 @@
             <div class="row">
                 <div class="col">
                     <h2>[[${item.lender.lenderName}]]</h2>
-                    <input type="hidden" th:value="${lenderName}">
                     <div class="mt-5 w-25">
                         <input type="text" class="form-control" id="itemName" name="itemName" placeholder="용품 이름" th:value="${item.itemName}" readonly/>
                     </div>
@@ -34,17 +33,23 @@
                         <input type="text" class="form-control" id="price" name="price" placeholder="용품 가격" th:value="${item.price}" readonly/>
                     </div>
                     <div class="mb-3 mt-3 w-50">
-                        <textarea type="text" class="form-control" rows="5" id="content" name="content" placeholder="용품 설명을 쓰세요" th:value="${item.content}" readonly></textarea>
+                        <textarea type="text" class="form-control" rows="5" id="content" name="content" placeholder="용품 설명을 쓰세요" th:utext="${item.content}" readonly></textarea>
+                    </div>
+                    <div class="mb-3 mt-3 w-50">
+                        <img th:src="@{'/upload/item/' + ${item.fileList[0].file}}" class="card-img-top" alt="Item Image">
                     </div>
                 </div>
                 <div class="col mt-5">
-                    <form name="frm" id="frm" th:action="@{/lender/recipts}" method="post">
+                    <form name="frm" id="frm" th:action="@{/lender/itemRent}" method="post" onsubmit="mySubmit(); return false;">
+                        <input type="hidden" name="itemId" th:value="${item.id}" readonly/>
                         <div class="row">
                             <div class="col">
-                                <input name="sdate" type="button" id="sdate" th:value="${sdate}">
+                                <input id="sdate" th:value="${sdate}">
+                                <input type="hidden" name="sdate" id="sdateInput" th:value="${sdate}">
                             </div>
                             <div class="col">
-                                <input name="edate" type="button" id="edate" th:value="${edate}">
+                                <input id="edate" th:value="${edate}">
+                                <input type="hidden" name="edate" id="edateInput" th:value="${edate}">
                             </div>
                             <div class="col">
                                 <button type="button" class="minus btn btn-sm btn-outline-dark">-</button>
@@ -57,7 +62,7 @@
                         <div class="row mt-5">
                             <div class="col-md-3 offset-md-3">총 가격 : <span id="total-price"></span></div>
                             <div class="col-md-3 offset-md-3">
-                                <button type="submit" class="btn btn-outline-dark " onclick="mySubmit()">렌트하기</button>
+                                <button type="submit" class="btn btn-outline-dark ">렌트하기</button>
                             </div>
                         </div>
                     </form>
@@ -92,16 +97,16 @@
     let cnt = 1;
 
     function calculateTotalPrice() {
-        const s = $.datepicker.formatDate("yymmdd", $("#sdate").datepicker("getDate"));//string
-        const e = $.datepicker.formatDate("yymmdd", $("#edate").datepicker("getDate"));
+        const s = $("#sdate").datepicker("getDate");
+        const e = $("#edate").datepicker("getDate");
         const price = parseInt($("#price").val());//number
         const quantity = parseInt($("#quantity").val());//number
 
-        let sdate = parseInt(s);//number
-        let edate = parseInt(e);
-
-        if (sdate && edate && !isNaN(price) && !isNaN(quantity)) {
-            const days = (edate - sdate) / (1000 * 60 * 60 * 24);
+        if (s && e && !isNaN(price) && !isNaN(quantity)) {
+            let days = (e.getTime() - s.getTime()) / (1000 * 60 * 60 * 24);
+            if (days === 0) {
+                days = 1;
+            }
             const totalPrice = days * price * quantity;
             $("#total-price").text(totalPrice.toLocaleString('ko-KR'));
         } else {
@@ -133,16 +138,19 @@
     });
 
     function mySubmit() {
-    var sdate = $.datepicker.formatDate("yymmdd", $("#sdate").datepicker("getDate"));
-    var edate = $.datepicker.formatDate("yymmdd", $("#edate").datepicker("getDate"));
+    var s = $.datepicker.formatDate("yymmdd", $("#sdate").datepicker("getDate"));
+    var e = $.datepicker.formatDate("yymmdd", $("#edate").datepicker("getDate"));
         
-    if (sdate > edate) {
+    if (s > e) {
         alert('대여일은 반납일 이전이어야 합니다'); 
         return;
     }
-    
-    sdate.value = sdate.toString();
-    edate.value = edate.toString();
+
+    let sdate = $.datepicker.formatDate("yy-mm-dd", $("#sdate").datepicker("getDate"));
+    let edate = $.datepicker.formatDate("yy-mm-dd", $("#sdate").datepicker("getDate"));
+    document.querySelector("#sdateInput").value = sdate;
+    document.querySelector("#edateInput").value = edate;
+
     frm.submit();
 }
     
