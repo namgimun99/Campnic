@@ -50,7 +50,8 @@
                     <td th:text="${lender.city.city + ' ' + lender.address}"></td>
                     <td>
                         <a class="btn btn-primary" th:href="@{/lender/admin/update(id=${lender.id})}">🖉</a>&nbsp;
-                        <button type="button" class="btn btn-danger" th:onclick="remove([[${lender.id}]])">🗑</button>
+                        <button type="button" class="btn btn-danger" th:onclick="remove([[${lender.id}]])">🗑</button>&nbsp;
+                        <a class="btn btn-outline-dark" th:href="@{/lender/admin/itemList(lenderId=${lender.id})}">용품목록</a>
                     </td>
                 </tr>
                 </tbody>

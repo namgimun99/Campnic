@@ -20,9 +20,7 @@ class LenderServiceTest {
     @Autowired
     private CityRepository cityRepository;
     @Autowired
-    private ItemRepository itemRepository;
-    @Autowired
-    private RentalReciptRepository rentalReciptRepository;
+    private ItemFileService itemFileService;
 
     @Test
     void cityList() {
@@ -57,37 +55,34 @@ class LenderServiceTest {
         System.out.println(lender);
     }
 
-    @Test
-    void addItem() {
-        Item item = Item.builder()
-                .itemName("장작")
-                .price(8000000)
-                .content("잘 타요")
-                .build();
-        Lender lender = lenderRepository.findById(2L).orElse(null);
-        String lenderName = lender.getLenderName();
-        lenderService.addItem(item, lenderName);
-    }
+//    @Test
+//    void addItem() {
+//        Item item = Item.builder()
+//                .itemName("장작")
+//                .price(8000000)
+//                .content("잘 타요")
+//                .build();
+//        lenderService.addItem(item, 2L);
+//    }
 
-    @Test
-    void updateItem() {
-        Lender lender = lenderRepository.findById(2L).orElse(null);
-        Item item = Item.builder()
-                .id(8L)
-                .itemName("숯")
-                .price(8000000)
-                .content("잘 타요")
-                .lender(lender)
-                .build();
-
-        lenderService.updateItem(item);
-    }
+//    @Test
+//    void updateItem() {
+//        Lender lender = lenderRepository.findById(2L).orElse(null);
+//        Item item = Item.builder()
+//                .id(8L)
+//                .itemName("숯")
+//                .price(8000000)
+//                .content("잘 타요")
+//                .lender(lender)
+//                .build();
+//
+//        lenderService.updateItem(item);
+//    }
 
     @Test
     void myItemList() {
-        Lender lender = lenderRepository.findById(2L).orElse(null);
-        String lenderName = lender.getLenderName();
-        lenderService.myItemList(lenderName).forEach(System.out::println);
+        Lender lender = lenderRepository.findById(15L).orElse(null);
+        lenderService.myItemList(lender.getId()).forEach(System.out::println);
     }
 
     @Test
@@ -98,6 +93,12 @@ class LenderServiceTest {
     @Test
     void searchItemList() {
         lenderService.searchItemList("수원시").forEach(System.out::println);
+    }
+
+    @Test
+    void fileTest() {
+        ItemFileDTO file = itemFileService.findById(13L);
+        System.out.println(file);
     }
 
 }

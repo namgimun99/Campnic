@@ -21,15 +21,18 @@
     <th:block th:insert="~{common/header::header}"></th:block>
 
     <div class="container mt-5">
-        <h2>[[${lenderName}]]</h2><a class="btn btn-outline-dark" th:href="@{/lender/admin/itemWrite(lenderName=${lender.lenderName})}">용품 추가하기</a>
+        <h2>[[${lender.lenderName}]]</h2>
+        <a class="btn btn-primary" th:href="@{/lender/admin/list}">◀</a>
+        <a class="btn btn-outline-dark" th:href="@{/lender/admin/itemWrite(lenderId=${lender.id})}">용품 추가하기</a>
         <div class="row row-cols-1 row-cols-md-4 g-4 mt-3" >
             <div class="col" th:each="item : ${itemList}">
               <div class="card">
-                <img th:src="@{'/upload/item/' + ${item.fileList[0].file}}" class="card-img-top">
+                  <!--/*
+                <img th:src="@{'/upload/item/' + ${item.fileList[0].file}}" class="card-img-top">*/-->
                 <div class="card-body">
                   <h5 class="card-title">[[${item.itemName}]]</h5>
                   <p class="card text bg-info bg-opacity-10 border">[[${item.price}]]원</p>
-                  <a class="btn btn-outline-primary float-end" th:href="@{/lender/itemDetail(id=${item.id})}">자세히 보기</a>
+                  <a class="btn btn-outline-primary float-end" th:href="@{/lender/admin/itemDetail(id=${item.id})}">자세히 보기</a>
                 </div>
               </div>
             </div>

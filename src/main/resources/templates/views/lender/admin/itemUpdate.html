@@ -16,33 +16,50 @@
 
         <title>/lender/admin/itemUpdate</title>
     </head>
-<body>
+    <body>
     <!-- 인증 header -->
     <th:block th:insert="~{common/header::header}"></th:block>
 
     <div class="container mt-5">
-        <form class="align-items-center mt-5" th:action="@{/lender/admin/itemUpdate}" method="post">
-            <h2>[[${item.lender.lenderName}]]</h2>
-            <input type="hidden" th:value="${item.lender}">
-            <div class="mt-5 w-25">
-                <input type="text" class="form-control" id="itemName" name="itemName" placeholder="용품 이름" th:value="${item.itemName}">
-            </div>
-            <div class="mt-3 w-25">
-                <input type="text" class="form-control" id="price" name="price" placeholder="용품 가격" th:value="${item.price}">
-            </div>
-            <div class="mb-3 mt-3 w-50">
-                <textarea type="text" class="form-control" rows="5" id="content" name="content" placeholder="용품 설명을 쓰세요" th:value="${item.content}"></textarea>
-            </div>
-            <div  class="col-6 mt-3">
-                <button type="submit" class="btn float-right btn-outline-dark ">수정완료</button>
+        <form class="align-items-center mt-5" th:action="@{/lender/admin/itemUpdate}" method="post" enctype="Multipart/form-data">
+            <div class="row">
+                <div class="col">
+                    <h2>[[${item.lender.lenderName}]]</h2>
+                    <input type="hidden" name="id" th:value="${item.id}"/>
+                    <div class="mt-5 w-25">
+                        <input type="text" class="form-control" id="itemName" name="itemName" placeholder="용품 이름" th:value="${item.itemName}">
+                    </div>
+                    <div class="mt-3 w-25">
+                        <input type="text" class="form-control" id="price" name="price" placeholder="용품 가격" th:value="${item.price}">
+                    </div>
+                    <div class="mb-3 mt-3 w-50">
+                        <textarea type="text" class="form-control" rows="5" id="content" name="content" placeholder="용품 설명을 쓰세요" th:utext="${item.content}"></textarea>
+                    </div>
+                    <div  class="col-6 mt-3">
+                        <button type="submit" class="btn float-right btn-outline-dark ">수정완료</button>
+                    </div>
+                </div>
+                <div class="col mt-5">
+                    <!-- 첨부파일 -->
+                    <div class="container mt-3 mb-3 border rounded">
+                        <div class="mb-3 mt-3">
+                            <label>첨부파일:</label>
+                            <div id="files">
+
+                            </div>
+                            <button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
+                        </div>
+                    </div>
+                    <!-- 첨부파일 -->
+                </div>
             </div>
             <span class="row mt-3" th:if="${error }">
                 <div class="col-12 text-danger" th:text="${error }">
                  <!--/* 에러메세지 */-->
                 </div>
             </span>
-          </form>
+        </form>
     </div>
-</body>
+    </body>
 </th:block>
 </html>

@@ -16,29 +16,67 @@
 
         <title>/lender/admin/itemDetail</title>
     </head>
-<body>
+    <body>
     <!-- 인증 header -->
     <th:block th:insert="~{common/header::header}"></th:block>
 
+    <form name="frmDelete" th:action="@{/lender/admin/itemDelete}" method="post">
+        <input type="hidden" name="id"/>
+        <input type="hidden" name="lenderId"/>
+    </form>
+
     <div class="container mt-5">
         <form class="align-items-center mt-5" >
-            <h2>[[${item.lender.lenderName}]]</h2>
-            <input type="hidden" th:value="${lenderName}">
-            <div class="mt-5 w-25">
-                <input type="text" class="form-control" id="itemName" name="itemName" placeholder="용품 이름" th:value="${item.itemName}" readonly/>
+            <div class="row">
+                <div class="col">
+                    <h2>[[${item.lender.lenderName}]]</h2>
+                    <div class="mt-5 w-25">
+                        <input type="text" class="form-control" id="itemName" name="itemName" placeholder="용품 이름" th:value="${item.itemName}" readonly/>
+                    </div>
+                    <div class="mt-3 w-25">
+                        <input type="text" class="form-control" id="price" name="price" placeholder="용품 가격" th:value="${item.price}" readonly/>
+                    </div>
+                    <div class="mb-3 mt-3 w-50">
+                        <textarea type="text" class="form-control" rows="5" id="content" name="content" placeholder="용품 설명을 쓰세요" th:utext="${item.content}" readonly></textarea>
+                    </div>
+                    <div  class="col-6 mt-3">
+                        <a class="btn btn-primary" th:href="@{/lender/admin/itemList(lenderId=${item.lender.id})}">◀</a>&nbsp;
+                        <a class="btn btn-primary" th:href="@{/lender/admin/itemUpdate(id=${item.id})}">수정하기</a>&nbsp;
+                        <button type="button" class="btn btn-danger" th:onclick="remove([[${item.id}]], [[${item.lender.id}]])">삭제하기</button>
+                    </div>
+                </div>
+                <div class="col mt-5">
+                    <!-- 첨부파일목록 -->
+                    <div class="container mt-3 mb-3 border rounded">
+                        <div class="mb-3 mt-3">
+                            <label>첨부파일:</label>
+                            <!-- 첨부파일 이름, 다운로드 링크 -->
+                            <ul class="list-group mb-1">
+                                <li class="list-group-item" th:each="fileDto : ${item.fileList}">
+                                    <a th:href="@{download(id=${fileDto.id})}">[[${fileDto.source}]]</a>
+                                </li>
+                            </ul>
+                            <!--/* 이미지인 경우 보여주기 */-->
+                            <div th:each="fileDto : ${item.fileList}" th:if="${fileDto.image}">
+                                <img th:src="@{'/upload/item/' + ${fileDto.file}}" class="img-thumbnail" alt="Cinque Terre">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 첨부파일목록 -->
+                </div>
             </div>
-            <div class="mt-3 w-25">
-                <input type="text" class="form-control" id="price" name="price" placeholder="용품 가격" th:value="${item.price}" readonly/>
-            </div>
-            <div class="mb-3 mt-3 w-50">
-                <textarea type="text" class="form-control" rows="5" id="content" name="content" placeholder="용품 설명을 쓰세요" th:value="${item.content}" readonly></textarea>
-            </div>
-            <div  class="col-6 mt-3">
-                <button type="button" class="btn btn-primary" th:href="@{/lender/admin/itemUpdate(id=${item.id})}">수정하기</button>&nbsp;
-                <button type="button" class="btn btn-danger" th:href="@{/lender/admin/ItemDelete(id=${item.id})}">삭제하기</button>
-            </div>
-          </form>
+        </form>
     </div>
-</body>
+    <script>
+        function remove(id, lenderId) {
+            var answer = confirm("삭제하시겠습니까?");
+            if (answer) {
+                $("input[name='id']").val(id);
+                $("input[name='lenderId']").val(lenderId);
+                $("form[name='frmDelete']").submit();
+            }
+        }
+    </script>
+    </body>
 </th:block>
 </html>
