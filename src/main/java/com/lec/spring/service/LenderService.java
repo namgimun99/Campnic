@@ -409,7 +409,7 @@ public class LenderService {
     // 취소일이 렌트 당일인지 check
     public boolean checkDays(RentalRecipt rentalRecipt){
         LocalDate sdate = rentalRecipt.getSdate();
-        if(sdate != LocalDate.now()) {return true;}
+        if(sdate.isAfter(LocalDate.now())) {return true;}
         return false;
     }
 

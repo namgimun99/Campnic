@@ -237,8 +237,9 @@ public class LenderContoller {
     @PostMapping("/reciptDelete")
     public String reciptDelete(
             Long id
+            , Model model
     ) {
-        lenderService.delRental(id);
+        if(lenderService.delRental(id) == 0){ return "lender/delNotOk";}
         return "redirect:/lender/recipts";
     }
 }

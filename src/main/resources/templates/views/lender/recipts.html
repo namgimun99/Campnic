@@ -38,12 +38,13 @@
               <img th:src="@{'/upload/item/' + ${rental.item.fileList[0].file}}" class="card-img-top" alt="Item Image">
               <div class="card-body">
                 <h5 class="card-title" th:text="${rental.item.price * (T(java.time.temporal.ChronoUnit).DAYS.between(rental.sdate, rental.edate) + 1) * rental.quantity}"></h5>
-                <p class="card-text" th:text="${rental.item.lender.address + ' ' + rental.item.lender.city.city}"></p>
-                <p class="card-text" th:text="${#temporals.format(rental.regDate, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                <p class="card-text" th:text="${rental.item.lender.city.city + ' ' + rental.item.lender.address}"></p>
+                <p class="card-text" th:text="${rental.sdate + '~' + rental.edate}"></p>
+                <p class="card-text" th:text="${#temporals.format(rental.regDate, 'yyyy-MM-dd')}"></p>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <a class="btn btn-danger delete-rental" th:data-regdate="${#temporals.format(rental.regDate, 'yyyy-MM-dd HH:mm:ss')}" th:onclick="remove([[${rental.id}]])">🗑</a>
+                    <a class="btn btn-danger"th:onclick="remove([[${rental.id}]])">🗑</a>
                 </li>
               </ul>
             </div>
@@ -53,24 +54,8 @@
     </div>
   </div>
   <script>
-    $(document).ready(function () {
-      $(".delete-rental").each(function () {
-        const regDateString = $(this).data("regDate");
-        const regDate = new Date(regDateString);
-        const currentDate = new Date();
-        const daysDiff = Math.floor((currentDate - regDate) / (1000 * 60 * 60 * 24));
-
-        if (daysDiff < 1) {
-          $(this).prop("disabled", true);
-        } else {
-          $(this).prop("disabled", false);
-        }
-      });
-    });
-  </script>
-  <script>
     function remove(id) {
-      var answer = confirm("삭제하시겠습니까?");
+      var answer = confirm("취소하시겠습니까?");
       if (answer) {
         $("input[name='id']").val(id);
         $("form[name='frmDelete']").submit();

@@ -57,13 +57,4 @@ public class Item {
         rentalReciptList.add(rentalRecipt);
     }
 
-    // 대여 가능 여부 체크
-    public boolean isAvailable(LocalDate sdate, LocalDate edate) {
-        for (RentalRecipt rentalRecipt : rentalReciptList) {
-            if (rentalRecipt.getSdate().isBefore(edate) && rentalRecipt.getEdate().isAfter(sdate)) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

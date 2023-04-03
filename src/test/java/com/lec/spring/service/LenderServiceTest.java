@@ -21,6 +21,8 @@ class LenderServiceTest {
     private CityRepository cityRepository;
     @Autowired
     private ItemFileService itemFileService;
+    @Autowired
+    private RentalReciptRepository rentalReciptRepository;
 
     @Test
     void cityList() {
@@ -100,5 +102,6 @@ class LenderServiceTest {
         ItemFileDTO file = itemFileService.findById(13L);
         System.out.println(file);
     }
+
 
 }
