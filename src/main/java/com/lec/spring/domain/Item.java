@@ -2,6 +2,7 @@ package com.lec.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -22,10 +23,11 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;    // 글 id (PK)
 
-    @Column(nullable = false) // vaildation에서 [lendername]종류로 적게함
+    @Column(nullable = false)
     private String itemName;
 
-    private int price;
+    @Column(nullable = false)
+    private Long price;
 
     @Column(nullable = false)
     private String content;

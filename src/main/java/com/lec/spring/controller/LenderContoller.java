@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
 
@@ -37,9 +38,22 @@ public class LenderContoller {
     public String adminWriteOk(
             Lender lender
             , @RequestParam("cityId") Long cityId
-            , Model model) {
-        model.addAttribute("lender", lender);
-        model.addAttribute("result", lenderService.addLender(lender, cityId));
+            , Model model
+            , RedirectAttributes redirectAttrs) {
+        // validation
+        if (cityId == null || cityId == 0) {
+            redirectAttrs.addFlashAttribute("error", "도시를 선택해 주세요.");
+            return "redirect:/lender/admin/write";
+        }
+        if (lender.getLenderName() == null || lender.getLenderName().isEmpty()) {
+            redirectAttrs.addFlashAttribute("error", "사업장 이름을 입력해 주세요.");
+            return "redirect:/lender/admin/write";
+        }
+        if (lender.getAddress() == null || lender.getAddress().isEmpty()) {
+            redirectAttrs.addFlashAttribute("error", "주소를 입력해 주세요.");
+            return "redirect:/lender/admin/write";
+        }
+        lenderService.addLender(lender, cityId);
         return "redirect:/lender/admin/list";
     }
 
@@ -58,7 +72,21 @@ public class LenderContoller {
     public String adminUpdateOk(
             @ModelAttribute("lender") Lender lender
             , @RequestParam("cityId") Long cityId
-            , Model model) {
+            , Model model
+            , RedirectAttributes redirectAttrs) {
+        // validation
+        if (cityId == null || cityId == 0) {
+            redirectAttrs.addFlashAttribute("error", "도시를 선택해 주세요.");
+            return "redirect:/lender/admin/update?id=" + lender.getId();
+        }
+        if (lender.getLenderName() == null || lender.getLenderName().isEmpty()) {
+            redirectAttrs.addFlashAttribute("error", "사업장 이름을 입력해 주세요.");
+            return "redirect:/lender/admin/update?id=" + lender.getId();
+        }
+        if (lender.getAddress() == null || lender.getAddress().isEmpty()) {
+            redirectAttrs.addFlashAttribute("error", "주소를 입력해 주세요.");
+            return "redirect:/lender/admin/update?id=" + lender.getId();
+        }
         model.addAttribute("result", lenderService.lenderUpdate(lender, cityId));
         return "redirect:/lender/admin/list";
     }
@@ -78,12 +106,28 @@ public class LenderContoller {
         model.addAttribute("lender", lenderService.lender(lenderId));
     }
 
+
     @PostMapping("/admin/itemWrite")
     public String adminItemWriteOk(
             @RequestParam Map<String, MultipartFile> files     // 첨부파일들
             , @ModelAttribute("item") Item item
             , Long lenderId
-            , Model model) {
+            , Model model
+            , RedirectAttributes redirectAttrs) {
+        // validation
+        if (item.getItemName() == null || item.getItemName().isEmpty()) {
+            redirectAttrs.addFlashAttribute("error", "용품이름을 입력해 주세요.");
+            return "redirect:/lender/admin/itemWrite?lenderId=" + lenderId;
+        }
+        if (item.getPrice() == null) {
+            redirectAttrs.addFlashAttribute("error", "용품가격을 입력해 주세요.");
+            return "redirect:/lender/admin/itemWrite?lenderId=" + lenderId;
+        }
+        if (item.getContent() == null || item.getContent().isEmpty()) {
+            redirectAttrs.addFlashAttribute("error", "용품설명을 입력해 주세요.");
+            return "redirect:/lender/admin/itemWrite?lenderId=" + lenderId;
+        }
+
         model.addAttribute("result", lenderService.addItem(item, lenderId, files));
         return "lender/admin/itemWriteOk";
     }
@@ -110,7 +154,21 @@ public class LenderContoller {
             , @RequestParam Map<String, MultipartFile> files     // 새로 추가될 첨부파일들
             , Long[] delfile    // 삭제될 파일들
             , Model model
+            , RedirectAttributes redirectAttrs
     ) {
+        // validation
+        if (item.getItemName() == null || item.getItemName().isEmpty()) {
+            redirectAttrs.addFlashAttribute("error", "용품이름을 입력해 주세요.");
+            return "redirect:/lender/admin/itemUpdate?id=" + item.getId();
+        }
+        if (item.getPrice() == null) {
+            redirectAttrs.addFlashAttribute("error", "용품가격을 입력해 주세요.");
+            return "redirect:/lender/admin/itemUpdate?id=" + item.getId();
+        }
+        if (item.getContent() == null || item.getContent().isEmpty()) {
+            redirectAttrs.addFlashAttribute("error", "용품설명을 입력해 주세요.");
+            return "redirect:/lender/admin/itemUpdate?id=" + item.getId();
+        }
         model.addAttribute("result", lenderService.updateItem(item, files, delfile));
         return "lender/admin/itemUpdateOk";
     }

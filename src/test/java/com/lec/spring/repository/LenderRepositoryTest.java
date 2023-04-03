@@ -89,42 +89,42 @@ class LenderRepositoryTest {
         Item i1 = Item.builder()
                 .itemName("초강력 텐트")
                 .content("인기 많아요")
-                .price(1000000)
+                .price(1000000L)
                 .lender(l1)
                 .build();
 
         Item i2 = Item.builder()
                 .itemName("스텐 세트")
                 .content("별로 안썼어요")
-                .price(2000000)
+                .price(2000000L)
                 .lender(l1)
                 .build();
 
         Item i3 = Item.builder()
                 .itemName("캔들")
                 .content("분위기 좋게 만들어줘요")
-                .price(3000000)
+                .price(3000000L)
                 .lender(l2)
                 .build();
 
         Item i4 = Item.builder()
                 .itemName("식기류 세트")
                 .content("열전도가 좋아요")
-                .price(4000000)
+                .price(4000000L)
                 .lender(l2)
                 .build();
 
         Item i5 = Item.builder()
                 .itemName("낚시용 의자")
                 .content("튼튼해요")
-                .price(5000000)
+                .price(5000000L)
                 .lender(l3)
                 .build();
 
         Item i6 = Item.builder()
                 .itemName("모기장")
                 .content("여름 한정")
-                .price(6000000)
+                .price(6000000L)
                 .lender(l3)
                 .build();
 
