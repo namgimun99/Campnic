@@ -69,9 +69,11 @@ public class CampingServiceTest {
 
     @Test
     public void campingSave(){
-        Camping camping1 = campingService.campingSave(18L);
+        Camping camping1 = campingService.campingOne(18L);
         System.out.println(camping1);
     }
+
+
 
 
 }

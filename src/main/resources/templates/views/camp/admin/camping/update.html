@@ -36,17 +36,17 @@
 
         <div class = write>
             <label for="camp_name">캠핑장 이름:</label>
-            <input type="text" class="form-control" id="camp_name" placeholder="캠핑장명" name="camp_name" th:value="${dto.camp_name}">
+            <input type="text" class="form-control" id="camp_name" placeholder="캠핑장명" name="camp_name" th:value="${dto.camp_name}" required>
         </div>
 
         <div class = write>
             <label for="address">주소:</label>
-            <input type="text" class="form-control" id="address" placeholder="상세 주소" name="address" th:value="${dto.address}">
+            <input type="text" class="form-control" id="address" placeholder="상세 주소" name="address" th:value="${dto.address}" required>
         </div>
 
         <div class = write>
             <label for="content">소개:</label>
-            <input type="text" class="form-control" id="content" placeholder="소개" name="content" th:value="${dto.content}">
+            <input type="text" class="form-control" id="content" placeholder="소개" name="content" th:value="${dto.content}" required>
         </div>
 
 

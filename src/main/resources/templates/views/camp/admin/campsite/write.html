@@ -14,13 +14,9 @@
 
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
-<th:block th:with="dto=${list}">
 <h2 id = wh2>구역 등록</h2>
 <div id = write>
     <div id = wimage>
-        <div id = wimgbtn>
-            <button type = button id = btnAdd class="btn btn-outline-dark">이미지 등록</button>
-        </div>
 
         <div class="row mt-5" th:if="${error }">
             <div class="col-12 text-danger" th:text="${error }">
@@ -30,20 +26,25 @@
 
 
         <form th:action="@{/camp/admin/campsite/write}" method="post" enctype="Multipart/form-data">
-            <input type="text" class="form-control" id="camping" placeholder="캠핑 id" name="camping" th:value="${camping.id}">
+            <label>첨부파일:</label>
+            <div id="files">
+
+            </div>
+            <button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
+            <input type="hidden" class="form-control" id="camping" placeholder="캠핑 id" name="camping" th:value="${camping}" >
             <div class = write>
                 <label for="number">구역 번호:</label>
-                <input type="text" class="form-control" id="number" placeholder="구역 번호" name="number" th:value="${number}">
+                <input type="text" class="form-control" id="number" placeholder="구역 번호" name="number" th:value="${number}" required>
             </div>
 
             <div class = write>
                 <label for="content">소개:</label>
-                <input type="text" class="form-control" id="content" placeholder="소개" name="content" th:value="${content}">
+                <input type="text" class="form-control" id="content" placeholder="소개" name="content" th:value="${content}" required>
             </div>
 
             <div class = write>
                 <label for="price">가격:</label>
-                <input type="text" class="form-control" id="price" placeholder="가격" name="price" th:value="${price}">
+                <input type="text" class="form-control" id="price" placeholder="가격" name="price" th:value="${price}" required>
             </div>
 
 
@@ -54,7 +55,6 @@
         </form>
     </div>
 </div>
-</th:block>
 
 </body>
 </html>

@@ -1,14 +1,9 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.domain.CampReserve;
-import com.lec.spring.domain.Camping;
-import com.lec.spring.domain.Campsite;
-import com.lec.spring.domain.User;
-import com.lec.spring.repository.CampReserveRepository;
-import com.lec.spring.repository.CampingRepository;
-import com.lec.spring.repository.CampsiteRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.domain.*;
+import com.lec.spring.repository.*;
 import com.lec.spring.service.CampingService;
+import com.lec.spring.service.LenderService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +35,16 @@ public class CampingController {
 
         @Autowired
         private UserRepository userRepository;
+        @Autowired
+        private CityRepository cityRepository;
+
+        @Autowired
+        private LenderService lenderService;
 
         @GetMapping("/reserve")
         public void reserve(Long id, Model model){
 
-                Camping camping = campingService.campingSave(id);
+                Camping camping = campingService.campingOne(id);
                 model.addAttribute("camping", camping);
 
                 List<Campsite> campsite = campingService.campsiteList(id);
@@ -58,25 +58,12 @@ public class CampingController {
         }
 
         @PostMapping("/reserve")
-        public String reserveOK(@Valid CampReserve campReserve,
+        public String reserveOK(CampReserve campReserve,
                                BindingResult result,
                                Model model,
                                RedirectAttributes redirectAttributes){
 
                 campReserve.setCoupon(campingService.couponNum());
-                if(result.hasErrors()){
-                        redirectAttributes.addFlashAttribute("sdate", campReserve.getSdate());
-                        redirectAttributes.addFlashAttribute("edate", campReserve.getEdate());
-                        redirectAttributes.addFlashAttribute("campsite", campReserve.getCampsite().getId());
-
-                        List<FieldError> errList = result.getFieldErrors();
-
-                        for(FieldError err : errList){
-                                redirectAttributes.addFlashAttribute("error", err.getCode());
-                                break;
-                        }
-                        return "redirect:/camp/reserve";
-                }
 
                 model.addAttribute("result", campingService.addReserve(campReserve));
                 model.addAttribute("dto", campReserve);
@@ -103,13 +90,15 @@ public class CampingController {
 
        @GetMapping("/recipt")
        public void recipt(Long id, Model model) {
-           model.addAttribute("list", campingService.campReserveDetail(id));
+
+                model.addAttribute("list", campingService.campReserveDetail(id));
        }
 
 //  ----------------------------------admin page---------------------------------------------
         @GetMapping("/admin/camping/list")
         public void adminCampingList(Model model) {
-            model.addAttribute("list", campingService.myCamping());
+
+                model.addAttribute("list", campingService.myCamping());
         }
         @GetMapping("/admin/camping/detail")
         public void adminCampingDetail(Long id, Model model) {
@@ -117,36 +106,21 @@ public class CampingController {
         }
 
         @GetMapping("/admin/camping/write")
-        public void adminCampingWrite(Camping camping, Model model) {
+        public void adminCampingWrite(Model model) {
 
-                model.addAttribute("list", camping);
-
+                model.addAttribute("cityList", lenderService.cityList());
         }
 
         @PostMapping("/admin/camping/write")
-        public String adminCampingWriteOK(@RequestParam Map<String, MultipartFile> files,
-                                          @Valid Camping camping,
+        public String adminCampingWriteOK(@RequestParam Long cityId,
+                                          Camping camping,
                                           BindingResult result,
                                           Model model,
                                           RedirectAttributes redirectAttributes){
                         User num1 = camping.getUser();
 
-                if(result.hasErrors()){
-                        redirectAttributes.addFlashAttribute("camp_name", camping.getCamp_name());
-                        redirectAttributes.addFlashAttribute("address", camping.getAddress());
-                        redirectAttributes.addFlashAttribute("content", camping.getContent());
-                        redirectAttributes.addFlashAttribute("city",camping.getCity().getCity());
 
-
-                        List<FieldError> errList = result.getFieldErrors();
-
-                        for(FieldError err : errList){
-                                redirectAttributes.addFlashAttribute("error", err.getCode());
-                                break;
-                        }
-                        return "redirect:/camp/admin/camping/write?user=" + num1;
-                }
-                model.addAttribute("result", campingService.addCamping(camping));
+                model.addAttribute("result", campingService.addCamping(camping,cityId));
                 model.addAttribute("dto", camping);
 
                 return "camp/admin/camping/writeOK";
@@ -158,22 +132,10 @@ public class CampingController {
         }
 //
         @PostMapping("/admin/camping/update")
-        public String adminCampingUpdateOK(@Valid Camping camping,
+        public String adminCampingUpdateOK(Camping camping,
                                          BindingResult result,
                                          Model model,
                                          RedirectAttributes redirectAttrs){
-                if (result.hasErrors()) {
-                        redirectAttrs.addFlashAttribute("campname", camping.getCamp_name());
-                        redirectAttrs.addFlashAttribute("content", camping.getContent());
-                        redirectAttrs.addFlashAttribute("address", camping.getAddress());
-
-                        List<FieldError> errList = result.getFieldErrors();
-                        for (FieldError err : errList) {
-                                redirectAttrs.addFlashAttribute("error", err.getCode());
-                                break;
-                        }
-                        return "redirect:/camp/admin/camping/update?id=" + camping.getId();
-                }
 
                 model.addAttribute("result", campingService.campingUpdate(camping));
                 model.addAttribute("dto", camping);
@@ -195,36 +157,18 @@ public class CampingController {
         }
 
         @GetMapping("/admin/campsite/write")
-        public void adminCampsiteWrite(Campsite campsite, Long id, Model model){
-                model.addAttribute("list", campsite);
-
-                Camping camping = campingService.campingSave(id);
-                model.addAttribute("camping", camping);
+        public void adminCampsiteWrite(Long id, Model model){
+                model.addAttribute("camping", campingService.campingOne(id).getId());
         }
 
         @PostMapping("/admin/campsite/write")
         public String adminCampsiteWriteOK(@RequestParam Map<String, MultipartFile> files,
-                                         @Valid Campsite campsite,
+                                           Campsite campsite,
                                          BindingResult result,
                                          Model model,
                                          RedirectAttributes redirectAttributes){
                 Camping num1 = campsite.getCamping();
 
-                if(result.hasErrors()){
-                        redirectAttributes.addFlashAttribute("number", campsite.getNumber());
-                        redirectAttributes.addFlashAttribute("price", campsite.getPrice());
-                        redirectAttributes.addFlashAttribute("content", campsite.getContent());
-                        redirectAttributes.addFlashAttribute("camping", campsite.getCamping().getId());
-
-
-                        List<FieldError> errList = result.getFieldErrors();
-
-                        for(FieldError err : errList){
-                                redirectAttributes.addFlashAttribute("error", err.getCode());
-                                break;
-                        }
-                        return "redirect:/camp/admin/campsite/Write?camping_id="+num1;
-                }
                 model.addAttribute("result", campingService.addCampsite(campsite));
                 model.addAttribute("dto", campsite);
 
@@ -242,22 +186,10 @@ public class CampingController {
         }
 
         @PostMapping("/admin/campsite/update")
-        public String adminCampsiteUpdateOK(@Valid Campsite campsite,
+        public String adminCampsiteUpdateOK(Campsite campsite,
                                           BindingResult result,
                                           Model model,
                                           RedirectAttributes redirectAttrs){
-                if (result.hasErrors()) {
-                        redirectAttrs.addFlashAttribute("number", campsite.getNumber());
-                        redirectAttrs.addFlashAttribute("content", campsite.getContent());
-                        redirectAttrs.addFlashAttribute("price", campsite.getPrice());
-
-                        List<FieldError> errList = result.getFieldErrors();
-                        for (FieldError err : errList) {
-                                redirectAttrs.addFlashAttribute("error", err.getCode());
-                                break;
-                        }
-                        return "redirect:/camp/admin/campsite/update?id=" + campsite.getId();
-                }
 
                 model.addAttribute("result", campingService.campsiteUpdate(campsite));
                 model.addAttribute("dto", campsite);

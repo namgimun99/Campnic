@@ -23,9 +23,9 @@
 <th:block th:insert="~{common/header::header}"></th:block>
 <th:block th:with="dto=${list[0]}">
 <div class="container mt-3">
-    <h2>목록</h2>
-    <hr>
+    <h2>목록</h2><a class="btn btn-outline-dark" th:href="@{/camp/admin/camping/list}" sec:authorize="hasAnyRole('ROLE_CAMPING')">관리자모드</a>
 
+    <hr>
     <!-- 목록 -->
     <table class="table table-hover">
         <thead class="table-success">

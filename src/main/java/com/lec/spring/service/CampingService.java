@@ -77,15 +77,16 @@ public class CampingService {
 
 
     //camping 등록
-    public int addCamping(Camping camping) {
+    public int addCamping(Camping camping, Long cityId) {
 
         // 현재 로그인한 작성자 정보
         User user = U.getLoggedUser();
-
+        City city = cityRepository.findById(cityId).orElse(null);
 
         // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다
         user = userRepository.findById(user.getId()).orElse(null);
         camping.setUser(user);  // 글 작성자 세팅
+        camping.setCity(city);
 
         camping = campingRepository.save(camping);  // INSERT
 
@@ -150,7 +151,7 @@ public class CampingService {
         return list;
     }
 
-    public Camping campingSave(Long id) {
+    public Camping campingOne(Long id) {
         Camping camping = campingRepository.findById(id).orElse(null);
         return camping;
     }

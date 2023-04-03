@@ -19,3 +19,4 @@ SELECT * FROM item_file;
 SELECT * FROM rental_recipt;
 SELECT * FROM qna;
 SELECT * FROM qna_comment;
+

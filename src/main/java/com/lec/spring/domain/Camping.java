@@ -5,6 +5,10 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,4 +40,13 @@ public class Camping extends BaseEntity{
 
         @Column(nullable = false)
         private String address; // 주소
+
+        @OneToMany(mappedBy = "camping", cascade = CascadeType.ALL)
+        @ToString.Exclude
+        @Builder.Default
+        private List<Campsite> campsiteList = new ArrayList<>();
+
+        public void addItems(Campsite... campsite){
+                Collections.addAll(campsiteList, campsite);
+        }
 }

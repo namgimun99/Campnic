@@ -39,6 +39,15 @@ public class Campsite{
         @OneToMany(mappedBy = "campsite", cascade = CascadeType.ALL)
         @ToString.Exclude
         @Builder.Default
+        private List<CampReserve> campReserveList = new ArrayList<>();
+
+        public void addItems(CampReserve... campReserve){
+                Collections.addAll(campReserveList, campReserve);
+        }
+
+        @OneToMany(mappedBy = "campsite", cascade = CascadeType.ALL)
+        @ToString.Exclude
+        @Builder.Default
         private List<CampFileDTO> fileList = new ArrayList<>();
 
         public void addFiles(CampFileDTO... files){

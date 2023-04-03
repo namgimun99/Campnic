@@ -18,10 +18,6 @@
 <h2 id = wh2>캠핑장 등록</h2>
 <div id = write>
     <div id = wimage>
-        <div id = wimgbtn>
-            <button type = button id = btnAdd class="btn btn-outline-dark">이미지 등록</button>
-        </div>
-
         <div class="row mt-5" th:if="${error }">
             <div class="col-12 text-danger" th:text="${error }">
                 <!--/* 에러메세지 */-->
@@ -35,26 +31,26 @@
 
         <div class = write>
             <label for="camp_name">캠핑장 이름:</label>
-            <input type="text" class="form-control" id="camp_name" placeholder="캠핑장명" name="camp_name" th:value="${camp_name}">
+            <input type="text" class="form-control" id="camp_name" placeholder="캠핑장명" name="camp_name" th:value="${camp_name}" required>
         </div>
 
-        <div class = write>
-            <label>도시:</label>
-            <select>
-                <option>선택해주세요</option>
-                <option th:each="dto : ${list}" th:value ="${city}">[[${dto.city}]]</option>
-            </select>
-        </div>
-
-        <label>구역 번호:</label>-->
         <div class = write>
             <label for="content">소개:</label>
-            <input type="text" class="form-control" id="content" placeholder="소개" name="content" th:value="${content}">
+            <input type="text" class="form-control" id="content" placeholder="소개" name="content" th:value="${content}" required>
+        </div>
+        <div>도시 선택</div>
+        <div class = write>
+            <select name="cityId" id="city" class="form-select">
+                <option value="null" selected>도시</option>
+                <th:block th:each="city : ${cityList}">
+                    <option th:value="${city.id}" th:text="${city.city}"></option>
+                </th:block>
+            </select>
         </div>
 
         <div class = write>
             <label for="address">주소:</label>
-            <input type="text" class="form-control" id="address" placeholder="상세 주소" name="address" th:value="${address}">
+            <input type="text" class="form-control" id="address" placeholder="상세 주소" name="address" th:value="${address}" required>
         </div>
 
 
