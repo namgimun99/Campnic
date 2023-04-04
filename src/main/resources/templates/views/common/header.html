@@ -15,7 +15,7 @@
 
 <body>
 <th:block th:fragment="header">
-    <nav class="navbar navbar-expand-sm" style="background-color: rgb(211, 211, 211, 0.5);">
+    <nav class="navbar navbar-expand-sm" id="header" style="background: url(/img/bg-header.png);">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="navbar-nav me-auto">
@@ -25,22 +25,23 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/camp/list}" style="padding-top: 70px; color: black; font-size: 20px;"><b>캠핑예약</b></a>
+                        <a class="nav-link" th:href="@{/camp/list}" style="padding-top: 70px; font-size: 20px; color: aliceblue;"><b>캠핑예약</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/lender/itemList}" style="padding-top: 70px; color: black; font-size: 20px;"><b>캠핑용품</b></a>
+                        <a class="nav-link" th:href="@{/lender/itemList}" style="padding-top: 70px; font-size: 20px; color: aliceblue;"><b>캠핑용품</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/qna/list}" style="padding-top: 70px; color: black; font-size: 20px;"><b>QnA</b></a>
+                        <a class="nav-link" th:href="@{/qna/list}" style="padding-top: 70px; font-size: 20px; color: aliceblue;"><b>QnA</b></a>
                     </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" th:href="@{/user/mypage}" style="padding-top: 70px; color: black; font-size: 20px;"><b>Mypage</b></a>
+                    <li class="nav-item" sec:authorize="hasAnyRole('MEMBER', 'LENDER', 'CAMPING')" th:with="user=${#authentication.getPrincipal().getUser()}">
+                        <a class="nav-link" th:href="@{/user/mypage(userId=${user.id})}" style="padding-top: 70px; color: PeachPuff; font-size: 20px;"><b>Mypage</b></a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                        <a class="nav-link" th:href="@{/admin/authCheck}" style="padding-top: 70px; color: blue; font-size: 20px;"><b>관리자</b></a>
+                        <a class="nav-link" th:href="@{/admin/authCheck}" style="padding-top: 70px; color: SandyBrown; font-size: 20px;"><b>관리자</b></a>
                     </li>
                 </ul>
-                <a id="CouBtn" style="background-color: #8996C6; color: white; font-size:20px; text-decoration:none; border: 0px; border-radius:10%; padding: 7px; margin-right: 15px;" th:href="@{/coupon/write}">쿠폰 등록하기</a>
+                <button id="weather">날씨 넣을 곳</button>
+                <a id="CouBtn" style="background-color: #8996C6; color: white; font-size:20px; text-decoration:none; border: 0px; border-radius:10px; padding: 7px; margin-right: 15px;" th:href="@{/coupon/write}">쿠폰 등록하기</a>
                 <a class="btn btn-primary" sec:authorize="isAnonymous()" data-bs-toggle="modal" data-bs-target="#myModal">Login</a>
 
                 <div class="modal fade" id="myModal">
@@ -83,7 +84,7 @@
 
                 <form th:action="@{/user/logout}" method="POST" sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">
                     <span class="d-flex">
-                        <span class="text p-2" ><span style="color:black; font-size: 20px;">[[${user.username}]] 님 환영합니다!(Point: [[${user.point}]])</span></span>
+                        <span class="text p-2" ><span style=" color: aliceblue; font-size: 20px;">[[${user.username}]] 님 환영합니다!(Point: [[${user.point}]])</span></span>
                         <span><button class="btn btn-danger" type="submit">Logout</button></span>
                       </span>
                 </form>

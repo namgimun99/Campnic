@@ -19,7 +19,7 @@
 <!--/* 인증 헤더 */-->
 <th:block th:insert="~{common/header::header}"></th:block>
 
-<div class="conA">
+<section class="conA">
   <div class="conB">
     <h1 class="easyLogin"><b>간편로그인</b></h1>
     <div class="apiLogin">
@@ -52,8 +52,8 @@
       <button class="loginBtn" type="submit">로그인</button>
     </form>
   </div>
-
-</div>
+  <div class="conA-bg"><img th:src="@{/img/background.png}" id="bg"></div>
+</section>
 
 </body>
 </html>

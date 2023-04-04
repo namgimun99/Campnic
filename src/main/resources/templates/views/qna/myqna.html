@@ -18,28 +18,6 @@
     <title>목록</title>
 </head>
 
-<style>
-    #t_admin{
-    color: Crimson;
-    border-left-style: dashed;
-    border-left-width: 3px;
-    border-left-color: tomato;
-    border-right-style: dashed;
-    border-right-width: 3px;
-    border-right-color: tomato;
-    }
-    #thead{
-    border-bottom-style:dashed;
-    border-bottom-width:3px;
-    border-bottom-color: tomato;
-    }
-    #t_blank{
-    border-bottom-style:dashed;
-    border-bottom-width:3px;
-    border-bottom-color: tomato;
-    }
-</style>
-
 
 <body>
 <!--/* 인증 헤더 */-->
@@ -70,7 +48,7 @@
     <!-- 목록 -->
     <table class="table table-hover">
         <thead class="table-success">
-        <tr id="thead">
+        <tr>
             <th>ID</th>
             <th>제목</th>
             <th>작성자</th>
@@ -78,16 +56,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="dto2 : ${adminL}" id="t_admin" style="color: Crimson;">
-            <td><b>[[${dto2.id}]]</b></td>
-            <td><a th:href="@{/qna/detail(id=${dto2.id})}" style="color: Crimson; text-decoration: none;"><b>[[${dto2.subject}]]</b></a></td>
-            <td><b>[[${dto2.user.username}]]</b></td>
-            <td><b>[[${#temporals.format(dto2.regDate, 'yyyy-MM-dd HH:mm:ss')}]]</b></td>
-        </tr>
-        <tr id="t_blank"></tr>
-        </tbody>
-        <tbody>
-        <tr th:each="dto : ${list}">
+        <tr th:each="dto : ${myqna}">
             <td>[[${dto.id}]]</td>
             <td><a th:href="@{/qna/detail(id=${dto.id})}" style="color: black; text-decoration: none;">[[${dto.subject}]]</a> </td>
             <td>[[${dto.user.username}]]</td>
@@ -96,12 +65,6 @@
         </tbody>
     </table>
     <!-- 목록 -->
-
-    <div class="row">
-        <div class="col-12">
-            <a class="btn btn-outline-dark" th:href="@{/qna/write}">작성</a>
-        </div>
-    </div>
 </div>
 
 <!-- pagination -->

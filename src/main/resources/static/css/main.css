@@ -1,4 +1,109 @@
 body {
-color: aliceblue;
-background-color : black;
+    color: aliceblue;
+    background-color : black;
+}
+.conA-bg{
+    position: relative;
+}
+.conA-a{
+    position: absolute;
+    background-color: rgb(255, 255, 255, 0.5);
+    color: black;
+    font-size: 30px;
+    padding: 1em;
+    margin-top: 10em;
+    margin-left: 12em;
+    border-radius: 10px;
+}
+.conA-b{
+       position: absolute;
+       background-color: rgb(255, 255, 255, 0.5);
+       color: black;
+       font-size: 30px;
+       padding: 1em;
+       margin-top: 10em;
+       margin-left: 33em;
+       border-radius: 10px;
+ }
+.link{
+    font-size: 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+}
+.link2{
+    background-color: rgb(255, 255, 255, 0.5);
+    text-decoration: none;
+    color: DarkViolet;
+    padding: 15px;
+    font-size: 25px;
+    border-radius: 40px 80px;
+    border: 0px;
+    float: right;
+}
+#bg{
+    width:100%;
+    height: 100%;
+    vertical-align: middle;
+}
+#awan {
+position:fixed;
+top;0px; left: 0px;
+width:100%;
+height:90%;
+text-align:center;
+margin:0px;
+padding:0px;
+background-color:transparent;
+background: url("/img/cloud.png") center top repeat-x;
+padding-top: 100px;
+padding-bottom: 10px;
+  width: 100%;
+  padding:0px;
+  margin:0px;
+  animation: awan-animasi 2s linear infinite;
+  -ms-animation: awan-animasi 2s linear infinite;
+  -moz-animation: awan-animasi 2s linear infinite;
+  -webkit-animation: awan-animasi 20s linear infinite;
+}
+
+@keyframes awan-animasi {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 100% 0;
+  };
+}
+
+@-webkit-keyframes awan-animasi {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 100% 0;
+  };
+}
+
+@-ms-keyframes awan-animasi {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 100% 0;
+  };
+}
+
+@-moz-keyframes awan-animasi {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 100% 0;
+  };
 }

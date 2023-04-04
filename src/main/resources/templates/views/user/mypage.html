@@ -8,69 +8,126 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script th:src="@{/js/mypage.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
     <title>Mypage</title>
 </head>
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
+<div th:with="user=${#authentication.getPrincipal().getUser()}">
 
-<div class="container mt-3">
-<input class="btn" id="btn-join" value="LENDER 권한등록" data-bs-toggle="modal" data-bs-target="#myModal2">
-<div class="modal fade" id="myModal2">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
+    <div class="conA">
+        <div class="con1"><a th:href="@{/camp/recipt(id=${user.id})}" class="a_title"><img th:src="@{/img/campRecipt.png}" class="img_title"><h1 class="title">캠핑내역</h1></a></div>
+        <div class="con2"><a th:href="@{/lender/recipts}" class="a_title"><img th:src="@{/img/lendRecipt.png}" class="img_title"><h1 class="title">렌탈내역</h1></a></div>
+        <div class="con3"><a th:href="@{/qna/myqna(userId=${user.id})}" class="a_title"><img th:src="@{/img/myQna.jpg}" class="img_title"><h1 id="title">My QnA</h1></a></div>
+    </div>
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title"><b>캠핑용품을 직접 등록해보세요!</b></h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
+    <div class="conB">
+        <div class="con4">
+            <img th:src="@{/img/campAuth.png}" class="bottomImg">
+            <input class="btn" id="btn-join" value="CAMPING 권한신청" data-bs-toggle="modal" data-bs-target="#myModal2">
+            <div class="modal fade" id="myModal2">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
 
-            <form name="form2" th:action="@{/user/adminreq}" method="post" onsubmit="return chkSubmit()">
-                <div class="modal-body">
-                    <div class="Category">
-                        <label>ROLE_LENDER </label>
-                        <input type="hidden" id="hreq" name="auth" value="ROLE_LENDER">
-                        <input type="hidden" name="username" th:value="${user.username}">
-                        LENDER에 대한 간단 설명.....<br>
-                        blablablabla......
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title"><b>캠핑장을 직접 등록해보세요!</b></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <form name="form2" th:action="@{/user/adminreq}" method="post">
+                            <div class="modal-body">
+                                <div class="Category">
+                                    <label class="highlight">ROLE_CAMPING</label><br><br>
+                                    <input type="hidden" id="hreq2" name="auth" value="ROLE_CAMPING">
+                                    <input type="hidden" name="username" th:value="${user.username}">
+                                    'ROLE_CAMPING' 권한은 자신의 캠핑장을 등록할 수 있으며 사용자들에게 새로운 캠핑장을 제공할 수 있습니다.<br>
+                                    등록신청을 하여 당신만의 캠핑장을 홍보해보세요!✨
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" value="등록 신청" onclick="javascript:btn()"></input>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="등록 신청" onclick="javascript:btn()"></input>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<input class="btn" id="btn-join2" value="CAMPING 권한등록" data-bs-toggle="modal" data-bs-target="#myModal3">
-<div class="modal fade" id="myModal3">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title"><b>캠핑장을 직접 등록해보세요!</b></h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+        </div>
+        <div class="con5">
+            <img th:src="@{/img/lendAuth.png}" class="bottomImg">
+            <input class="btn" id="btn-join2" value="LENDER 권한신청" data-bs-toggle="modal" data-bs-target="#myModal3">
+            <div class="modal fade" id="myModal3">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
 
-            <form name="form2" th:action="@{/user/adminreq}" method="post" onsubmit="return chkSubmit()">
-                <div class="modal-body">
-                    <div class="Category">
-                        <label>ROLE_CAMPING </label>
-                        <input type="hidden" id="hreq2" name="auth" value="ROLE_CAMPING">
-                        <input type="hidden" name="username" th:value="${user.username}">
-                        CAMPING 에 대한 간단 설명.....<br>
-                        blablablabla......
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title"><b>캠핑용품을 직접 등록해보세요!</b></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <form name="form2" th:action="@{/user/adminreq}" method="post" onsubmit="return chkSubmit()">
+                            <div class="modal-body">
+                                <div class="Category">
+                                    <label class="highlight">ROLE_LENDER </label><br><br>
+                                    <input type="hidden" id="hreq" name="auth" value="ROLE_LENDER">
+                                    <input type="hidden" name="username" th:value="${user.username}">
+                                    캠핑용품이 남아서 고민하고 계시나요? <br>
+                                    'ROLE_LENDER' 권한을 통해 자신의 캠핑용품들을 등록하여 사용자들에게 대가를 받고 렌탈기능을 제공할 수 있습니다.<br>
+                                    등록신청을 하여 사업장을 운영해보세요!🔧💸
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" value="등록 신청" onclick="javascript:btn()"></input>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="등록 신청" onclick="javascript:btn()"></input>
+            </div>
+        </div>
+        <div class="con6">
+            <img th:src="@{/img/deleteUser.png}" id="bottomImg">
+            <input class="btn" id="btn-join3" value="회원탈퇴" data-bs-toggle="modal" data-bs-target="#myModal4">
+            <div class="modal fade" id="myModal4">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title"><b>회원 탈퇴</b></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <form name="form2" th:action="@{/user/delete}" method="post">
+                            <div class="modal-body">
+                                <div class="Category">
+                                    <label>정말로 탈퇴하시겠습니까? </label>
+                                    탈퇴하실 경우, 아래 사용자의 모든 내역은 삭제됩니다.<br><br>
+                                    <ol>
+                                        <li>사용자의 캠핑예약 내역</li>
+                                        <li>사용자의 렌탈 내역</li>
+                                        <li>(캠핑권한 사용시) 캠핑권한 탈퇴</li>
+                                        <li>(렌더권한 사용시) 렌더권한 탈퇴</li>
+                                    </ol>
+                                    <br>
+                                    동의하실 경우, '확인' 버튼을 눌러주십시오.
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" value="확인"></input>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </form>
+            </div>
+
+
+
+
+
+
         </div>
     </div>
-</div>
 
 </div>
 </body>

@@ -115,12 +115,8 @@ public class UserController {
     }
 
     @GetMapping("/mypage")
-    public String mypage(Long userId, Model model){
-        model.addAttribute("user", U.getLoggedUser());
-        model.addAttribute("myqna", qnaService.myqnaList(userId));
+    public void mypage(){}
 
-        return "/user/mypage";
-    }
 
     @PostMapping("/adminreq")
     public String adminReq( String auth
@@ -129,6 +125,12 @@ public class UserController {
     ){
         userService.registerAuthReq(auth, username);
         return "redirect:mypage";
+    }
+
+    @PostMapping("/delete")
+    public String deleteOk(Model model){
+        model.addAttribute("result", userService.deleteLoggedUser());
+        return "user/deleteOk";
     }
 
     @InitBinder

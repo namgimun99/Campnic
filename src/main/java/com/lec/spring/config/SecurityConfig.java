@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth   // AuthorizationManagerRequestMatcherRegistry
 
                         // delete 페이지랑 authreq 버튼 auth 걸어야 됨.
-                        .requestMatchers("/camp/reserve/**", "/user/mypage/**").authenticated()
+                        .requestMatchers("/camp/reserve/**").authenticated()
                         .requestMatchers("/camp/recipt/**", "/camp/reserveDelete/**").hasAnyRole("MEMBER")
                         .requestMatchers("/lender/itemRent/**", "/lender/recipts/**").hasAnyRole("MEMBER")
                         .requestMatchers("/camp/admin/camping/list/**", "/camp/admin/camping/detail/**", "/camp/admin/camping/write/**").hasAnyRole("CAMPING")

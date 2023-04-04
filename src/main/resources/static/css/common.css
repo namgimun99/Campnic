@@ -3,9 +3,24 @@
     src : url("../font/NanumSquareNeo-Variable.woff") format("woff");
 }
 @font-face{
-    font-family: "NanumSquare";
-    src : url("../font/NanumSquareR.ttf") format("truetype");
+    font-family: "Delta";
+    src : url("../font/Delta Universe.ttf") format("truetype");
 }
 body {
 font-family: NanumSquareNeo;
+}
+.campnic{
+    font-family: Delta;
+    position: absolute;
+    font-size: 180px;
+    height: 70px;
+    padding-left:30%;
+    padding-top: 10%;
+}
+.inform{
+    font-family: NanumSquareNeo;
+    position: absolute;
+    font-size: 23px;
+    padding-left: 25%;
+    padding-top: 24%;
 }
