@@ -37,12 +37,12 @@ class RentalReciptRepositoryTest {
         User user2 = userRepository.findByUsername("USER2");
         User user3 = userRepository.findByUsername("USER3");
 
-        Item i1 = itemRepository.findByItemName("초강력 텐트");
-        Item i2 = itemRepository.findByItemName("스텐 세트");
-        Item i3 = itemRepository.findByItemName("캔들");
-        Item i4 = itemRepository.findByItemName("식기류 세트");
-        Item i5 = itemRepository.findByItemName("낚시용 의자");
-        Item i6 = itemRepository.findByItemName("모기장");
+        Item i1 = itemRepository.findById(1L).orElse(null);
+        Item i2 = itemRepository.findById(2L).orElse(null);
+        Item i3 = itemRepository.findById(3L).orElse(null);
+        Item i4 = itemRepository.findById(4L).orElse(null);
+        Item i5 = itemRepository.findById(5L).orElse(null);
+        Item i6 = itemRepository.findById(6L).orElse(null);
 
         // RentalRecipt
         RentalRecipt r1 = RentalRecipt.builder()
