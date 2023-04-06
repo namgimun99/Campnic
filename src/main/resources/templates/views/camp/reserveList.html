@@ -37,7 +37,7 @@
         </thead>
         <tbody>
         <tr th:each="dto : ${list}">
-            <td><a th:href="@{/camp/reserveDetail(id=${dto.id})}">[[${dto.campsite.camping.camp_name}]]</a></td>
+            <td><a th:href="@{/camp/recipt(id=${dto.id})}">[[${dto.campsite.camping.camp_name}]]</a></td>
             <td>[[${dto.sdate}]]</td>
             <td>[[${dto.edate}]]</td>
         </tr>

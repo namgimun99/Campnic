@@ -41,7 +41,7 @@ public class CampingController {
         @Autowired
         private LenderService lenderService;
 
-        @GetMapping("/recipt")
+        @GetMapping("/reserveList")
         public void reserveList(Model model) {
                 model.addAttribute("list", campingService.myReserve());
         }
@@ -93,7 +93,7 @@ public class CampingController {
                 model.addAttribute("list", campingService.campingDetail(id));
         }
 
-        @GetMapping("/reserveDetail")
+        @GetMapping("/recipt")
         public void recipt(Long id, Model model) {
                 model.addAttribute("list", campingService.campReserveDetail(id));
         }
