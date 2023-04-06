@@ -54,10 +54,15 @@ public class UserController {
         model.addAttribute("username", id);
 
         if(userService.isExist(id)){
-            return "/user/apiLogin";
+            return "user/apiLogin";
         }else{
-            return "/user/apiJoin";
+            return "user/apiJoin";
         }
+    }
+
+    @GetMapping("/naverOk")
+    public String naverOk(){
+        return "common/naverOk";
     }
 
     @PostMapping("/loginError")

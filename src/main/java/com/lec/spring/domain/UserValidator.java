@@ -29,7 +29,7 @@ public class UserValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "※ 비밀번호는 필수입니다");
 
         String password = user.getPassword();
-        String p_regex = "^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$@$!%*#?&]).{8,20}$";
+        String p_regex = "^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$@$!%*#?&]).{8,}$";
         if(!Pattern.matches(p_regex, password)){
             errors.rejectValue("password", "비밀번호는 8-20자리 이상, 영문/숫자/특수문자 조합입니다.");
         }

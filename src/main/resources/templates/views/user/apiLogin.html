@@ -15,7 +15,7 @@
 
 <form id="frm" th:action="@{/user/login}" method="POST">
     <input type="hidden" name="username" th:value="${username}">
-    <input type="hidden" name="password" th:value="${username.toUpperCase()}">
+    <input type="hidden" name="password" th:value="${username.toUpperCase()+'!'}">
 </form>
 </body>
 <script>

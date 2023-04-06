@@ -36,7 +36,7 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String name; // 회원 이름
 
-    @Column(nullable = false)
+    @Column
     private String phone;
 
     @ColumnDefault(value = "0")

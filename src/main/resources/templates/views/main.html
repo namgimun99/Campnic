@@ -8,7 +8,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script th:src="@{/js/kakaoLogin.js}"></script>
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
+    <script th:src="@{/js/kakaoLogin2.js}"></script>
+    <script th:src="@{/js/naverLogin.js}"></script>
+    <script th:src="@{/js/googleLogin.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
     <title>Home</title>
@@ -21,17 +26,6 @@
     <div class="conA-bg">
         <p class="campnic">"  C A M P N I C  "</p>
         <p class="inform"> CAMPNIC 은 캠퍼들에게 다양한 캠핑장을 소개하고 새로운 편의성을 제공합니다.</p>
-
-<!--        백그라운드 img에 링크를 거는게 position 문제로 안 걸어지네요,, header에서 링크타고 들어가는 게 좋을 것 같아요~-->
-<!--            <div class="conA-a">-->
-<!--            <a class="link" th:href="@{/camp/list}">캠핑장 보러가기</a><br>-->
-<!--            <a class="link2" th:href="@{/camp/admin/camping/list}" sec:authorize="hasRole('CAMPING')">관리자 모드</a>-->
-<!--            </div>-->
-<!--            <div class="conA-b">-->
-<!--            <a class="link" th:href="@{/lender/itemList}">캠핑용품 렌탈</a><br>-->
-<!--            <a class="link2" th:href="@{/lender/admin/list}" sec:authorize="hasRole('LENDER')">관리자 모드</a>-->
-<!--            </div>-->
-
 
         <div id="awan"></div>
         <img th:src="@{/img/background.png}" id="bg">

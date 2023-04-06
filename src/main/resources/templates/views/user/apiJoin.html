@@ -14,7 +14,10 @@
 <body>
 <form id="frm" th:action="@{/user/join}" method="POST">
   <input type="hidden" name="username" th:value="${username}">
-  <input type="hidden" name="password" th:value="${username.toUpperCase()}">
+  <input type="hidden" name="name" th:value="${name}">
+  <input type="hidden" name="password" th:value="${username.toUpperCase()+'!'}">
+  <input type="hidden" name="re_password" th:value="${username.toUpperCase()+'!'}">
+  <input type="hidden" name="phone" th:value="${phone}">
   <input type="hidden" name="provider" th:value="api">
 
 </form>
