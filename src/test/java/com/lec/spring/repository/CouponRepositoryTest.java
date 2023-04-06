@@ -1,36 +1,36 @@
 package com.lec.spring.repository;
 
+import com.lec.spring.domain.Camping;
+import com.lec.spring.domain.Coupon;
 import com.lec.spring.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @SpringBootTest
 class CouponRepositoryTest {
 
     @Autowired
     private CouponRepository couponRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Autowired
     private UserRepository userRepository;
+
 
     @Test
     public void init(){
         System.out.println("init() 생성");
 
+        User user1 = userRepository.findByUsername("CAMPING1");
+
         //User 생성
-        User user1 = User.builder()
-                .username("USER1")
-                .password(passwordEncoder.encode("1234"))
-                .phone("01012345678")
-                .name("멤버1")
+        Coupon coupon = Coupon.builder()
+                .user(user1)
+                .cpNum("12345678")
                 .build();
 
-        user1 = userRepository.save(user1);
+
+        coupon = couponRepository.save(coupon);
 
 
         couponRepository.findAll().forEach(System.out::println);

@@ -9,9 +9,10 @@ import java.util.List;
 
 public interface CampReserveRepository extends JpaRepository<CampReserve, Long> {
 
-    List<CampReserve> findBySdate(int sdate);
 
     List<CampReserve> findByUser(User user);
 
-    List<CampReserve> findByUserOrderByIdDesc(User user);
+    List<CampReserve> findByUserOrderByIdAsc(User user);
+
+    CampReserve findByCoupon(String coupon);
 }

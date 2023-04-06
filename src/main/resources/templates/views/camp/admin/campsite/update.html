@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-</body>
+<script th:if="${list == null} or ${#lists.size(list) <= 0}">
+            alert("해당 정보가 삭제되거나 없습니다");
+            history.back();
+          </script>
+<th:block th:with="dto=${list[0]}" th:if="${list} and ${#lists.size(list) > 0}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <script th:src="@{/js/write.js}"></script>
+
+        <title>캠핑장 수정</title>
+    </head>
+    <body>
+    <th:block th:insert="~{common/header::header}"></th:block>
+
+
+    <h2 id = wh2>캠핑장 수정</h2>
+    <div id = write>
+        <div class="row mt-5" th:if="${error }">
+            <div class="col-12 text-danger" th:text="${error }">
+                <!--/* 에러메세지 */-->
+            </div>
+        </div>
+
+        <form th:action="@{/camp/admin/campsite/update}" method="post">
+            <input type="hidden" name="id" th:value="${dto.id}"/>
+
+
+            <div class = write>
+                <label for="number">구역 번호:</label>
+                <input type="text" class="form-control" id="number" placeholder="구역 번호" name="number" th:value="${dto.number}" required>
+            </div>
+
+            <div class = write>
+                <label for="price">가격:</label>
+                <input type="text" class="form-control" id="price" placeholder="가격" name="price" th:value="${dto.price}" required>
+            </div>
+
+            <div class = write>
+                <label for="content">소개:</label>
+                <input type="text" class="form-control" id="content" placeholder="소개" name="content" th:value="${dto.content}" required>
+            </div>
+
+
+            <div id = wbutton>
+                <button type="submit" class="btn btn-outline-dark">수정 완료</button>
+                <a class="btn btn-outline-dark" th:href="@{/camp/admin/campsite/list}">목록</a>
+            </div>
+        </form>
+    </div>
+    </div>
+    </body>
+</th:block>
 </html>
+

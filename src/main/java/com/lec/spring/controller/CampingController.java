@@ -41,8 +41,13 @@ public class CampingController {
         @Autowired
         private LenderService lenderService;
 
+        @GetMapping("/recipt")
+        public void reserveList(Model model) {
+                model.addAttribute("list", campingService.myReserve());
+        }
+
         @GetMapping("/reserve")
-        public void reserve(Long id, Model model){
+        public void reserve(Long id, Model model) {
 
                 Camping camping = campingService.campingOne(id);
                 model.addAttribute("camping", camping);
@@ -59,9 +64,9 @@ public class CampingController {
 
         @PostMapping("/reserve")
         public String reserveOK(CampReserve campReserve,
-                               BindingResult result,
-                               Model model,
-                               RedirectAttributes redirectAttributes){
+                                BindingResult result,
+                                Model model,
+                                RedirectAttributes redirectAttributes) {
 
                 campReserve.setCoupon(campingService.couponNum());
 
@@ -74,35 +79,35 @@ public class CampingController {
 
         @PostMapping("/reserveDelete")
         public String reserveDelete(Long id, Model model) {
-            model.addAttribute("result", campingService.campReserveDelete(id));
-            return "camp/reserveDelete";
+                model.addAttribute("result", campingService.campReserveDelete(id));
+                return "camp/reserveDelete";
         }
 
         @GetMapping("/list")
         public void list(Model model) {
-            model.addAttribute("list", campingService.campinglist());
+                model.addAttribute("list", campingService.campinglist());
         }
 
         @GetMapping("/detail")
         public void CampingDetail(Long id, Model model) {
-            model.addAttribute("list", campingService.campingDetail(id));
+                model.addAttribute("list", campingService.campingDetail(id));
         }
 
-       @GetMapping("/recipt")
-       public void recipt(Long id, Model model) {
-
+        @GetMapping("/reserveDetail")
+        public void recipt(Long id, Model model) {
                 model.addAttribute("list", campingService.campReserveDetail(id));
-       }
+        }
 
-//  ----------------------------------admin page---------------------------------------------
+        //  ----------------------------------admin page---------------------------------------------
         @GetMapping("/admin/camping/list")
         public void adminCampingList(Model model) {
 
                 model.addAttribute("list", campingService.myCamping());
         }
+
         @GetMapping("/admin/camping/detail")
         public void adminCampingDetail(Long id, Model model) {
-            model.addAttribute("list", campingService.campingDetail(id));
+                model.addAttribute("list", campingService.campingDetail(id));
         }
 
         @GetMapping("/admin/camping/write")
@@ -116,11 +121,11 @@ public class CampingController {
                                           Camping camping,
                                           BindingResult result,
                                           Model model,
-                                          RedirectAttributes redirectAttributes){
-                        User num1 = camping.getUser();
+                                          RedirectAttributes redirectAttributes) {
+                User num1 = camping.getUser();
 
 
-                model.addAttribute("result", campingService.addCamping(camping,cityId));
+                model.addAttribute("result", campingService.addCamping(camping, cityId));
                 model.addAttribute("dto", camping);
 
                 return "camp/admin/camping/writeOK";
@@ -128,14 +133,15 @@ public class CampingController {
 
         @GetMapping("/admin/camping/update")
         public void adminCampingUpdate(Long id, Model model) {
-            model.addAttribute("list", campingService.campingDetail(id));
+                model.addAttribute("list", campingService.campingDetail(id));
         }
-//
+
+        //
         @PostMapping("/admin/camping/update")
         public String adminCampingUpdateOK(Camping camping,
-                                         BindingResult result,
-                                         Model model,
-                                         RedirectAttributes redirectAttrs){
+                                           BindingResult result,
+                                           Model model,
+                                           RedirectAttributes redirectAttrs) {
 
                 model.addAttribute("result", campingService.campingUpdate(camping));
                 model.addAttribute("dto", camping);
@@ -152,56 +158,100 @@ public class CampingController {
 //-----------------------------------campsite--------------------------------------------
 
         @GetMapping("/admin/campsite/list")
-        public void adminCampsiteList(Long id, Model model){
-            model.addAttribute("list", campingService.campsiteList(id));
+        public void adminCampsiteList(Long id, Model model) {
+                model.addAttribute("list", campingService.campsiteList(id));
         }
 
         @GetMapping("/admin/campsite/write")
-        public void adminCampsiteWrite(Long id, Model model){
+        public void adminCampsiteWrite(Long id, Model model) {
                 model.addAttribute("camping", campingService.campingOne(id).getId());
         }
 
         @PostMapping("/admin/campsite/write")
         public String adminCampsiteWriteOK(@RequestParam Map<String, MultipartFile> files,
                                            Campsite campsite,
-                                         BindingResult result,
-                                         Model model,
-                                         RedirectAttributes redirectAttributes){
+                                           BindingResult result,
+                                           Model model) {
                 Camping num1 = campsite.getCamping();
 
-                model.addAttribute("result", campingService.addCampsite(campsite));
+                model.addAttribute("result", campingService.addCampsite(campsite,files));
                 model.addAttribute("dto", campsite);
 
                 return "camp/admin/campsite/writeOK";
         }
 
         @GetMapping("/admin/campsite/detail")
-        public void adminCampsiteDetail(Long id, Model model){
-            model.addAttribute("list", campingService.campsiteDetail(id));
+        public void adminCampsiteDetail(Long id, Model model) {
+                model.addAttribute("list", campingService.campsiteDetail(id));
         }
 
         @GetMapping("/admin/campsite/update")
-        public void adminCampsiteUpdate(Long id, Model model){
-            model.addAttribute("list", campingService.campsiteDetail(id));
+        public void adminCampsiteUpdate(Long id, Model model) {
+                model.addAttribute("list", campingService.campsiteDetail(id));
         }
 
         @PostMapping("/admin/campsite/update")
         public String adminCampsiteUpdateOK(Campsite campsite,
-                                          BindingResult result,
-                                          Model model,
-                                          RedirectAttributes redirectAttrs){
+                                            BindingResult result,
+                                            @RequestParam Map<String, MultipartFile> files,     // 새로 추가될 첨부파일들
+                                            Long[] delfile,
+                                            Model model) {
 
-                model.addAttribute("result", campingService.campsiteUpdate(campsite));
+                model.addAttribute("result", campingService.campsiteUpdate(campsite, files, delfile));
                 model.addAttribute("dto", campsite);
 
                 return "camp/admin/campsite/updateOk";
         }
+
         @PostMapping("/admin/campsite/delete")
-       public String campsiteDelete(Long id,Camping camping, Model model) {
+        public String campsiteDelete(Long id, Camping camping, Model model) {
                 model.addAttribute("result", campingService.campsiteDelete(id));
-                Long num1 =camping.getId();
-                model.addAttribute("dto",num1);
+                Long num1 = camping.getId();
+                model.addAttribute("dto", num1);
                 return "camp/admin/campsite/deleteOK";
         }
+
+        @GetMapping("/coupon")
+        public void coupon(Model model) {
+                User user = U.getLoggedUser();
+
+                // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다
+                user = userRepository.findById(user.getId()).orElse(null);
+                model.addAttribute("name", user);
         }
+
+        @PostMapping("/coupon")
+        public String couponOK(Coupon coupon,
+                               BindingResult result,
+                               Model model,
+                                RedirectAttributes redirectAttrs) {
+
+                if(campingService.findByCoupon(coupon.getCpNum())){
+
+                        if(campingService.couponCheck(coupon.getCpNum())) {
+                                model.addAttribute("result", campingService.addCoupon(coupon));
+                                model.addAttribute("dto", coupon);
+
+                                User user = U.getLoggedUser();
+
+                                // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다
+                                      user = userRepository.findById(user.getId()).orElse(null);
+
+                                int point = user.getPoint() + 5000;
+
+                                user.setPoint(point);
+
+                                userRepository.saveAndFlush(user);
+
+                                return "camp/couponOK";
+                        }else{
+                                return "camp/useCoupon";
+                        }
+                } else {
+                        return "camp/noReserve";
+
+                }
+        }
+}
+
 

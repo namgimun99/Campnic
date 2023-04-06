@@ -31,10 +31,10 @@ public class CampReserve extends BaseEntity{
         @ToString.Exclude
         private Campsite campsite; // FK
 
-        @Column(nullable = false, length = 8)
+        @Column(length = 8)
         private int sdate; // 날짜
 
-        @Column(nullable = false, length = 8)
+        @Column(length = 8)
         private int edate; // 날짜
 
         @ColumnDefault("00000000")

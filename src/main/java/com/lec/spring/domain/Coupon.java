@@ -15,7 +15,7 @@ public class Coupon {
     private Long id;
 
     @Column(nullable = false)
-    private String cp_sno;  // 쿠폰 일련번호
+    private String cpNum;  // 쿠폰 일련번호
 
     @ManyToOne
     private User user;

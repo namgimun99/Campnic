@@ -16,7 +16,7 @@
 <div th:with="user=${#authentication.getPrincipal().getUser()}">
 
     <div class="conA">
-        <div class="con1"><a th:href="@{/camp/recipt(id=${user.id})}" class="a_title"><img th:src="@{/img/campRecipt.png}" class="img_title"><h1 class="title">캠핑내역</h1></a></div>
+        <div class="con1"><a th:href="@{/camp/recipt}" class="a_title"><img th:src="@{/img/campRecipt.png}" class="img_title"><h1 class="title">캠핑내역</h1></a></div>
         <div class="con2"><a th:href="@{/lender/recipts}" class="a_title"><img th:src="@{/img/lendRecipt.png}" class="img_title"><h1 class="title">렌탈내역</h1></a></div>
         <div class="con3"><a th:href="@{/qna/myqna(userId=${user.id})}" class="a_title"><img th:src="@{/img/myQna.jpg}" class="img_title"><h1 id="title">My QnA</h1></a></div>
     </div>

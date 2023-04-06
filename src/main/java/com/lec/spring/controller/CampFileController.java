@@ -2,9 +2,7 @@ package com.lec.spring.controller;
 // 데이터를 response 하기 위해
 
 import com.lec.spring.domain.CampFileDTO;
-import com.lec.spring.domain.ItemFileDTO;
-import com.lec.spring.service.CampFileService;
-import com.lec.spring.service.ItemFileService;
+import com.lec.spring.service.CampsiteFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -26,10 +24,10 @@ public class CampFileController {
     @Value("${app.camp.upload.path}")  // org.springframework.beans.factory.annotation.Value
     private String uploadDir;
 
-    private CampFileService campfileService;
+    private CampsiteFileService campfileService;
 
     @Autowired
-    public void setCampFileService(CampFileService campfileService) {
+    public void setCampFileService(CampsiteFileService campfileService) {
         this.campfileService = campfileService;
     }
 

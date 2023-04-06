@@ -23,26 +23,7 @@
 <th:block th:insert="~{common/header::header}"></th:block>
 <th:block th:with="dto=${list[0]}">
 <div class="container mt-3">
-    <h2>목록</h2><a class="btn btn-outline-dark" th:href="@{/camp/admin/camping/list}" sec:authorize="hasAnyRole('ROLE_CAMPING')">관리자모드</a>
-
-
-    <form class="row align-items-center" th:action="@{/camp/list}" method="post">
-        <div class="d-flex flex-row mt-3">
-            <div class="p-2">
-                <select name="cityId" id="city" class="form-select">
-                    <option value="null" selected>도시</option>
-                    <th:block th:each="city : ${cityList}">
-                        <option th:value="${city.id}" th:text="${city.city}"></option>
-                    </th:block>
-                </select>
-            </div>
-            <div class="p-2">
-                <button type="submit" class="btn btn-primary">🔍</button>&nbsp;
-                <a class="btn btn-primary" th:href="@{/lender/itemList}">모두보기</a>
-            </div>
-        </div>
-    </form>
-
+    <h2>목록</h2>
 
     <hr>
     <!-- 목록 -->
@@ -50,15 +31,15 @@
         <thead class="table-success">
         <tr>
             <th>제목</th>
-            <th>소개</th>
-            <th>주소</th>
+            <th>입실</th>
+            <th>퇴실</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="dto : ${list}">
-            <td><a th:href="@{/camp/detail(id=${dto.id})}">[[${dto.camp_name}]]</a></td>
-            <td>[[${dto.content}]]</td>
-            <td>[[${dto.address}]]</td>
+            <td><a th:href="@{/camp/reserveDetail(id=${dto.id})}">[[${dto.campsite.camping.camp_name}]]</a></td>
+            <td>[[${dto.sdate}]]</td>
+            <td>[[${dto.edate}]]</td>
         </tr>
         </tbody>
     </table>

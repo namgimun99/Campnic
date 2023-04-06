@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
+    Coupon findByCpNum(String coupon);
+
     // 쿠폰일련번호로 조회 -> '이미 사용한 쿠폰입니다' 사용 목적
 //    Coupon findByCp_sno(String cp_sno);
 

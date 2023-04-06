@@ -10,6 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script th:src="@{/js/write.js}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
     <title>예약하기</title>
 </head>
@@ -53,9 +58,9 @@
 
                 <div class=detail>
                     <label>시작 날짜:</label>
-                    <input type="number" class="form-control" id="sdate" placeholder="입실 날짜" name="sdate" th:value="${sdate}" required>
+                    <input class="form-control" id="sdate" name="sdate" th:value="${sdate}" required>
                     <label>끝 날짜:</label>
-                    <input type="number" class="form-control" id="edate" placeholder="퇴실 날짜" name="edate" th:value="${edate}" required>
+                    <input type="text" class="form-control" id="edate" name="edate" th:value="${edate}" required>
                 </div>
 
                     <table class="table table-hover">
@@ -87,4 +92,33 @@
         </div>
     </body>
 </th:block>
+<script>
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년'
+    });
+
+</script>
+
+<script>
+  $(function() {
+      $("#sdate, #edate").datepicker({
+
+          dateFormat: 'yymmdd'
+      });
+      $("#sdate").datepicker('setDate', 'today');
+	  $("#edate").datepicker('setDate', 'today');
+  });
+
+
+
+</script>
 </html>

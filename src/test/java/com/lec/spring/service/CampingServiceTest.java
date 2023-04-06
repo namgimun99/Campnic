@@ -73,7 +73,10 @@ public class CampingServiceTest {
         System.out.println(camping1);
     }
 
+    @Test
+    public void couponfind(){
+        boolean exist = campingService.findByCoupon("00000000");
 
-
-
+        System.out.println(exist);
+    }
 }
