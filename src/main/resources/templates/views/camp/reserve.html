@@ -31,8 +31,7 @@
             </div>
         </div>
 
-                <form th:action="@{/camp/reserve}" method="post">
-
+                <form name="frm" id="frm" th:action="@{/camp/reserve}" method="post" onsubmit="mySubmit(); return false;">
                     <div class = write>
                         <input type="hidden" class="form-control" id="user" placeholder="user" name="user" th:value="${user}">
                     </div>
@@ -60,22 +59,30 @@
                     <label>시작 날짜:</label>
                     <input class="form-control" id="sdate" name="sdate" th:value="${sdate}" required>
                     <label>끝 날짜:</label>
-                    <input type="text" class="form-control" id="edate" name="edate" th:value="${edate}" required>
+                    <input class="form-control" id="edate" name="edate" th:value="${edate}" required>
                 </div>
 
                     <table class="table table-hover">
                         <thead class="table-success">
                         <tr>
+                            <th>이미지</th>
                             <th>번호</th>
                             <th>소개</th>
-                            <th>가격</th>
+                            <th>가격(1박)</th>
+                            <th>총 가격</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="site : ${site}">
+                            <td>
+                                <div th:if="${site.fileList != null and site.fileList.size() > 0}">
+                                    <img th:src="@{'/upload/camp/' + ${site.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="campImage">
+                                </div>
+                            </td>
                             <td th:value="${site.number}">[[${site.number}]]</td>
                             <td th:value="${site.content}" >[[${site.content}]]</td>
-                            <td th:value="${site.price}">[[${site.price}]]</td>
+                            <td id="price" name="price" th:value="${site.price}">[[${site.price}]]</td>
+                            <td name = "totalPrice" id="totalPrice" class="totalPrice col-md-3 offset-md-3">총 가격 : </td>
                             <td><button type="submit" class="btn btn-outline-dark" name = "campsite" id = "campsite" th:value="${site.id}" >예약하기</button></td>
                         </tr>
                         </tbody>
@@ -91,10 +98,11 @@
                 <!-- 하단 링크 -->
         </div>
     </body>
-</th:block>
+
 <script>
     $.datepicker.setDefaults({
         dateFormat: 'yy-mm-dd',
+		minDate: 0,
         prevText: '이전 달',
         nextText: '다음 달',
         monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -118,7 +126,49 @@
 	  $("#edate").datepicker('setDate', 'today');
   });
 
-
-
 </script>
+<script>
+$(document).ready(function () {
+  function calculateTotalPrice() {
+    const s = $("#sdate").datepicker("getDate");
+    const e = $("#edate").datepicker("getDate");
+
+    let days = (e.getTime() - s.getTime()) / (1000 * 60 * 60 * 24);
+    if (days === 0) {
+      days = 1;
+    }
+
+    const rows = document.querySelectorAll('tr');
+    for (const row of rows) {
+      const priceTd = row.querySelector('#price');
+      if (priceTd) {
+        const priceValue = parseFloat(priceTd.innerText);
+        const multipliedValue = priceValue * days;
+        const totalPriceTd = row.querySelector('.totalPrice');
+        if (totalPriceTd) {
+          totalPriceTd.innerText = multipliedValue;
+        }
+      }
+    }
+  }
+
+  $("#sdate, #edate").on("change", function () {
+    calculateTotalPrice();
+  });
+
+  $("#frm").submit(function (event) {
+    const s = $("#sdate").datepicker("getDate");
+    const e = $("#edate").datepicker("getDate");
+
+    if (s > e) {
+      alert('시작 날짜는 끝 날짜보다 이전이어야 합니다');
+      event.preventDefault();
+      return;
+    }
+
+    calculateTotalPrice();
+  });
+});
+</script>
+</th:block>
 </html>

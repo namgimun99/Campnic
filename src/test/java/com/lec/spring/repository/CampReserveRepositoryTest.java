@@ -46,7 +46,9 @@ class CampReserveRepositoryTest {
 
         //city 생성
 
-        City city1 = cityRepository.findByCity("제천");
+        City city1 = cityRepository.findByCity("서울시");
+        City city2 = cityRepository.findByCity("수원시");
+        City city3 = cityRepository.findByCity("하남시");
 
         //camping 생성
 
@@ -62,14 +64,14 @@ class CampReserveRepositoryTest {
                 .content("공기 좋고 물 좋은 설악산으로 오세요 2")
                 .address("속초")
                 .user(user1)
-                .city(city1)
+                .city(city2)
                 .build();
         Camping camping3 = Camping.builder()
                 .camp_name("설악산 캠핑장 3")
                 .content("공기 좋고 물 좋은 설악산으로 오세요 3")
                 .address("속초")
                 .user(user1)
-                .city(city1)
+                .city(city3)
                 .build();
 
 //      Camping camping4 = Camping.builder()
@@ -172,60 +174,60 @@ class CampReserveRepositoryTest {
 
         //Camp_Reserve 생성
 
-//        CampReserve campReserve1 = CampReserve.builder()
-//                .user(user1)
-//                .sdate(20230326)
-//                .edate(20230326)
-//                .campsite(campsite1)
-//                .coupon("12345678")
-//                .build();
-//
-//        CampReserve campReserve2 = CampReserve.builder()
-//                .user(user1)
-//                .sdate(20230326)
-//                .edate(20230326)
-//                .campsite(campsite2)
-//                .coupon("45678910")
-//                .build();
-//
-//        CampReserve campReserve3 = CampReserve.builder()
-//                .user(user2)
-//                .sdate(20230326)
-//                .edate(20230326)
-//                .campsite(campsite3)
-//                .coupon("13572468")
-//                .build();
-//
-//        CampReserve campReserve4 = CampReserve.builder()
-//                .user(user1)
-//                .sdate(20230326)
-//                .edate(20230326)
-//                .campsite(campsite4)
-//                .coupon("12411235")
-//                .build();
-//
-//        CampReserve campReserve5 = CampReserve.builder()
-//                .user(user2)
-//                .sdate(20230326)
-//                .edate(20230326)
-//                .campsite(campsite5)
-//                .coupon("53467654")
-//                .build();
-//
-//        CampReserve campReserve6 = CampReserve.builder()
-//                .user(user2)
-//                .sdate(20230326)
-//                .edate(20230326)
-//                .campsite(campsite6)
-//                .coupon("93983473")
-//                .build();
-//
-//        campReserve1 = campreserveRepository.save(campReserve1);
-//        campReserve2 = campreserveRepository.save(campReserve2);
-//        campReserve3 = campreserveRepository.save(campReserve3);
-//        campReserve4 = campreserveRepository.save(campReserve4);
-//        campReserve5 = campreserveRepository.save(campReserve5);
-//        campReserve6 = campreserveRepository.save(campReserve6);
+        CampReserve campReserve1 = CampReserve.builder()
+                .user(user1)
+                .sdate(20230326)
+                .edate(20230326)
+                .campsite(campsite1)
+                .coupon("12345678")
+                .build();
+
+        CampReserve campReserve2 = CampReserve.builder()
+                .user(user1)
+                .sdate(20230326)
+                .edate(20230326)
+                .campsite(campsite2)
+                .coupon("45678910")
+                .build();
+
+        CampReserve campReserve3 = CampReserve.builder()
+                .user(user2)
+                .sdate(20230326)
+                .edate(20230326)
+                .campsite(campsite3)
+                .coupon("13572468")
+                .build();
+
+        CampReserve campReserve4 = CampReserve.builder()
+                .user(user1)
+                .sdate(20230326)
+                .edate(20230326)
+                .campsite(campsite4)
+                .coupon("12411235")
+                .build();
+
+        CampReserve campReserve5 = CampReserve.builder()
+                .user(user2)
+                .sdate(20230326)
+                .edate(20230326)
+                .campsite(campsite5)
+                .coupon("53467654")
+                .build();
+
+        CampReserve campReserve6 = CampReserve.builder()
+                .user(user2)
+                .sdate(20230326)
+                .edate(20230326)
+                .campsite(campsite6)
+                .coupon("93983473")
+                .build();
+
+        campReserve1 = campreserveRepository.save(campReserve1);
+        campReserve2 = campreserveRepository.save(campReserve2);
+        campReserve3 = campreserveRepository.save(campReserve3);
+        campReserve4 = campreserveRepository.save(campReserve4);
+        campReserve5 = campreserveRepository.save(campReserve5);
+        campReserve6 = campreserveRepository.save(campReserve6);
 
 
         campreserveRepository.findAll().forEach(System.out::println);

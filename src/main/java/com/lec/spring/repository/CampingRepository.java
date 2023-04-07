@@ -12,4 +12,5 @@ public interface CampingRepository extends JpaRepository<Camping, Long> {
     List<Camping> findByUserOrderByIdAsc(User user);
 
 
+    List<Camping> findByCity(City city);
 }

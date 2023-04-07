@@ -30,6 +30,10 @@
                 <input type="hidden" name="id" th:value="${dto.id}">
             </form>
 
+            <div th:if="${dto.campsite.fileList != null and dto.campsite.fileList.size() > 0}">
+                <img th:src="@{'/upload/camp/' + ${dto.campsite.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="campImage">
+            </div>
+
             <div class=detail>
                 <label>캠핑장 이름:</label>
                 <div class="border bg-light rounded p-2" >[[${dto.campsite.camping.camp_name}]]</div>

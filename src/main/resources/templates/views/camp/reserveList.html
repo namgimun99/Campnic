@@ -30,6 +30,7 @@
     <table class="table table-hover">
         <thead class="table-success">
         <tr>
+            <th>이미지</th>
             <th>제목</th>
             <th>입실</th>
             <th>퇴실</th>
@@ -37,6 +38,11 @@
         </thead>
         <tbody>
         <tr th:each="dto : ${list}">
+            <td>
+                <div th:if="${dto.campsite.fileList != null and dto.campsite.fileList.size() > 0}">
+                    <img th:src="@{'/upload/camp/' + ${dto.campsite.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="campImage">
+                </div>
+            </td>
             <td><a th:href="@{/camp/recipt(id=${dto.id})}">[[${dto.campsite.camping.camp_name}]]</a></td>
             <td>[[${dto.sdate}]]</td>
             <td>[[${dto.edate}]]</td>

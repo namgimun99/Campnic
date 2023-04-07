@@ -28,6 +28,13 @@ public class CampingServiceTest {
     }
 
     @Test
+    public void searchcamp(){
+        List<Camping> campingList = campingService.searchcamp(1L);
+        campingList.forEach(System.out::println);
+
+    }
+
+    @Test
     public void testCitylist() {
         List<City> cityList = campingService.citylist();
         System.out.println(cityList);

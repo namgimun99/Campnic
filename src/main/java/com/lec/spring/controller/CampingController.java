@@ -86,6 +86,17 @@ public class CampingController {
         @GetMapping("/list")
         public void list(Model model) {
                 model.addAttribute("list", campingService.campinglist());
+                model.addAttribute("city",campingService.citylist());
+        }
+
+        @PostMapping("/list")
+        public void listOK(
+                @RequestParam("cityId") Long cityId
+                , Model model
+        ) {
+                model.addAttribute("list", campingService.searchcamp(cityId));
+                model.addAttribute("city",campingService.citylist());
+
         }
 
         @GetMapping("/detail")
@@ -95,7 +106,9 @@ public class CampingController {
 
         @GetMapping("/recipt")
         public void recipt(Long id, Model model) {
+
                 model.addAttribute("list", campingService.campReserveDetail(id));
+
         }
 
         //  ----------------------------------admin page---------------------------------------------
@@ -170,7 +183,6 @@ public class CampingController {
         @PostMapping("/admin/campsite/write")
         public String adminCampsiteWriteOK(@RequestParam Map<String, MultipartFile> files,
                                            Campsite campsite,
-                                           BindingResult result,
                                            Model model) {
                 Camping num1 = campsite.getCamping();
 

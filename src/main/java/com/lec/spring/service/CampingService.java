@@ -373,10 +373,13 @@ public class CampingService {
     @Transactional
     public int addCampsite(Campsite campsite,
                            Map<String, MultipartFile> files) {
-        addFiles(files, campsite.getId());
-        campsite = campsiteRepository.save(campsite);  // INSERT
 
-        return 1;
+        campsite = campsiteRepository.save(campsite);  // INSERT
+        if(campsite != null){
+            addFiles(files, campsite.getId());
+            return 1;
+        }
+        return 0;
     }
 
 
@@ -576,6 +579,12 @@ public int addReserve(CampReserve campReserve) {
         return myReserve;
     }
 
+    public CampReserve reserveOne(Long id){
+        CampReserve camp = campReserveRepository.findById(id).orElse(null);
+        return camp;
+    }
+
+
 
 
 //    public boolean isExist(int sdate){
@@ -626,4 +635,11 @@ public int addReserve(CampReserve campReserve) {
             return result;
         }
 
+    @Transactional
+    public List<Camping> searchcamp(Long cityId){
+        City city = cityRepository.findById(cityId).orElse(new City());
+        List<Camping> campList = campingRepository.findByCity(city);
+
+        return campList;
+    }
 }

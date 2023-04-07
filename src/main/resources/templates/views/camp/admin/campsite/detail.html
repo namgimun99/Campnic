@@ -31,6 +31,9 @@
             </form>
 
         <div id = detail>
+            <div th:if="${dto.fileList != null and dto.fileList.size() > 0}">
+                <img th:src="@{'/upload/camp/' + ${dto.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="campImage">
+            </div>
                 <div class=detail>
                     <label>구역 번호:</label>
                     <div class="border bg-light rounded p-2" >[[${dto.number}]]</div>

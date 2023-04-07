@@ -5,7 +5,6 @@
             alert("해당 정보가 삭제되거나 없습니다");
             history.back();
           </script>
-<th:block th:with="dto=${list[0]}" th:if="${list} and ${#lists.size(list) > 0}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,10 +29,26 @@
             </div>
         </div>
 
-        <form th:action="@{/camp/admin/campsite/update}" method="post">
+        <form th:action="@{/camp/admin/campsite/update}" method="post" enctype="Multipart/form-data">
+
+
+            <div class="container mt-3 mb-3 border rounded">
+                <div class="mb-3 mt-3">
+                    <label>첨부파일:</label>
+                    <div id="files">
+
+                    </div>
+                    <button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
+                    <!--/* 이미지인 경우 보여주기 */-->
+                    <div th:each="fileDto : ${list[0].fileList}">
+                        <img th:src="@{'/upload/camp/' + ${fileDto.file}}" style="width:150px; height:150px;" class="img-thumbnail" alt="Cinque Terre">
+                    </div>
+                </div>
+            </div>
+            <th:block th:with="dto=${list[0]}" th:if="${list} and ${#lists.size(list) > 0}">
+
+
             <input type="hidden" name="id" th:value="${dto.id}"/>
-
-
             <div class = write>
                 <label for="number">구역 번호:</label>
                 <input type="text" class="form-control" id="number" placeholder="구역 번호" name="number" th:value="${dto.number}" required>
@@ -54,10 +69,11 @@
                 <button type="submit" class="btn btn-outline-dark">수정 완료</button>
                 <a class="btn btn-outline-dark" th:href="@{/camp/admin/campsite/list}">목록</a>
             </div>
+
+        </th:block>
         </form>
     </div>
     </div>
     </body>
-</th:block>
 </html>
 

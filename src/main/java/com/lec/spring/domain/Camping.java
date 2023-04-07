@@ -46,7 +46,7 @@ public class Camping extends BaseEntity{
         @Builder.Default
         private List<Campsite> campsiteList = new ArrayList<>();
 
-        public void addItems(Campsite... campsite){
+        public void addCamp(Campsite... campsite){
                 Collections.addAll(campsiteList, campsite);
         }
 }

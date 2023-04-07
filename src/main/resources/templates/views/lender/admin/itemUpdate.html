@@ -54,7 +54,7 @@
                             </div>
                             <button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
                             <!--/* 이미지인 경우 보여주기 */-->
-                            <div th:each="fileDto : ${item.fileList}" th:if="${fileDto.image}">
+                            <div th:each="fileDto : ${item.fileList}" th:if="${fileDto.file}">
                                 <img th:src="@{'/upload/item/' + ${fileDto.file}}" class="img-thumbnail" alt="Cinque Terre">
                             </div>
                         </div>

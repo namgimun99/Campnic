@@ -31,14 +31,14 @@
             <div class="p-2">
                 <select name="cityId" id="city" class="form-select">
                     <option value="null" selected>도시</option>
-                    <th:block th:each="city : ${cityList}">
+                    <th:block th:each="city : ${city}">
                         <option th:value="${city.id}" th:text="${city.city}"></option>
                     </th:block>
                 </select>
             </div>
             <div class="p-2">
                 <button type="submit" class="btn btn-primary">🔍</button>&nbsp;
-                <a class="btn btn-primary" th:href="@{/lender/itemList}">모두보기</a>
+                <a class="btn btn-primary" th:href="@{/camp/list}">모두보기</a>
             </div>
         </div>
     </form>
