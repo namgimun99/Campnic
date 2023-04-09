@@ -69,8 +69,11 @@ public class UserService {
     }
 
     // 권한등록
+//    public void registerAuthReq(List<String> auth, String username, int i){
     public void registerAuthReq(String auth, String username){
         User u = userRepository.findByUsername(username);
+//        for(i = 0; i <= auth.size(); i++){
+//            Authority au = authorityRepository.findByName(auth.get(i));
         Authority au = authorityRepository.findByName(auth);
         Authreq ar = new Authreq();
         ar.setUser(u);

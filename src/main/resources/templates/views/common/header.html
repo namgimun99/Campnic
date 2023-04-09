@@ -10,9 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
-    <script th:src="@{/js/kakaoLogin2.js}"></script>
-    <script th:src="@{/js/naverLogin.js}"></script>
+    <script th:src="@{/js/kakaoLogin.js}"></script>
 </head>
 
 <body>
@@ -52,7 +50,14 @@
                             <!-- Modal Header -->
                             <div class="modal-header">
                                 <h4 class="modal-title" style="color: black; padding-right: 20px;"><b>간편로그인</b></h4>
-                                    <th:block th:insert="~{common/apiLogin::api}"></th:block>
+                                    <img th:src="@{/img/google.png}" style="display:inline; width: 70px; padding-right: 10px;">
+                                    <img th:src="@{/img/naver.png}" style="display:inline; width: 70px; padding-right: 10px;">
+                                    <form id="kakaoform" th:action="@{/user/apiLogin}" method="POST"></form>
+                                    <div onclick="loginWithKakao();" style="display:inline; width:70px;">
+                                        <a href="javascript:void(0)">
+                                            <img th:src="@{/img/kakao.png}">
+                                        </a>
+                                    </div>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <form name="form2" th:action="@{/user/login}" method="post">

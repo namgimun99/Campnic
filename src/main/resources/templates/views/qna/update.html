@@ -52,7 +52,7 @@
 
 
             <!-- 하단 링크 -->
-            <button type="submit" class="btn btn-outline-dark" th:if="${logged_user.id == dto.user.id}">수정완료</button>
+            <button type="submit" class="btn btn-outline-dark">수정완료</button>
             <button type="button" class="btn btn-outline-dark" onclick="history.back()">이전으로</button>
             <a class="btn btn-outline-dark" th:href="@{/qna/list(page=${session.page})}">목록</a>
             <!-- 하단 링크 -->
