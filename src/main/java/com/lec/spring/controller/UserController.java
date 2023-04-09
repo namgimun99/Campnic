@@ -128,12 +128,6 @@ public class UserController {
         return "redirect:mypage";
     }
 
-    @PostMapping("/delete")
-    public String deleteOk(Model model){
-        model.addAttribute("result", userService.deleteLoggedUser());
-        return "user/deleteOk";
-    }
-
     @InitBinder
     public void initBinder(WebDataBinder binder){
         binder.setValidator(new UserValidator());

@@ -111,12 +111,7 @@ public class UserService {
         return new ArrayList<>();
     }
 
-    // 회원탈퇴
-    public int deleteLoggedUser(){
-        User user = U.getLoggedUser();
-        userRepository.delete(user);
-        return 1;
-    }
+
 
     public int updateUser(Long id, int point) {
         User user = userRepository.findById(id).orElse(null);
