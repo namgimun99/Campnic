@@ -15,13 +15,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script th:src="@{/js/write.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
 
     <title>캠핑장 수정</title>
 </head>
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
 
-
+<div class="container mt-3">
 <h2 id = wh2>캠핑장 수정</h2>
 <div id = write>
         <div class="row mt-5" th:if="${error }">
@@ -55,6 +56,7 @@
             <a class="btn btn-outline-dark" th:href="@{/camp/admin/camping/list}">목록</a>
         </div>
     </form>
+</div>
 </div>
 </div>
 </body>

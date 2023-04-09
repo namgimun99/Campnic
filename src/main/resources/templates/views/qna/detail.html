@@ -63,10 +63,10 @@
 
 
             <!-- 하단 링크 -->
-            <a class="btn btn-outline-dark" th:href="@{/qna/update(id=${dto.id})}" >수정</a>
+            <a class="btn btn-outline-dark" th:href="@{/qna/update(id=${dto.id})}" th:if="${logged_user.id == dto.user.id}">수정</a>
             <a class="btn btn-outline-dark" th:href="@{/qna/list(page=${session.page})}">목록</a>
-            <button type="button" class="btn btn-outline-dark" id="btnDel" >삭제</button>
-            <a class="btn btn-outline-dark" th:href="@{/qna/write}" >작성</a>
+            <button type="button" class="btn btn-outline-dark" id="btnDel" th:if="${logged_user.id == dto.user.id}">삭제</button>
+            <a class="btn btn-outline-dark" th:href="@{/qna/write}" sec:authorize="isAuthenticated()">작성</a>
             <!-- 하단 링크 -->
 
             <!-- 댓글 -->

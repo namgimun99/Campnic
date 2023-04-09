@@ -60,10 +60,6 @@ public class UserController {
         }
     }
 
-    @GetMapping("/naverOk")
-    public String naverOk(){
-        return "common/naverOk";
-    }
 
     @PostMapping("/loginError")
     public String loginError(){ return "user/login"; }
@@ -142,5 +138,6 @@ public class UserController {
     public void initBinder(WebDataBinder binder){
         binder.setValidator(new UserValidator());
     }
+
 
 }
