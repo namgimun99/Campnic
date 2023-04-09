@@ -121,8 +121,8 @@ public class UserController {
 
     @PostMapping("/adminreq")
     public String adminReq( String auth
-                            , String username
-                            , Model model
+            , String username
+            , Model model
     ){
         userService.registerAuthReq(auth, username);
         return "redirect:mypage";

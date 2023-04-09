@@ -25,10 +25,10 @@
     <div class="container mt-3">
         <h2 id = dh2>[[${dto.camp_name}]]</h2>
         <section>
-        <form name="frmDelete" th:action="@{/camp/admin/camping/delete}" method="post">
-            <input type="hidden" name="id" th:value="${dto.id}">
-        </form>
-        <div id = detail>
+            <form name="frmDelete" th:action="@{/camp/admin/camping/delete}" method="post">
+                <input type="hidden" name="id" th:value="${dto.id}">
+            </form>
+            <div id = detail>
                 <div class=detail>
                     <label>캠핑장 이름:</label>
                     <div class="border bg-light rounded p-2" >[[${dto.camp_name}]]</div>
@@ -41,7 +41,7 @@
                     <label>소개:</label>
                     <div class="border bg-light rounded p-2" >[[${dto.content}]]</div>
                 </div>
-            <a class="btn btn-outline-dark" th:href="@{/camp/admin/campsite/list(id=${dto.id})}">등록한 구역 보기</a>
+                <a class="btn btn-outline-dark" th:href="@{/camp/admin/campsite/list(id=${dto.id})}">등록한 구역 보기</a>
                 <div id = dbutton>
                     <!-- 하단 링크 -->
                     <a class="btn btn-outline-dark" th:href="@{/camp/admin/camping/update(id=${dto.id})}">수정</a>
@@ -52,7 +52,7 @@
                 <!-- 하단 링크 -->
 
 
-        </div>
+            </div>
         </section>
     </div>
     </body>

@@ -52,13 +52,13 @@
                             <!-- Modal Header -->
                             <div class="modal-header">
                                 <h4 class="modal-title" style="color: black; padding-right: 20px;"><b>간편로그인</b></h4>
-                                    <th:block th:insert="~{common/apiLogin::api}"></th:block>
+                                <th:block th:insert="~{common/apiLogin::api}"></th:block>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <form name="form2" th:action="@{/user/login}" method="post">
                                 <div class="modal-body" style="color: black; font-size: 17px;">
-                                <div class="apiLogin">
-                                </div>
+                                    <div class="apiLogin">
+                                    </div>
                                     <div class="form-floating">
                                         <input type="text" class="form-control" name="username" id="username" th:value="${username}" placeholder="ID" required>
                                         <label for="username">ID</label>

@@ -9,25 +9,25 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">    </script>
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-<!--  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>-->
+  <!--  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>-->
   <script th:src="@{/js/kakaoLogin.js}"></script>
   <script th:src="@{/js/naverLogin.js}"></script>
 </head>
 <body>
 <th:block th:fragment="api">
-<div id="apiLogin">
-  <form id="kakaoform" th:action="@{/user/apiLogin}" method="POST"></form>
-  <div onclick="loginWithKakao();" style="padding-top: 10px;">
-    <a href="javascript:void(0)">
-      <img th:src="@{/img/kakao_long.png}">
-    </a>
-  </div>
+  <div id="apiLogin">
+    <form id="kakaoform" th:action="@{/user/apiLogin}" method="POST"></form>
+    <div onclick="loginWithKakao();" style="padding-top: 10px;">
+      <a href="javascript:void(0)">
+        <img th:src="@{/img/kakao_long.png}">
+      </a>
+    </div>
 
-<!--  <div id="naverIdLogin" style="padding-top: 10px;">-->
-<!--    <a id="naverIdLogin_loginButton" href="javascript:void(0)">-->
-<!--      <img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.1" height="60">-->
-<!--    </a>-->
-<!--  </div>-->
+    <!--  <div id="naverIdLogin" style="padding-top: 10px;">-->
+    <!--    <a id="naverIdLogin_loginButton" href="javascript:void(0)">-->
+    <!--      <img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.1" height="60">-->
+    <!--    </a>-->
+    <!--  </div>-->
 
   </div>
 
