@@ -96,7 +96,7 @@ public class UserController {
                 break;
             }
 
-            return "redirect:/user/join";
+            return "redirect:join";
         }
         // valid 통과되면 수행
         int cnt = userService.register(user);
@@ -107,12 +107,12 @@ public class UserController {
             System.out.println("----------------------------");
             System.out.println(user.getUsername());
             System.out.println("----------------------------");
-            return "/user/apiLogin";
+            return "apiLogin";
         }
 
         // 에러 없었으면 회원 등록 진행
         model.addAttribute("result", cnt);
-        return "/user/joinOk";
+        return "joinOk";
     }
 
     @GetMapping("/mypage")

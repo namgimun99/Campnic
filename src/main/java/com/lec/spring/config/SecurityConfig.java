@@ -60,7 +60,7 @@ public class SecurityConfig {
                         .requestMatchers("/lender/admin/write/**", "/lender/admin/update/**", "/lender/admin/list/**").hasAnyRole("LENDER")
                         .requestMatchers("/lender/admin/itemList/**", "/lender/admin/itemWrite/**", "/lender/admin/itemDetail/**", "/lender/admin/itemUpdate/**").hasAnyRole("LENDER")
                         .requestMatchers("/admin/authCheck/**", "/admin/city/**").hasAnyRole("ADMIN")
-                        .requestMatchers("/coupon/write/**").authenticated()
+                        .requestMatchers("/camp/coupon/**").authenticated()
                         .requestMatchers("/qna/write/**", "/qna/detail/**", "/qna/update/**", "/qna/delete/**").hasAnyRole("MEMBER", "LENDER", "CAMPING", "ADMIN")
                         .anyRequest().permitAll()
                 )

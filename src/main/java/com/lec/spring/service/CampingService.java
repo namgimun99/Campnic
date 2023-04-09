@@ -53,6 +53,7 @@ public class CampingService {
     public void setAuthorityRepository(AuthorityRepository authorityRepository) {
         this.authorityRepository = authorityRepository;
     }
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
