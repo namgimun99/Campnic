@@ -36,7 +36,7 @@
                         <textarea type="text" class="form-control" rows="5" id="content" name="content" placeholder="용품 설명을 쓰세요" th:utext="${item.content}" readonly></textarea>
                     </div>
                     <div class="mb-3 mt-3 w-50">
-                        <img th:src="@{'/upload/item/' + ${item.fileList[0].file}}" class="card-img-top" alt="Item Image">
+                        <img th:src="@{'/upload/item/' + ${item.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="Item Image">
                     </div>
                 </div>
                 <div class="col mt-5">

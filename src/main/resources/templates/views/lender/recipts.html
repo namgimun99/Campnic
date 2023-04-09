@@ -35,7 +35,7 @@
         <th:block th:each="rental : ${rentalList}">
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img th:src="@{'/upload/item/' + ${rental.item.fileList[0].file}}" class="card-img-top" alt="Item Image">
+              <img th:src="@{'/upload/item/' + ${rental.item.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="Item Image">
               <div class="card-body">
                 <h5 class="card-title" th:text="${rental.item.price * (T(java.time.temporal.ChronoUnit).DAYS.between(rental.sdate, rental.edate) + 1) * rental.quantity}"></h5>
                 <p class="card-text" th:text="${rental.item.lender.city.city + ' ' + rental.item.lender.address}"></p>
