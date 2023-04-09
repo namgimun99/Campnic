@@ -118,4 +118,10 @@ public class UserService {
         return 1;
     }
 
+    public int updateUser(Long id, int point) {
+        User user = userRepository.findById(id).orElse(null);
+        user.setPoint(point);
+        user = userRepository.saveAndFlush(user);
+        return 1;
+    }
 }

@@ -1,14 +1,20 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.config.PrincipalDetailService;
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.*;
 import com.lec.spring.service.CampingService;
 import com.lec.spring.service.LenderService;
+import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -40,6 +46,12 @@ public class CampingController {
 
         @Autowired
         private LenderService lenderService;
+
+        @Autowired
+        private UserService userService;
+
+        @Autowired
+        private PrincipalDetailService principalDetailService;
 
         @GetMapping("/reserveList")
         public void reserveList(Model model) {
@@ -232,6 +244,7 @@ public class CampingController {
                 model.addAttribute("name", user);
         }
 
+        @Transactional
         @PostMapping("/coupon")
         public String couponOK(Coupon coupon,
                                BindingResult result,
@@ -255,6 +268,15 @@ public class CampingController {
 
                                 userRepository.saveAndFlush(user);
 
+                                // 덮어씌우기
+                                userService.updateUser(user.getId(), point);
+
+                                //수정된 유저정보 principal에 업데이트
+                                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                                UserDetails userAccount = (UserDetails) authentication.getPrincipal();
+                                SecurityContextHolder.getContext().setAuthentication(
+                                        createNewAuthentication(authentication,userAccount.getUsername()));
+
                                 return "camp/couponOK";
                         }else{
                                 return "camp/useCoupon";
@@ -263,6 +285,18 @@ public class CampingController {
                         return "camp/noReserve";
 
                 }
+        } // end
+
+        protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
+                UserDetails newPrincipal = principalDetailService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken newAuth =
+                        new UsernamePasswordAuthenticationToken(
+                                newPrincipal,
+                                currentAuth.getCredentials(),
+                                newPrincipal.getAuthorities()
+                        );
+                newAuth.setDetails(currentAuth.getDetails());
+                return newAuth;
         }
 }
 
