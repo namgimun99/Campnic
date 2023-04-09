@@ -3,21 +3,22 @@
 
 <th:block th:with="dto=${camping}">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script th:src="@{/js/write.js}"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script th:src="@{/js/write.js}"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-    <title>예약하기</title>
-</head>
+        <title>예약하기</title>
+    </head>
 
     <body>
     <th:block th:insert="~{common/header::header}"></th:block>
@@ -31,144 +32,144 @@
             </div>
         </div>
 
-                <form name="frm" id="frm" th:action="@{/camp/reserve}" method="post" onsubmit="mySubmit(); return false;">
-                    <div class = write>
-                        <input type="hidden" class="form-control" id="user" placeholder="user" name="user" th:value="${user}">
-                    </div>
+        <form name="frm" id="frm" th:action="@{/camp/reserve}" method="post" onsubmit="mySubmit(); return false;">
+            <div class = write>
+                <input type="hidden" class="form-control" id="user" placeholder="user" name="user" th:value="${user}">
+            </div>
 
-                <div class=detail>
-                    <label>캠핑장 이름:</label>
-                    <div class="border bg-light rounded p-2" >[[${dto.camp_name}]]</div>
-                </div>
-                <div class=detail>
-                    <label>주소:</label>
-                    <div class="border bg-light rounded p-2" >[[${dto.address}]]</div>
-                </div>
+            <div class=detail>
+                <label>캠핑장 이름:</label>
+                <div class="border bg-light rounded p-2" >[[${dto.camp_name}]]</div>
+            </div>
+            <div class=detail>
+                <label>주소:</label>
+                <div class="border bg-light rounded p-2" >[[${dto.address}]]</div>
+            </div>
 
-                <div class=detail>
-                    <label>예약자 명:</label>
-                    <div class="border bg-light rounded p-2" >[[${name.name}]]</div>
-                </div>
+            <div class=detail>
+                <label>예약자 명:</label>
+                <div class="border bg-light rounded p-2" >[[${name.name}]]</div>
+            </div>
 
-                <div class=detail>
-                    <label>캠핑장 소개:</label>
-                    <div class="border bg-light rounded p-2" >[[${dto.content}]]</div>
-                </div>
+            <div class=detail>
+                <label>캠핑장 소개:</label>
+                <div class="border bg-light rounded p-2" >[[${dto.content}]]</div>
+            </div>
 
-                <div class=detail>
-                    <label>시작 날짜:</label>
-                    <input class="form-control" id="sdate" name="sdate" th:value="${sdate}" required>
-                    <label>끝 날짜:</label>
-                    <input class="form-control" id="edate" name="edate" th:value="${edate}" required>
-                </div>
+            <div class=detail>
+                <label>시작 날짜:</label>
+                <input class="form-control" id="sdate" name="sdate" th:value="${sdate}" required>
+                <label>끝 날짜:</label>
+                <input class="form-control" id="edate" name="edate" th:value="${edate}" required>
+            </div>
 
-                    <table class="table table-hover">
-                        <thead class="table-success">
-                        <tr>
-                            <th>이미지</th>
-                            <th>번호</th>
-                            <th>소개</th>
-                            <th>가격(1박)</th>
-                            <th>총 가격</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="site : ${site}">
-                            <td>
-                                <div th:if="${site.fileList != null and site.fileList.size() > 0}">
-                                    <img th:src="@{'/upload/camp/' + ${site.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="campImage">
-                                </div>
-                            </td>
-                            <td th:value="${site.number}">[[${site.number}]]</td>
-                            <td th:value="${site.content}" >[[${site.content}]]</td>
-                            <td id="price" name="price" th:value="${site.price}">[[${site.price}]]</td>
-                            <td name = "totalPrice" id="totalPrice" class="totalPrice col-md-3 offset-md-3">총 가격 : </td>
-                            <td><button type="submit" class="btn btn-outline-dark" name = "campsite" id = "campsite" th:value="${site.id}" >예약하기</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                <div id = dbutton>
-                    <!-- 하단 링크 -->
-                    <a class="btn btn-outline-dark" th:href="@{/camp/list}">목록으로</a>
-
-
-                </div>
-
-                </form>
+            <table class="table table-hover">
+                <thead class="table-success">
+                <tr>
+                    <th>이미지</th>
+                    <th>번호</th>
+                    <th>소개</th>
+                    <th>가격(1박)</th>
+                    <th>총 가격</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="site : ${site}">
+                    <td>
+                        <div th:if="${site.fileList != null and site.fileList.size() > 0}">
+                            <img th:src="@{'/upload/camp/' + ${site.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="campImage">
+                        </div>
+                    </td>
+                    <td th:value="${site.number}">[[${site.number}]]</td>
+                    <td th:value="${site.content}" >[[${site.content}]]</td>
+                    <td id="price" name="price" th:value="${site.price}">[[${site.price}]]</td>
+                    <td name = "totalPrice" id="totalPrice" class="totalPrice col-md-3 offset-md-3">총 가격 : </td>
+                    <td><button type="submit" class="btn btn-outline-dark" name = "campsite" id = "campsite" th:value="${site.id}" >예약하기</button></td>
+                </tr>
+                </tbody>
+            </table>
+            <div id = dbutton>
                 <!-- 하단 링크 -->
-        </div>
+                <a class="btn btn-outline-dark" th:href="@{/camp/list}">목록으로</a>
+
+
+            </div>
+
+        </form>
+        <!-- 하단 링크 -->
+    </div>
     </body>
 
-<script>
-    $.datepicker.setDefaults({
-        dateFormat: 'yy-mm-dd',
-		minDate: 0,
-        prevText: '이전 달',
-        nextText: '다음 달',
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-        showMonthAfterYear: true,
-        yearSuffix: '년'
-    });
+    <script>
+        $.datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd',
+            minDate: 0,
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년'
+        });
 
-</script>
+    </script>
 
-<script>
-  $(function() {
-      $("#sdate, #edate").datepicker({
+    <script>
+        $(function() {
+            $("#sdate, #edate").datepicker({
 
-          dateFormat: 'yymmdd'
-      });
-      $("#sdate").datepicker('setDate', 'today');
-	  $("#edate").datepicker('setDate', 'today');
-  });
+                dateFormat: 'yymmdd'
+            });
+            $("#sdate").datepicker('setDate', 'today');
+            $("#edate").datepicker('setDate', 'today');
+        });
 
-</script>
-<script>
-$(document).ready(function () {
-  function calculateTotalPrice() {
-    const s = $("#sdate").datepicker("getDate");
-    const e = $("#edate").datepicker("getDate");
+    </script>
+    <script>
+        $(document).ready(function () {
+            function calculateTotalPrice() {
+                const s = $("#sdate").datepicker("getDate");
+                const e = $("#edate").datepicker("getDate");
 
-    let days = (e.getTime() - s.getTime()) / (1000 * 60 * 60 * 24);
-    if (days === 0) {
-      days = 1;
-    }
+                let days = (e.getTime() - s.getTime()) / (1000 * 60 * 60 * 24);
+                if (days === 0) {
+                    days = 1;
+                }
 
-    const rows = document.querySelectorAll('tr');
-    for (const row of rows) {
-      const priceTd = row.querySelector('#price');
-      if (priceTd) {
-        const priceValue = parseFloat(priceTd.innerText);
-        const multipliedValue = priceValue * days;
-        const totalPriceTd = row.querySelector('.totalPrice');
-        if (totalPriceTd) {
-          totalPriceTd.innerText = multipliedValue;
-        }
-      }
-    }
-  }
+                const rows = document.querySelectorAll('tr');
+                for (const row of rows) {
+                    const priceTd = row.querySelector('#price');
+                    if (priceTd) {
+                        const priceValue = parseFloat(priceTd.innerText);
+                        const multipliedValue = priceValue * days;
+                        const totalPriceTd = row.querySelector('.totalPrice');
+                        if (totalPriceTd) {
+                            totalPriceTd.innerText = multipliedValue;
+                        }
+                    }
+                }
+            }
 
-  $("#sdate, #edate").on("change", function () {
-    calculateTotalPrice();
-  });
+            $("#sdate, #edate").on("change", function () {
+                calculateTotalPrice();
+            });
 
-  $("#frm").submit(function (event) {
-    const s = $("#sdate").datepicker("getDate");
-    const e = $("#edate").datepicker("getDate");
+            $("#frm").submit(function (event) {
+                const s = $("#sdate").datepicker("getDate");
+                const e = $("#edate").datepicker("getDate");
 
-    if (s > e) {
-      alert('시작 날짜는 끝 날짜보다 이전이어야 합니다');
-      event.preventDefault();
-      return;
-    }
+                if (s > e) {
+                    alert('시작 날짜는 끝 날짜보다 이전이어야 합니다');
+                    event.preventDefault();
+                    return;
+                }
 
-    calculateTotalPrice();
-  });
-});
-</script>
+                calculateTotalPrice();
+            });
+        });
+    </script>
 </th:block>
 </html>

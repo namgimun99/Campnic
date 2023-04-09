@@ -22,41 +22,42 @@
 <!--/* 인증 헤더 */-->
 <th:block th:insert="~{common/header::header}"></th:block>
 <th:block th:with="dto=${list[0]}">
-<div class="container mt-3" >
-    <h2>목록 - [[${dto.camping.camp_name}]]</h2>
-    <hr>
-</div>
+    <div class="container mt-3" >
+        <h2>목록 - [[${dto.camping.camp_name}]]</h2>
+        <hr>
 
-    <!-- 목록 -->
-    <table class="table table-hover">
-        <thead class="table-success">
-        <tr>
-            <th>이미지</th>
-            <th>번호</th>
-            <th>소개</th>
-            <th>가격</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="cs : ${list}">
-            <td>
-                <div th:if="${cs.fileList != null and cs.fileList.size() > 0}">
-                    <img th:src="@{'/upload/camp/' + ${cs.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="campImage">
-                </div>
-            </td>
-            <td><a th:href="@{/camp/admin/campsite/detail(id=${cs.id})}">[[${cs.number}]]</a></td>
-            <td>[[${cs.content}]]</td>
-            <td>[[${cs.price}]]</td>
-        </tr>
-        </tbody>
-    </table>
-    <!-- 목록 -->
-    <div class="row">
-        <div class="col-12">
-            <a class="btn btn-outline-dark" th:href="@{/camp/admin/campsite/write(id=${dto.camping.id})}">캠핑장 구역 등록</a>
+
+        <!-- 목록 -->
+        <table class="table table-hover">
+            <thead class="table-success">
+            <tr>
+                <th>이미지</th>
+                <th>번호</th>
+                <th>소개</th>
+                <th>가격</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cs : ${list}">
+                <td>
+                    <div th:if="${cs.fileList != null and cs.fileList.size() > 0}">
+                        <img th:src="@{'/upload/camp/' + ${cs.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top" alt="campImage">
+                    </div>
+                </td>
+                <td><a th:href="@{/camp/admin/campsite/detail(id=${cs.id})}">[[${cs.number}]]</a></td>
+                <td>[[${cs.content}]]</td>
+                <td>[[${cs.price}]]</td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- 목록 -->
+        <div class="row">
+            <div class="col-12">
+                <a class="btn btn-outline-dark" th:href="@{/camp/admin/campsite/write(id=${dto.camping.id})}">캠핑장 구역 등록</a>
+            </div>
         </div>
     </div>
-</div>
+    </div>
 </th:block>
 </body>
 </html>

@@ -5,68 +5,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">    </script>
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-  <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+  <!--  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>-->
   <script th:src="@{/js/kakaoLogin.js}"></script>
   <script th:src="@{/js/naverLogin.js}"></script>
-  <script th:src="@{/js/googleLogin.js}"></script>
-
-<script>
-  function onSignIn(){
-    google.accounts.id.initialize({
-        client_id: "433601482853-1a55r7pqkgulalj3ukdq1qf1lr1olhj6.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-    });
-    google.accounts.id.prompt();
-}
-
-function handleCredentialResponse(response){
-    var profile = jwt_decode(response.credential);
-    console.log("ID: " + profile.sub);
-    console.log("Name: " + profile.name);
-    console.log("Image URL: " + profile.picture);
-    console.log("Email: " + profile.email);
-
-    ${'#googleLogin'}.css('display', 'none');
-    ${'#uname'}.html('[' + profile.name + ']');
-    ${'#uid'}.html('[' + profile.sub + ']');
-}
-
-</script>
 </head>
 <body>
 <th:block th:fragment="api">
-<div id="apiLogin">
-  <form id="kakaoform" th:action="@{/user/apiLogin}" method="POST"></form>
-  <div onclick="loginWithKakao();" style="padding-top: 10px;">
-    <a href="javascript:void(0)">
-      <img th:src="@{/img/kakao.png}" height="50" width="230">
-    </a>
+  <div id="apiLogin">
+    <form id="kakaoform" th:action="@{/user/apiLogin}" method="POST"></form>
+    <div onclick="loginWithKakao();" style="padding-top: 10px;">
+      <a href="javascript:void(0)">
+        <img th:src="@{/img/kakao_long.png}">
+      </a>
+    </div>
+
+    <!--  <div id="naverIdLogin" style="padding-top: 10px;">-->
+    <!--    <a id="naverIdLogin_loginButton" href="javascript:void(0)">-->
+    <!--      <img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.1" height="60">-->
+    <!--    </a>-->
+    <!--  </div>-->
+
   </div>
 
-<!--  <div style="display:inline-flex; padding-top: 10px; padding-left: 50px; padding-right: 50px;">-->
-<!--    <a href="javascript:void(0)">-->
-<!--      <img th:src="@{/img/google.png}">-->
-<!--    </a>-->
-<!--  </div>-->
-  <div id="googleLogin" style=" padding-top: 10px;">
-    <button onclick="onSignIn();"><img th:src="@{/img/google.png}"></button>
-  </div>
-  <span id="uname"></span>
-  <span id="uid"></span>
-
-  <div class="naverIdLogin" style=" padding-top: 10px;">
-    <a id="naverIdLogin_loginButton" href="javascript:void(0)"><img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.1" height="50"></a>
-  </div>
-<!--  <div class="naverIdLogin" style="display:inline-flex; padding-top: 10px;">-->
-<!--    <a id="naverIdLogin" href="javascript:void(0)">-->
-<!--      <img th:src="@{/img/naver.png}" style="width: 80px;">-->
-<!--    </a>-->
-<!--  </div>-->
-</div>
 </th:block>
 </body>
 </html>

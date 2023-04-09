@@ -60,10 +60,6 @@ public class UserController {
         }
     }
 
-    @GetMapping("/naverOk")
-    public String naverOk(){
-        return "common/naverOk";
-    }
 
     @PostMapping("/loginError")
     public String loginError(){ return "user/login"; }
@@ -125,8 +121,8 @@ public class UserController {
 
     @PostMapping("/adminreq")
     public String adminReq( String auth
-                            , String username
-                            , Model model
+            , String username
+            , Model model
     ){
         userService.registerAuthReq(auth, username);
         return "redirect:mypage";
@@ -142,5 +138,6 @@ public class UserController {
     public void initBinder(WebDataBinder binder){
         binder.setValidator(new UserValidator());
     }
+
 
 }
