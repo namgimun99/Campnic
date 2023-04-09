@@ -74,7 +74,7 @@
         <tr th:each="dto : ${list}">
             <td><a th:href="@{/camp/detail(id=${dto.id})}">[[${dto.camp_name}]]</a></td>
             <td>[[${dto.content}]]</td>
-            <td>[[${dto.address}]]</td>
+            <td>[[${dto.city.city}]] [[${dto.address}]]</td>
         </tr>
         </tbody>
     </table>
