@@ -47,7 +47,8 @@ public class CampingController {
         }
 
         @GetMapping("/reserve")
-        public void reserve(Long id, Model model) {
+        public void reserve(Long id,
+                            Model model) {
 
                 Camping camping = campingService.campingOne(id);
                 model.addAttribute("camping", camping);
@@ -64,9 +65,7 @@ public class CampingController {
 
         @PostMapping("/reserve")
         public String reserveOK(CampReserve campReserve,
-                                BindingResult result,
-                                Model model,
-                                RedirectAttributes redirectAttributes) {
+                                Model model) {
 
                 campReserve.setCoupon(campingService.couponNum());
 
@@ -84,8 +83,8 @@ public class CampingController {
         }
 
         @GetMapping("/list")
-        public void list(Model model) {
-                model.addAttribute("list", campingService.campinglist());
+        public void list(Integer page, Model model) {
+                model.addAttribute("list", campingService.CampingList(page,model));
                 model.addAttribute("city",campingService.citylist());
         }
 
@@ -132,9 +131,7 @@ public class CampingController {
         @PostMapping("/admin/camping/write")
         public String adminCampingWriteOK(@RequestParam Long cityId,
                                           Camping camping,
-                                          BindingResult result,
-                                          Model model,
-                                          RedirectAttributes redirectAttributes) {
+                                          Model model) {
                 User num1 = camping.getUser();
 
 
@@ -152,9 +149,7 @@ public class CampingController {
         //
         @PostMapping("/admin/camping/update")
         public String adminCampingUpdateOK(Camping camping,
-                                           BindingResult result,
-                                           Model model,
-                                           RedirectAttributes redirectAttrs) {
+                                           Model model) {
 
                 model.addAttribute("result", campingService.campingUpdate(camping));
                 model.addAttribute("dto", camping);
@@ -204,7 +199,6 @@ public class CampingController {
 
         @PostMapping("/admin/campsite/update")
         public String adminCampsiteUpdateOK(Campsite campsite,
-                                            BindingResult result,
                                             @RequestParam Map<String, MultipartFile> files,     // 새로 추가될 첨부파일들
                                             Long[] delfile,
                                             Model model) {
@@ -234,9 +228,7 @@ public class CampingController {
 
         @PostMapping("/coupon")
         public String couponOK(Coupon coupon,
-                               BindingResult result,
-                               Model model,
-                                RedirectAttributes redirectAttrs) {
+                               Model model) {
 
                 if(campingService.findByCoupon(coupon.getCpNum())){
 

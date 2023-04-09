@@ -29,7 +29,3 @@ DROP TABLE IF EXISTS camp_reserve;
 DROP TABLE IF EXISTS campsite;
 DROP TABLE IF EXISTS camping;
 DROP TABLE IF EXISTS db_city;
-
-# 페이징 테스트용 다량의 데이터
-INSERT INTO qna(user_id, subject, content, reg_date)
-SELECT user_id, subject, content, now(6) FROM qna;

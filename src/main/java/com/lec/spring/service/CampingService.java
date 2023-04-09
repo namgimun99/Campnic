@@ -236,47 +236,6 @@ public class CampingService {
         return list;
     }
 
-    //페이징
-    public List<Campsite> list(Integer page, Model model) {
-        if (page == null) page = 1;
-        if (page < 1) page = 1;
-
-        HttpSession session = U.getSession();
-        Integer campsitePages = (Integer) session.getAttribute("campsitePages");
-        if (campsitePages == null) campsitePages = C.WRITE_PAGES;
-        Integer pageRows = (Integer) session.getAttribute("pageRows");
-        if (pageRows == null) pageRows = C.PAGE_ROWS;
-        session.setAttribute("page", page);
-
-        Page<Campsite> pageWrites = campsiteRepository.findAll(PageRequest.of(page - 1, pageRows, Sort.by(Sort.Order.desc("id"))));
-
-        long cnt = pageWrites.getTotalElements();
-        int totalPage = pageWrites.getTotalPages();
-
-        if (page > totalPage) page = totalPage;
-
-        int fromRow = (page - 1) * pageRows;
-
-        int startPage = ((int) ((page - 1) / campsitePages) * campsitePages) + 1;
-        int endPage = startPage + campsitePages - 1;
-        if (endPage >= totalPage) endPage = totalPage;
-
-        model.addAttribute("cnt", cnt);
-        model.addAttribute("page", page);
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("pageRows", pageRows);
-
-        model.addAttribute("url", U.getRequest().getRequestURI());
-        model.addAttribute("campsitePages", campsitePages);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
-        List<Campsite> list = pageWrites.getContent();
-        model.addAttribute("list", list);
-
-
-        return list;
-    } // 페이징 end
 
     //특정 글(id) update
     public int campsiteUpdate(Campsite campsite,
@@ -487,7 +446,7 @@ public int addReserve(CampReserve campReserve) {
 }
 
     //페이징
-    public List<CampReserve> CampReserveList(Integer page, Model model) {
+    public List<CampReserve> ReserveList(Integer page, Model model) {
         if (page == null) page = 1;
         if (page < 1) page = 1;
 
