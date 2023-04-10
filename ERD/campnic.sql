@@ -21,3 +21,7 @@ SELECT * FROM rental_recipt;
 SELECT * FROM qna;
 SELECT * FROM qna_comment;
 
+
+# 페이징 테스트용 다량의 데이터
+INSERT INTO qna(user_id, subject, content, reg_date)
+SELECT user_id, subject, content, now(6) FROM qna;
