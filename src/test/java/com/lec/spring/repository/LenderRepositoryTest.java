@@ -47,9 +47,14 @@ class LenderRepositoryTest {
                 .city("하남시")
                 .build();
 
+        City c4 = City.builder()
+                .city("용인시")
+                .build();
+
         c1 = cityRepository.save(c1);
         c2 = cityRepository.save(c2);
         c3 = cityRepository.save(c3);
+        c4 = cityRepository.save(c4);
 
         //구분
         System.out.println("-------------lender------------------");
@@ -76,9 +81,17 @@ class LenderRepositoryTest {
                 .city(c3)
                 .build();
 
+        Lender l4 = Lender.builder()
+                .lenderName("용용죽겠지")
+                .address("처인구")
+                .user(lender1)
+                .city(c4)
+                .build();
+
         l1 = lenderRepository.save(l1);
         l2 = lenderRepository.save(l2);
         l3 = lenderRepository.save(l3);
+        l4 = lenderRepository.save(l4);
 
         lenderRepository.findAll().forEach(System.out::println);
 
@@ -142,63 +155,63 @@ class LenderRepositoryTest {
 
         //첨부파일
         ItemFileDTO file1 = ItemFileDTO.builder()
-                .file("face01.png")
-                .source("face01.png")
+                .file("item1.jpg")
+                .source("item1.jpg")
                 .item(i1.getId())
                 .build();
         ItemFileDTO file2 = ItemFileDTO.builder()
-                .file("face02.png")
-                .source("face02.png")
+                .file("item1.jpg")
+                .source("item1.jpg")
                 .item(i1.getId())
                 .build();
         ItemFileDTO file3 = ItemFileDTO.builder()
-                .file("face03.png")
-                .source("face03.png")
+                .file("item2.jpg")
+                .source("item2.jpg")
                 .item(i2.getId())
                 .build();
         ItemFileDTO file4 = ItemFileDTO.builder()
-                .file("face04.png")
-                .source("face04.png")
+                .file("item2.jpg")
+                .source("item2.jpg")
                 .item(i2.getId())
                 .build();
         ItemFileDTO file5 = ItemFileDTO.builder()
-                .file("face05.png")
-                .source("face05.png")
+                .file("item3.jpg")
+                .source("item3.jpg")
                 .item(i3.getId())
                 .build();
         ItemFileDTO file6 = ItemFileDTO.builder()
-                .file("face06.png")
-                .source("face06.png")
+                .file("item3.jpg")
+                .source("item3.jpg")
                 .item(i3.getId())
                 .build();
         ItemFileDTO file7 = ItemFileDTO.builder()
-                .file("face07.png")
-                .source("face07.png")
+                .file("item4.jpg")
+                .source("item4.jpg")
                 .item(i4.getId())
                 .build();
         ItemFileDTO file8 = ItemFileDTO.builder()
-                .file("face08.png")
-                .source("face08.png")
+                .file("item4.jpg")
+                .source("item4.jpg")
                 .item(i4.getId())
                 .build();
         ItemFileDTO file9 = ItemFileDTO.builder()
-                .file("face9.png")
-                .source("face09.png")
+                .file("item5.jpg")
+                .source("item5.jpg")
                 .item(i5.getId())
                 .build();
         ItemFileDTO file10 = ItemFileDTO.builder()
-                .file("face10.png")
-                .source("face10.png")
+                .file("item5.jpg")
+                .source("item5.jpg")
                 .item(i5.getId())
                 .build();
         ItemFileDTO file11 = ItemFileDTO.builder()
-                .file("face11.png")
-                .source("face11.png")
+                .file("item6.jpg")
+                .source("item6.jpg")
                 .item(i6.getId())
                 .build();
         ItemFileDTO file12 = ItemFileDTO.builder()
-                .file("face12.png")
-                .source("face12.png")
+                .file("item6.jpg")
+                .source("item6.jpg")
                 .item(i6.getId())
                 .build();
 
