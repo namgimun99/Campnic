@@ -54,9 +54,9 @@ public class UserController {
         model.addAttribute("username", id);
 
         if(userService.isExist(id)){
-            return "user/apiLogin";
+            return "/user/apiLogin";
         }else{
-            return "user/apiJoin";
+            return "/user/apiJoin";
         }
     }
 
@@ -96,7 +96,7 @@ public class UserController {
                 break;
             }
 
-            return "redirect:join";
+            return "redirect:/user/join";
         }
         // valid 통과되면 수행
         int cnt = userService.register(user);
