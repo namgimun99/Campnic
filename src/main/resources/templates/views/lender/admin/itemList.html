@@ -27,7 +27,9 @@
         <div class="row row-cols-1 row-cols-md-4 g-4 mt-3" >
             <div class="col" th:each="item : ${itemList}">
               <div class="card">
-                <img th:src="@{'/upload/item/' + ${item.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top">
+                  <div th:if="${item.fileList != null and item.fileList.size() > 0}">
+                    <img th:src="@{'/upload/item/' + ${item.fileList[0].file}}" style="width:150px; height:150px;" class="card-img-top">
+                  </div>
                 <div class="card-body">
                   <h5 class="card-title">[[${item.itemName}]]</h5>
                   <p class="card text bg-info bg-opacity-10 border">[[${item.price}]]원</p>

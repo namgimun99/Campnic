@@ -21,8 +21,3 @@ SELECT * FROM rental_recipt;
 SELECT * FROM qna;
 SELECT * FROM qna_comment;
 
-DROP TABLE IF EXISTS rental_recipt;
-DROP TABLE IF EXISTS item_file;
-DROP TABLE IF EXISTS item;
-DROP TABLE IF EXISTS lender;
-DROP TABLE IF EXISTS db_city;
