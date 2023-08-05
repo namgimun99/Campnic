@@ -18,11 +18,28 @@
 빌드 : Maven 4.0</br>
 서버 : localhost</br>
 데이터베이스 : MySql</br>
-필수 라이브러리 : SpringBoot Web, MySQL, Spring Data JPA, Lombok, Spring Security, Spring Boot DevTools, Thymeleaf, Validation 
+필수 라이브러리 : SpringBoot Web, MySQL, Spring Data JPA, Lombok, Spring Security6.0, Spring Boot DevTools, Thymeleaf, Validation 
 
 ## 개발환경 
 
-HTML5, CSS3, JavaScript, jQuery, JSON, Ajax, BootStrap3.0.4, Java, Spring, Spring Security, Maven, JDBC, Mysql, JPA, Intellij, Apache Tomcat, lombok, Thymeleaf
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=flat-square&logo=jquery&logoColor=white)](https://jquery.com/)
+[![JSON](https://img.shields.io/badge/JSON-000000?style=flat-square&logo=json&logoColor=white)](https://www.json.org/json-en.html)
+[![Ajax](https://img.shields.io/badge/Ajax-336791?style=flat-square&logo=ajax&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/3.4/)
+[![Java](https://img.shields.io/badge/Java-007396?style=flat-square&logo=java&logoColor=white)](https://www.java.com/)
+[![Spring](https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=spring&logoColor=white)](https://spring.io/)
+[![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=spring&logoColor=white)](https://spring.io/projects/spring-security)
+[![Maven](https://img.shields.io/badge/Maven-C71A36?style=flat-square&logo=apache-maven&logoColor=white)](https://maven.apache.org/)
+[![JDBC](https://img.shields.io/badge/JDBC-007ACC?style=flat-square&logo=jdbc&logoColor=white)](https://docs.oracle.com/en/database/oracle/oracle-database/19/jjdbc/introducing-JDBC.html)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![JPA](https://img.shields.io/badge/JPA-3498DB?style=flat-square&logo=jpa&logoColor=white)](https://docs.oracle.com/javaee/6/tutorial/doc/bnbpz.html)
+[![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat-square&logo=intellij-idea&logoColor=white)](https://www.jetbrains.com/idea/)
+[![Apache Tomcat](https://img.shields.io/badge/Apache_Tomcat-F8DC75?style=flat-square&logo=apache-tomcat&logoColor=black)](http://tomcat.apache.org/)
+[![Lombok](https://img.shields.io/badge/Lombok-BC2E86?style=flat-square&logo=lombok&logoColor=white)](https://projectlombok.org/)
+[![Thymeleaf](https://img.shields.io/badge/Thymeleaf-005F0F?style=flat-square&logo=thymeleaf&logoColor=white)](https://www.thymeleaf.org/)
 	
 ## 프로젝트
 📺 프로젝트 메인페이지
